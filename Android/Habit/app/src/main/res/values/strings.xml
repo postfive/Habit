@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Habit</string>
+
+    <string name="log_out">로그아웃</string>
+    <string name="look_around">둘러보기</string>
+    <string name="habit_list">전체습관</string>
+    <string name="habit">습관</string>
+    <string name="celeb_title">박보람의 다이어트 습관</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- firebase -->
+    <string name="other_platform_oauth_client">979804397949-egtlg6vjk4ssebhcjbg09r7l6780b5q4.apps.googleusercontent.com</string>
+
+</resources>

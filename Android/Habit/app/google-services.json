@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "979804397949",
+    "firebase_url": "https://habit-dev-afb3f.firebaseio.com",
+    "project_id": "habit-dev-afb3f",
+    "storage_bucket": "habit-dev-afb3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979804397949:android:26d9455780ca21da",
+        "android_client_info": {
+          "package_name": "com.postfive.habit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979804397949-qq62qvjcmtqhv3llch91k9379cc4gedg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.postfive.habit",
+            "certificate_hash": "f547129f0bcc64ded2a9b8a7f9fc1cb9636cd887"
+          }
+        },
+        {
+          "client_id": "979804397949-egtlg6vjk4ssebhcjbg09r7l6780b5q4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmbFu1eF4HnYb-PsQt9ulMS2fwFBowmcg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979804397949-egtlg6vjk4ssebhcjbg09r7l6780b5q4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
