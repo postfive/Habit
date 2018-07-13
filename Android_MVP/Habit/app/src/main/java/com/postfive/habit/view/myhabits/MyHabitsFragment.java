@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.postfive.habit.R;
-import com.postfive.habit.view.habitlist.HabitListActivity;
+import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
 
 /**
@@ -114,7 +114,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_habits_list:
-                Intent intent = new Intent(getContext(), HabitListActivity.class);
+                Intent intent = new Intent(getContext(), MyHabitListActivity.class);
                 startActivity(intent);
                 break;
 

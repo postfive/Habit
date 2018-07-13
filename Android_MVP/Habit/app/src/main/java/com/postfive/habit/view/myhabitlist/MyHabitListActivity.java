@@ -1,4 +1,4 @@
-package com.postfive.habit.view.habitlist;
+package com.postfive.habit.view.myhabitlist;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -12,13 +12,13 @@ import com.postfive.habit.R;
 import com.postfive.habit.view.habit.HabitActivity;
 import com.postfive.habit.view.main.MainActivity;
 
-public class HabitListActivity extends AppCompatActivity implements View.OnClickListener{
+public class MyHabitListActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button mBtnHait;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_habit_list);
+        setContentView(R.layout.activity_myhabit_list);
 
 
         // Toolbar 설정
