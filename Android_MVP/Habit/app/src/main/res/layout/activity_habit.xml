@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.habit.HabitActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -18,18 +19,265 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.Toolbar"
-            app:popupTheme="@style/AppTheme.Toolbar.PopupTheme">
+            android:gravity="fill_vertical|center_horizontal"
+            android:theme="@style/AppTheme.Toolbar">
 
-            <TextView
-                android:id="@+id/textview_habit_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/habit"
-                android:theme="@style/AppTheme.Toolbar.Title" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="13dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical"
+                android:theme="@style/AppTheme.Toolbar">
+
+                <TextView
+                    android:id="@+id/textview_habit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/add_habit"
+                    android:theme="@style/AppTheme.Toolbar.Title" />
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/textView_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_name" />
+
+                <EditText
+                    android:id="@+id/edt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/btn_new_habit_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/habit_list" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goal" />
+
+                <EditText
+                    android:id="@+id/edt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_alarmday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="반복" />
+
+                    <TextView
+                        android:id="@+id/tv_setalarmday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/tv_alarmday"
+                        android:text="" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_sunday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:padding="2dp"
+                        android:textOff="@string/short_sunday"
+                        android:textOn="@string/short_sunday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_monday"
+                        android:textOn="@string/short_monday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_tuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_tuesday"
+                        android:textOn="@string/short_tuesday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_wednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_wednesday"
+                        android:textOn="@string/short_wednesday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_thursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_thursday"
+                        android:textOn="@string/short_thursday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_friday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_friday"
+                        android:textOn="@string/short_friday" />
+
+                    <ToggleButton
+                        android:id="@+id/togglebtn_saturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_circle_toggle"
+                        android:onClick="onClickDayofWeek"
+                        android:textOff="@string/short_saturday"
+                        android:textOn="@string/short_saturday" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textview_habit_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="습관 시간" />
+
+                </RelativeLayout>
+
+                <ToggleButton
+                    android:id="@+id/toggleBtn_allday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ToggleButton"
+                    android:textOff="하루종일"
+                    android:textOn="하루종일" />
+
+                <ToggleButton
+                    android:id="@+id/toggleBtn_morning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ToggleButton"
+                    android:textOff="오전"
+                    android:textOn="오전" />
+
+                <ToggleButton
+                    android:id="@+id/toggleBtn_afternoon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ToggleButton"
+                    android:textOff="오후"
+                    android:textOn="오후" />
+
+                <ToggleButton
+                    android:id="@+id/toggleBtn_night"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ToggleButton"
+                    android:textOff="저녁"
+                    android:textOn="저녁" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="알람 저장하기" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

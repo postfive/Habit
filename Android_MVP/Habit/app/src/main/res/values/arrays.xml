@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="habit">
+        <item>선택</item>
+        <item>사용자정의</item>
+        <item>물마시기</item>
+        <item>줄넘기하기</item>
+    </string-array>
+</resources>
