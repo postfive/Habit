@@ -39,6 +39,8 @@ public class HabitMaker extends HabitFactory {
             return new SkipRopeHabit();
         }else if (habitId == 0){
             return new UserSetHabit();
+        }else if (habitId == 3){
+            return new PreStudyHabit();
         }
 
         return null;
@@ -57,6 +59,8 @@ public class HabitMaker extends HabitFactory {
             return new PreStudyHabit();
         }else if (habitType.equals("skiprope")){
             return new SkipRopeHabit();
+        }else if (habitType.equals("userset")){
+            return new UserSetHabit();
         }
         return null;
     }

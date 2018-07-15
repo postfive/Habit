@@ -13,7 +13,7 @@
         android:text="MyHabitFragment" />
 
     <Button
-        android:id="@+id/btn_habits_list"
+        android:id="@+id/btn_my_habits_ist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/habit_list" />

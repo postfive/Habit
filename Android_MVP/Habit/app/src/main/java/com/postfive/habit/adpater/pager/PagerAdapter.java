@@ -1,4 +1,4 @@
-package com.postfive.habit.adpater;
+package com.postfive.habit.adpater.pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

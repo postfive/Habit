@@ -6,6 +6,7 @@
     <string name="habit_list">습관 리스트</string>
     <string name="habit">습관</string>
     <string name="goal">목표</string>
+    <string name="select_habit">습관선택</string>
     <string name="add_habit">습관추가하기</string>
     <string name="modify_habit">습관변경하기</string>
 

@@ -33,7 +33,8 @@
         </activity>
         <activity android:name=".view.myhabitlist.MyHabitListActivity" />
         <activity android:name=".view.celeb.CelebActivity" />
-        <activity android:name=".view.habit.HabitActivity"></activity>
+        <activity android:name=".view.habit.HabitActivity" />
+        <activity android:name=".view.HabitList.HabitListActivity"></activity>
     </application>
 
 </manifest>

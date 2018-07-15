@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.postfive.habit.R;
+import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.habit.HabitActivity;
 import com.postfive.habit.view.main.MainActivity;
 
@@ -18,7 +19,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myhabit_list);
+        setContentView(R.layout.activity_my_habit_list);
 
 
         // Toolbar 설정
@@ -59,8 +60,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_habit :
-                Intent intent = new Intent(this, HabitActivity.class);
-                //setResult(RESULT_CANCELED, intent);
+                Intent intent = new Intent(this, HabitListActivity.class);                //setResult(RESULT_CANCELED, intent);
                 startActivity(intent);
                 break;
             default:

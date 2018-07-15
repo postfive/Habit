@@ -22,22 +22,12 @@
             android:gravity="fill_vertical|center_horizontal"
             android:theme="@style/AppTheme.Toolbar">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="13dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="vertical"
-                android:theme="@style/AppTheme.Toolbar">
-
                 <TextView
                     android:id="@+id/textview_habit_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:text="@string/add_habit"
                     android:theme="@style/AppTheme.Toolbar.Title" />
-            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 
@@ -61,25 +51,6 @@
                 android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 android:padding="4dp">
-
-                <TextView
-                    android:id="@+id/textView_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/habit_name" />
-
-                <EditText
-                    android:id="@+id/edt_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:inputType="text" />
-
-                <Button
-                    android:id="@+id/btn_new_habit_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/habit_list" />
 
             </LinearLayout>
 
