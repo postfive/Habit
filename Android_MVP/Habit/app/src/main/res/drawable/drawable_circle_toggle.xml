@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--color selector-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 클릭 했을 경우 -->
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/drawable_circle_toggle_on"/>
+
+    <!-- 클릭하지 않은 경우 -->
+    <item
+        android:drawable="@drawable/drawable_circle_toggle_off"/>
+
+</selector>
