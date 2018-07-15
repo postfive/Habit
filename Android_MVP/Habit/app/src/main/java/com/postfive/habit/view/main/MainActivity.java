@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -15,17 +17,31 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.PagerAdapter;
+import com.postfive.habit.adpater.pager.SectionsPagerAdapter;
+import com.postfive.habit.navigation.BottomNavigationViewHelper;
 import com.postfive.habit.view.login.LoginActivity;
 
 import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
 
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
+    private BottomNavigationView mBottomNavigationView;
+    private MenuItem mMenuItem;
+    private MenuItem mBottomNavigationMenu;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // db확인
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
 
+/*
         // Toolbar 설정
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -41,37 +58,84 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 //        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+*/
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Habit"));
-        tabLayout.addTab(tabLayout.newTab().setText("통계"));
-        tabLayout.addTab(tabLayout.newTab().setText("추천"));
-        tabLayout.addTab(tabLayout.newTab().setText("설정"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        mViewPager.setAdapter(pagerAdapter);
-        mViewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
+        mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
+        BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        // BottomNavigation 선택 리스터
+        mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-            }
+        // Viewpager Adapter
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        // viewpager
+        mViewPager = (ViewPager)findViewById(R.id.viewpager_main);
+        mViewPager.setAdapter(sectionsPagerAdapter);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.addOnPageChangeListener(pageChangeListener);
+        mMenuItem = mBottomNavigationView.getMenu().getItem(0);
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+        sectionsPagerAdapter.setListItem(0);
+        sectionsPagerAdapter.setListItem(1);
+        sectionsPagerAdapter.setListItem(2);
+        sectionsPagerAdapter.setListItem(3);
 
-            }
-        });
+        sectionsPagerAdapter.notifyDataSetChanged();
+
 
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.home :
+                            mViewPager.setCurrentItem(0);
+                            return true;
+                        case R.id.search :
+                            mViewPager.setCurrentItem(1);
+                            return true;
+                        case R.id.favorite :
+                            mViewPager.setCurrentItem(2);
+                            return true;
+                        case R.id.setting :
+                            mViewPager.setCurrentItem(3);
+                            return true;
+                        default :
+                            break;
+
+                    }
+                    return false;
+                }
+            };
+
+    private  ViewPager.OnPageChangeListener pageChangeListener =
+            new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    if ( mMenuItem != null) {
+                        mMenuItem.setChecked(false);
+                    }
+                    mMenuItem = mBottomNavigationView.getMenu().getItem(position);
+                    mMenuItem.setChecked(true);
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            };
 
     public static String getHashKey(Context context) {
 
@@ -106,16 +170,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
+        /*MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main_appbar, menu);
-
+*/
 
         return super.onCreateOptionsMenu(menu);
     }
 
     /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
+/*        switch (item.getItemId()) {
 
             case android.R.id.home:
 //                onClickHome();
@@ -125,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -162,7 +226,14 @@ public class MainActivity extends AppCompatActivity {
             LoginActivity.mFirebaseAuth.signOut();
         }
 
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        //startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        logout();
     }
 }

@@ -28,6 +28,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.postfive.habit.R;
 import com.postfive.habit.view.main.MainActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "LoginActivity";
@@ -131,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
+
         // [START_EXCLUDE silent]
         //showProgressDialog();
         // [END_EXCLUDE]
@@ -152,5 +156,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
             }
         });
+
     }
 }
