@@ -1,40 +1,35 @@
 package com.postfive.habit.view.main;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.postfive.habit.R;
-import com.postfive.habit.adpater.PagerAdapter;
-import com.postfive.habit.adpater.pager.SectionsPagerAdapter;
 import com.postfive.habit.navigation.BottomNavigationViewHelper;
+import com.postfive.habit.view.celeblist.CelebListFragment;
 import com.postfive.habit.view.login.LoginActivity;
+import com.postfive.habit.view.myhabits.MyHabitsFragment;
+import com.postfive.habit.view.setting.SettingFragment;
+import com.postfive.habit.view.statistics.StatisticsFragment;
 
 import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager mViewPager;
     private BottomNavigationView mBottomNavigationView;
     private MenuItem mMenuItem;
-    private MenuItem mBottomNavigationMenu;
 
     @Override
     protected void onStart() {
@@ -49,91 +44,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
 
-/*
-        // Toolbar 설정
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-
-        // 액션바 뒤로가기 버튼
-        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-*/
-
-
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
         BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
 
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        // Viewpager Adapter
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // viewpager
-        mViewPager = (ViewPager)findViewById(R.id.viewpager_main);
-        mViewPager.setAdapter(sectionsPagerAdapter);
-        mViewPager.setCurrentItem(0);
-        mViewPager.setOffscreenPageLimit(4);
-        mViewPager.addOnPageChangeListener(pageChangeListener);
-        mMenuItem = mBottomNavigationView.getMenu().getItem(0);
 
-        sectionsPagerAdapter.setListItem(0);
-        sectionsPagerAdapter.setListItem(1);
-        sectionsPagerAdapter.setListItem(2);
-        sectionsPagerAdapter.setListItem(3);
-
-        sectionsPagerAdapter.notifyDataSetChanged();
-
-
-
+        loadFragment(new MyHabitsFragment());
     }
 
+    private boolean loadFragment(Fragment fragment){
+        if(fragment == null){
+            return false;
+        }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+
+        return true;
+    }
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                    Fragment fragment = null;
                     switch (item.getItemId()){
                         case R.id.home :
-                            mViewPager.setCurrentItem(0);
-                            return true;
+                            fragment = new MyHabitsFragment();
+                            break;
                         case R.id.search :
-                            mViewPager.setCurrentItem(1);
-                            return true;
+                            fragment = new StatisticsFragment();
+                            break;
                         case R.id.favorite :
-                            mViewPager.setCurrentItem(2);
-                            return true;
+                            fragment = new CelebListFragment();
+                            break;
                         case R.id.setting :
-                            mViewPager.setCurrentItem(3);
-                            return true;
+                            fragment = new SettingFragment();
+                            break;
                         default :
                             break;
 
                     }
-                    return false;
-                }
-            };
-
-    private  ViewPager.OnPageChangeListener pageChangeListener =
-            new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    if ( mMenuItem != null) {
-                        mMenuItem.setChecked(false);
-                    }
-                    mMenuItem = mBottomNavigationView.getMenu().getItem(position);
-                    mMenuItem.setChecked(true);
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
+                    return loadFragment(fragment);
                 }
             };
 
