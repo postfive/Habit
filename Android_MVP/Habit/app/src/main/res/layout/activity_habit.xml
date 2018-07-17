@@ -34,6 +34,12 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <TextView
+        android:id="@+id/textView_habit_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_habit" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -68,7 +74,7 @@
                     android:text="@string/habit_title" />
 
                 <EditText
-                    android:id="@+id/edt_title"
+                    android:id = "@+id/edittext_goal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -81,31 +87,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
-                android:orientation="vertical"
-                android:padding="4dp">
+                android:padding="4dp"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id = "@+id/textview_goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/goal" />
+
                 <LinearLayout
+                    android:id = "@+id/layout_goal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/oneday_goal" />
+
                     <EditText
-                        android:id="@+id/edittext_goal"
+                        android:id="@+id/edittext_daygoal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_weight="1"
                         android:inputType="number|numberDecimal" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
 
                         <Spinner
                             android:id="@+id/spinner_unit"
@@ -115,8 +124,44 @@
                             android:layout_weight="1">
 
                         </Spinner>
-                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/perday" />
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textview_once"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/once_doing" />
+
+                    <EditText
+                        android:id="@+id/edittext_once"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:inputType="number|numberDecimal" />
+
+                    <TextView
+                        android:id="@+id/textview_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:text="번" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -177,10 +222,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:padding="2dp"
                         android:textOff="@string/short_sunday"
-                        android:textOn="@string/short_sunday" />
+                        android:textOn="@string/short_sunday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_monday"
@@ -188,9 +233,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_monday"
-                        android:textOn="@string/short_monday" />
+                        android:textOn="@string/short_monday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_tuesday"
@@ -198,9 +243,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_tuesday"
-                        android:textOn="@string/short_tuesday" />
+                        android:textOn="@string/short_tuesday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_wednesday"
@@ -208,9 +253,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_wednesday"
-                        android:textOn="@string/short_wednesday" />
+                        android:textOn="@string/short_wednesday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_thursday"
@@ -218,9 +263,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_thursday"
-                        android:textOn="@string/short_thursday" />
+                        android:textOn="@string/short_thursday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_friday"
@@ -228,9 +273,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_friday"
-                        android:textOn="@string/short_friday" />
+                        android:textOn="@string/short_friday"
+                        android:onClick="onClickDayofWeek"/>
 
                     <ToggleButton
                         android:id="@+id/togglebtn_saturday"
@@ -238,9 +283,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/drawable_circle_toggle"
-                        android:onClick="onClickDayofWeek"
                         android:textOff="@string/short_saturday"
-                        android:textOn="@string/short_saturday" />
+                        android:textOn="@string/short_saturday"
+                        android:onClick="onClickDayofWeek"/>
 
 
                 </LinearLayout>
@@ -311,10 +356,12 @@
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="알람 저장하기" />
+                android:onClick="onClickSaveHabit"
+                android:text="@string/save" />
 
         </LinearLayout>
     </ScrollView>
+
 
 
 </LinearLayout>

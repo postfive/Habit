@@ -15,6 +15,12 @@
     <string name="recommendation">추천</string>
     <string name="setting">설정</string>
     <string name="usercustom">사용자 정의 습관</string>
+    <string name="save">저장</string>
+    <string name="perday">/일</string>
+    <string name="oneday_goal">하루목표</string>
+    <string name="once_doing">1회 수행</string>
+    <string name="save_habit">알람저장</string>
+
 
     <string name="body">습관</string>
     <string name="habit_title">습관 제목</string>

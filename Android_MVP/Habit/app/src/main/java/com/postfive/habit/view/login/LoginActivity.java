@@ -25,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.postfive.habit.FirebaseUse;
 import com.postfive.habit.R;
 import com.postfive.habit.view.main.MainActivity;
 
@@ -42,8 +43,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button mBtnLookAround;
 
     // Firebase auth
-    public static FirebaseAuth mFirebaseAuth;
-    public static FirebaseUser mFirebaseUser;
+//    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions mGoogleSignInOptions;
@@ -53,15 +54,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+/*        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();*/
+
+
+        mFirebaseUser = FirebaseUse.getUser();
 
         // 로그인 여부 확인
         if ( mFirebaseUser == null ) {
             // 로그인 안되어있을때
             Toast.makeText(this, "로그인이 필요합니다", Toast.LENGTH_SHORT).show();
         }else{
-
+            Log.d(TAG, "get Uid "+mFirebaseUser.getUid());
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
@@ -78,7 +82,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions);
 
         // [START initialize_auth]
-        mFirebaseAuth = FirebaseAuth.getInstance();
+//        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = FirebaseUse.getUser();
         // Google 로그인 버튼
         mSigninBtn = (SignInButton) findViewById(R.id.btn_sign_google);
         mBtnLookAround = (Button)findViewById(R.id.btn_look_around);
@@ -141,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
-        Task<AuthResult> authResultTask = mFirebaseAuth.signInWithCredential(credential);
+        Task<AuthResult> authResultTask = FirebaseUse.getFirebaseAuth().signInWithCredential(credential);
 //        Toast.makeText(LoginActivity.this, "cc", Toast.LENGTH_LONG).show();
 
         authResultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -151,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(AuthActitivy.this, firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
                 firebaseUser.getEmail();*/
                 Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_LONG).show();
-
+                Log.d(TAG, "addOnSuccessListener get Uid "+mFirebaseUser.getUid());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }

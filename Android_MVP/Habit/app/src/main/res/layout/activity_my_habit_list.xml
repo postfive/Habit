@@ -32,6 +32,12 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id = "@+id/recyclerview_my_habit_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
     <Button
         android:id="@+id/btn_habit"
         android:layout_width="match_parent"

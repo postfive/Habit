@@ -79,6 +79,8 @@ public class HabitMaker extends HabitFactory {
             return PreStudyHabit.class;
         }else if (habitType.equals("skiprope")){
             return SkipRopeHabit.class;
+        }else if (habitType.equals("userset")){
+            return UserSetHabit.class;
         }
         return null;
     }
@@ -90,15 +92,4 @@ public class HabitMaker extends HabitFactory {
         }
     }
 
-    @Override
-    public String getUnit(String habitType) {
-        if(habitType.equals("drinkwater")){
-            return "water";
-        }else if (habitType.equals("prestudy")){
-            return "hour";
-        }else if (habitType.equals("skiprope")){
-            return "count";
-        }
-        return null;
-    }
 }

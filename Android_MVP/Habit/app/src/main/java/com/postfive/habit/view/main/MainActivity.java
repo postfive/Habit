@@ -16,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.postfive.habit.FirebaseUse;
 import com.postfive.habit.R;
 import com.postfive.habit.navigation.BottomNavigationViewHelper;
 import com.postfive.habit.view.celeblist.CelebListFragment;
@@ -28,9 +31,12 @@ import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity" ;
     private BottomNavigationView mBottomNavigationView;
     private MenuItem mMenuItem;
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
     @Override
     protected void onStart() {
         super.onStart();
@@ -44,12 +50,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
 
+
+        mFirebaseUser = FirebaseUse.getUser();
+
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
         BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
 
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
+        Log.d(TAG, "MainActivity Create get Uid "+mFirebaseUser.getUid());
 
         loadFragment(new MyHabitsFragment());
     }
@@ -176,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout(){
-        if(LoginActivity.mFirebaseAuth == null){
+        if(mFirebaseAuth == null){
             Toast.makeText(this,"로그인한 사용자가 아닙니다", Toast.LENGTH_SHORT);
         }else{
-            LoginActivity.mFirebaseAuth.signOut();
+           mFirebaseAuth.signOut();
         }
 
         //startActivity(new Intent(MainActivity.this, LoginActivity.class));

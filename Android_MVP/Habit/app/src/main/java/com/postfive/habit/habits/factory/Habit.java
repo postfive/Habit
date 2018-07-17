@@ -1,20 +1,24 @@
 package com.postfive.habit.habits.factory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public abstract class Habit {
+public abstract class Habit implements Serializable {
     protected String goal;
+    protected String typeName;
     protected int dayofWeek;
     protected int full;
     protected int dayFull;
-    protected int count;
+    protected int once;
+    protected int didDay=0;
     protected String unit;
     protected String type;
     protected List<String> time = new ArrayList<>();
-    String key = "";
-
-
+    protected List<String> unitList = new ArrayList<>();
+    protected String key = null;
 
     public Habit() {
     }
@@ -24,6 +28,9 @@ public abstract class Habit {
 
     public String getGoal() {
         return goal;
+    }
+    public void setGoal(String mGoal) {
+        this.goal = mGoal;
     }
 /*
     public int [] getDayofWeekArray() {
@@ -49,8 +56,8 @@ public abstract class Habit {
         return full;
     }
 
-    public int getCount() {
-        return count;
+    public int getOnce() {
+        return once;
     }
 
 
@@ -59,9 +66,7 @@ public abstract class Habit {
     }
 
 
-    public void setGoal(String mGoal) {
-        this.goal = mGoal;
-    }
+
 
     /**
      * 요일 설정
@@ -78,7 +83,9 @@ public abstract class Habit {
             this.dayofWeek &= ~(1 << mDayofWeek);
         }
     }
-
+    public void setDayofWeek(int DayofWeek) {
+        this.dayofWeek = DayofWeek ;
+    }
     public int getDayofWeek() {
         return dayofWeek;
     }
@@ -87,8 +94,8 @@ public abstract class Habit {
         this.full = mFull;
     }
 
-    public void setCount(int mCount) {
-        this.count = mCount;
+    public void setOnce(int mOnce) {
+        this.once = mOnce;
     }
 
     public void setUnit(String mUnit) {
@@ -103,10 +110,20 @@ public abstract class Habit {
         this.dayFull = mDayFull;
     }
 
-    public void doit(){
-
+    public void doIt(){
+        didDay+=once;
     }
 
+    public void cancelIt(){
+        didDay-=once;
+
+    }
+    public int getDidDay() {
+        return didDay;
+    }
+    public void setDidDay(int didDay) {
+        this.didDay = didDay;
+    }
     public String getType() {
         return type;
     }
@@ -120,13 +137,54 @@ public abstract class Habit {
     }
 
     public void setTime(String time) {
+        if(time == null || time.length() < 1)
+            return;
+
+
+        for(String tmp : this.time){
+            if(tmp.equals(time))
+                break;
+        }
         this.time.add(time);
     }
+    /*public void setTime(List<String> time) {
+        for(String tmp : time){
+            if(tmp == null){
+                continue;
+            }
+            if(tmp.length() < 1){
+                continue;
+            }
+            this.time.add(tmp);
+        }
+    }*/
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public List<String> getUnitList() {
+        return unitList;
+
+    }
+    public String selectUnitList(int position) {
+        return unitList.get(position);
+    }
+
+    public void addUnitList(String unit) {
+        this.unitList.add(unit);
+
+    }
+
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

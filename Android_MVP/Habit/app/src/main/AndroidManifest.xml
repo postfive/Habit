@@ -13,13 +13,7 @@
             android:name=".view.main.MainActivity"
             android:launchMode="singleTask">
 
-            <!--
-                <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".view.login.LoginActivity"
@@ -34,7 +28,8 @@
         <activity android:name=".view.myhabitlist.MyHabitListActivity" />
         <activity android:name=".view.celeb.CelebActivity" />
         <activity android:name=".view.habit.HabitActivity" />
-        <activity android:name=".view.HabitList.HabitListActivity"></activity>
+        <activity android:name=".view.HabitList.HabitListActivity">
+        </activity>
     </application>
 
 </manifest>
