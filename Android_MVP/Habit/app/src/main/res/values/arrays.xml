@@ -6,4 +6,14 @@
         <item>물마시기</item>
         <item>줄넘기하기</item>
     </string-array>
+    <string-array name="count">
+        <item>회</item>
+    </string-array>
+    <string-array name="water">
+        <item>mL</item>
+        <item>L</item>
+    </string-array>
+    <string-array name="hour">
+        <item>시간</item>
+    </string-array>
 </resources>

@@ -14,6 +14,14 @@
     <string name="statistics">통계</string>
     <string name="recommendation">추천</string>
     <string name="setting">설정</string>
+    <string name="usercustom">사용자 정의 습관</string>
+
+    <string name="body">습관</string>
+    <string name="habit_title">습관 제목</string>
+    <string name="frequency">빈도</string>
+    <string name="everyday">매일</string>
+    <string name="everyweek">매주</string>
+    <string name="add_time">시간 추가하기</string>
 
     <string name="celeb_title">박보람의 다이어트 습관</string>
     <!-- TODO: Remove or change this placeholder text -->

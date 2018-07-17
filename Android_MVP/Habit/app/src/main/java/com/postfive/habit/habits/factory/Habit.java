@@ -1,5 +1,8 @@
 package com.postfive.habit.habits.factory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Habit {
     protected String goal;
     protected int dayofWeek;
@@ -8,7 +11,7 @@ public abstract class Habit {
     protected int count;
     protected String unit;
     protected String type;
-    protected String time;
+    protected List<String> time = new ArrayList<>();
     String key = "";
 
 
@@ -76,6 +79,10 @@ public abstract class Habit {
         }
     }
 
+    public int getDayofWeek() {
+        return dayofWeek;
+    }
+
     public void setFull(int mFull) {
         this.full = mFull;
     }
@@ -100,7 +107,7 @@ public abstract class Habit {
 
     }
 
-    protected String getType() {
+    public String getType() {
         return type;
     }
 
@@ -108,12 +115,12 @@ public abstract class Habit {
         this.type = mType;
     }
 
-    public String getTime() {
+    public List<String> getTime() {
         return time;
     }
 
     public void setTime(String time) {
-        this.time = time;
+        this.time.add(time);
     }
     public String getKey() {
         return key;

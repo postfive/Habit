@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="25dp">
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goal" />
+                    android:text="@string/habit_title" />
 
                 <EditText
                     android:id="@+id/edt_title"
@@ -74,6 +74,49 @@
                     android:layout_marginTop="4dp"
                     android:inputType="text" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goal" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edittext_goal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:inputType="number|numberDecimal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <Spinner
+                            android:id="@+id/spinner_unit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1">
+
+                        </Spinner>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="반복" />
+                        android:text="@string/frequency" />
 
                     <TextView
                         android:id="@+id/tv_setalarmday"
@@ -102,7 +145,26 @@
                         android:text="" />
 
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ToggleButton
+                        android:id="@+id/togglebtn_everyday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="@string/everyday"
+                        android:textOn="@string/everyday"
 
+                        />
+                    <ToggleButton
+                        android:id="@+id/togglebtn_everyweek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="@string/everyweek"
+                        android:textOn="@string/everyweek"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -207,13 +269,17 @@
 
                 </RelativeLayout>
 
-                <ToggleButton
-                    android:id="@+id/toggleBtn_allday"
+                <Button
+                    android:id="@+id/btn_addtime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ToggleButton"
-                    android:textOff="하루종일"
-                    android:textOn="하루종일" />
+                    android:text="@string/add_time" />
+                <android.support.v7.widget.RecyclerView
+                    android:id = "@+id/recyclerview_habit_time_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
 
                 <ToggleButton
                     android:id="@+id/toggleBtn_morning"

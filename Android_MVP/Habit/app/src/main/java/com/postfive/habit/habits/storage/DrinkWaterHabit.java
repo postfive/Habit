@@ -20,7 +20,6 @@ public class DrinkWaterHabit extends Habit {
 
         dayofWeek = 124;
 
-
 //        for(int i = 1 ;  i < 8 ; i++)
 //            setDayofWeek(i, true);
     }

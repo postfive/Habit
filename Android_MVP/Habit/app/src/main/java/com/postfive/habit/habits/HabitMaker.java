@@ -10,6 +10,8 @@ import com.postfive.habit.habits.storage.UserSetHabit;
 public class HabitMaker extends HabitFactory {
     @Override
     public Habit createHabit(int habitId) {
+
+        Habit result = null;
 /*        if (habitId == null){
             return null;
         }
@@ -34,16 +36,16 @@ public class HabitMaker extends HabitFactory {
 //                break;
 //        }
         if(habitId == 1){
-            return new DrinkWaterHabit();
+            result = new DrinkWaterHabit();
         }else if (habitId == 2){
-            return new SkipRopeHabit();
-        }else if (habitId == 0){
-            return new UserSetHabit();
+            result = new SkipRopeHabit();
         }else if (habitId == 3){
-            return new PreStudyHabit();
+            result = new PreStudyHabit();
+        }else if (habitId == 0){
+            result = new UserSetHabit();
         }
 
-        return null;
+        return result;
     }
 
 
@@ -88,4 +90,15 @@ public class HabitMaker extends HabitFactory {
         }
     }
 
+    @Override
+    public String getUnit(String habitType) {
+        if(habitType.equals("drinkwater")){
+            return "water";
+        }else if (habitType.equals("prestudy")){
+            return "hour";
+        }else if (habitType.equals("skiprope")){
+            return "count";
+        }
+        return null;
+    }
 }
