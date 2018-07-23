@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Habit implements Serializable {
+public abstract class OldHabit implements Serializable {
     protected String goal;
     protected String typeName;
     protected int dayofWeek;
@@ -20,7 +20,7 @@ public abstract class Habit implements Serializable {
     protected List<String> unitList = new ArrayList<>();
     protected String key = null;
 
-    public Habit() {
+    public OldHabit() {
     }
 
     public abstract void prepare();

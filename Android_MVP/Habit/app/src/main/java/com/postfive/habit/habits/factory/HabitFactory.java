@@ -1,7 +1,7 @@
 package com.postfive.habit.habits.factory;
 
+import com.postfive.habit.db.Habit;
+
 public abstract class HabitFactory {
-    public abstract Habit createHabit(int habitID);
-    public abstract Habit createHabit(String habitType);
-    public abstract Class getHabit(String habitType);
+    public abstract Habit createHabit(int habitCode);
 }

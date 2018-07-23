@@ -1,72 +1,63 @@
 package com.postfive.habit.view.myhabits;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
+import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
+import com.postfive.habit.adpater.myhabitlist.MyHabitListRecyclerViewAdapter;
+import com.postfive.habit.db.UserHabitDetail;
+import com.postfive.habit.db.UserHabitRespository;
+import com.postfive.habit.db.UserHabitState;
+import com.postfive.habit.db.UserHabitViewModel;
 import com.postfive.habit.view.HabitList.HabitListActivity;
+import com.postfive.habit.view.habit.HabitActivity;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
+import java.util.Calendar;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyHabitsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyHabitsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MyHabitsFragment extends Fragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
+    private static final String TAG = "MyHabitsFragment";
     private Button btnHabitsList;
+    private Button btnTodayHabits;
+    private UserHabitRespository mUserHabitRespository;
+
+    private MyHabitRecyclerViewAdapter mMyHabitRecyclerViewAdapter;
+
+    private int day_count = 0;
 
     public MyHabitsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyHabitsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyHabitsFragment newInstance(String param1, String param2) {
-        MyHabitsFragment fragment = new MyHabitsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication());
+        Calendar today = Calendar.getInstance();
+
+
     }
 
     @Override
@@ -74,9 +65,65 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_my_habits, container, false);
-        // Inflate the layout for this fragment
+
         btnHabitsList = (Button)view.findViewById(R.id.btn_my_habits_ist);
         btnHabitsList.setOnClickListener(this);
+
+        btnTodayHabits = (Button)view.findViewById(R.id.btn_today);
+        btnTodayHabits.setOnClickListener(this);
+
+
+        mMyHabitRecyclerViewAdapter = new MyHabitRecyclerViewAdapter();
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_my_habits_fragemnt_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setAdapter(mMyHabitRecyclerViewAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Calendar day = Calendar.getInstance();
+
+
+        // 오늘 습관 가져오기
+        List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day.get(Calendar.DAY_OF_WEEK));
+
+/*
+        Log.d(TAG, "요일  |  타입  |  목표  |  오늘한량 | 오늘목표량 | ");
+        for(UserHabitState tmp : userHabitStatesList) {
+
+            Log.d(TAG, "오늘 습관 "+tmp.getDayofweek()+" "+tmp.getHabitcode()+" "+tmp.getGoal() +"  " +tmp.getDid() +" "+tmp.getFull());
+        }
+*/
+
+        mMyHabitRecyclerViewAdapter.setAllHabit(userHabitStatesList);
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                UserHabitState tmp = mMyHabitRecyclerViewAdapter.getHabit(position);
+
+                tmp.setDid(tmp.getDid()+tmp.getOnce());
+                mMyHabitRecyclerViewAdapter.changeHabit(position, tmp);
+                // update
+                mUserHabitRespository.updateUserHabitState(tmp);
+            }
+        });
+
+        /* UserHabitViewModel userHabitViewModel = ViewModelProviders.of(this).get(UserHabitViewModel.class);
+        // 지금 할일
+       userHabitViewModel.getTodayUserHabitStateLive().observe(this, new Observer<List<UserHabitState>>() {
+            @Override
+            public void onChanged(@Nullable List<UserHabitState> userHabitStates) {
+                Log.d(TAG, "hi size "+ Integer.toString(userHabitStates.size()));
+
+
+                mMyHabitRecyclerViewAdapter.setAllHabit(userHabitStates);
+            }
+        });*/
+
+        // 다한일
+
+        // 놓친일
+
+
+
         return view;
     }
 
@@ -85,30 +132,21 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-
-
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-/*        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mUserHabitRespository.destroyInstance();
     }
 
     @Override
@@ -118,25 +156,18 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 Intent intent = new Intent(getContext(), MyHabitListActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.btn_today :
+                Calendar day = Calendar.getInstance();
 
+                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day.get(Calendar.DAY_OF_WEEK));
+
+                Log.d(TAG, "요일  |  타입  |  목표  |  오늘한량 | 오늘목표량 | ");
+                for(UserHabitState tmp : userHabitStatesList) {
+                    Log.d(TAG, tmp.getDayofweek()+" "+tmp.getHabitcode()+" "+tmp.getGoal() +"  " +tmp.getDid() +" "+tmp.getFull());
+                }
             default:
                 break;
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
 

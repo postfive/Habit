@@ -4,10 +4,10 @@
         android:id="@+id/home"
         android:icon = "@drawable/ic_home_black_24dp"
         android:title = "@string/habit"/>
-    <item
+<!--    <item
         android:id="@+id/search"
         android:icon = "@drawable/ic_equalizer_black_24dp"
-        android:title = "@string/statistics"/>
+        android:title = "@string/statistics"/>-->
     <item
         android:id="@+id/favorite"
         android:icon = "@drawable/ic_star_black_24dp"

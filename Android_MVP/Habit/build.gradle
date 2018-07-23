@@ -1,10 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+ext {
+    // room
+    roomVersion = '1.0.0'
+    archLifecycleVersion = '1.1.0'
+    // room
+}
 buildscript {
     
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'

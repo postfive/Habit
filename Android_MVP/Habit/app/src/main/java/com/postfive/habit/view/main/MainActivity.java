@@ -16,16 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.postfive.habit.FirebaseUse;
 import com.postfive.habit.R;
+import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.navigation.BottomNavigationViewHelper;
 import com.postfive.habit.view.celeblist.CelebListFragment;
 import com.postfive.habit.view.login.LoginActivity;
 import com.postfive.habit.view.myhabits.MyHabitsFragment;
 import com.postfive.habit.view.setting.SettingFragment;
-import com.postfive.habit.view.statistics.StatisticsFragment;
 
 import java.security.MessageDigest;
 
@@ -33,10 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity" ;
     private BottomNavigationView mBottomNavigationView;
-    private MenuItem mMenuItem;
 
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
     @Override
     protected void onStart() {
         super.onStart();
@@ -50,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
 
-
-        mFirebaseUser = FirebaseUse.getUser();
+        Toast.makeText(this, " "+Integer.toString(UserSettingValue.getAfternoonPushHour()) , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, " "+UserSettingValue.getResolutionValue() , Toast.LENGTH_LONG).show();
 
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
         BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
@@ -59,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        Log.d(TAG, "MainActivity Create get Uid "+mFirebaseUser.getUid());
-
         loadFragment(new MyHabitsFragment());
+
     }
 
     private boolean loadFragment(Fragment fragment){
@@ -85,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.home :
                             fragment = new MyHabitsFragment();
-                            break;
-                        case R.id.search :
-                            fragment = new StatisticsFragment();
                             break;
                         case R.id.favorite :
                             fragment = new CelebListFragment();
@@ -135,27 +125,12 @@ public class MainActivity extends AppCompatActivity {
     /* toolbar 붙이기 */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        /*MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main_appbar, menu);
-*/
-
         return super.onCreateOptionsMenu(menu);
     }
 
     /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-/*        switch (item.getItemId()) {
 
-            case android.R.id.home:
-//                onClickHome();
-                break;
-            case R.id.btn_logout:
-                logout();
-                break;
-            default:
-                break;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -164,42 +139,14 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
-       /* MenuItem alertMenuItem = menu.findItem(R.id.app_bar_switch_layout);
-        RelativeLayout rootView = (RelativeLayout) alertMenuItem.getActionView();
-
-        mSwitch = (Switch)rootView.findViewById(R.id.app_bar_switch);
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG,TAG+ " Switch " + isChecked);
-
-                if(isChecked)
-                    alarm.setEnable(1);
-                else
-                    alarm.setEnable(0);
-            }
-        });*/
-
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void logout(){
-        if(mFirebaseAuth == null){
-            Toast.makeText(this,"로그인한 사용자가 아닙니다", Toast.LENGTH_SHORT);
-        }else{
-           mFirebaseAuth.signOut();
-        }
-
-        //startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        finish();
-    }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        logout();
+        finish();
     }
 }

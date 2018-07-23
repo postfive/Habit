@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.postfive.habit.view.celeblist.CelebListFragment;
 import com.postfive.habit.view.myhabits.*;
-import com.postfive.habit.view.statistics.*;
 import com.postfive.habit.view.setting.*;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -24,12 +23,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 MyHabitsFragment myHabitsFragment = new MyHabitsFragment();
                 return myHabitsFragment;
             case 1:
-                StatisticsFragment statisticsFragment = new StatisticsFragment();
-                return statisticsFragment;
-            case 2:
                 CelebListFragment celebListFragment = new CelebListFragment();
                 return celebListFragment;
-            case 3:
+            case 2:
                 SettingFragment settingFragment = new SettingFragment();
                 return settingFragment;
             default :

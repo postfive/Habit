@@ -8,18 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.postfive.habit.R;
-import com.postfive.habit.habits.factory.Habit;
+import com.postfive.habit.db.UserHabitDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MyHabitRecyclerViewModel {
+public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MyHabitListRecyclerViewModel {
 
-    private List<Habit> mMyHabitList;
+    private List<UserHabitDetail> mMyHabitList;
     private int index = -1;
     private String[] strArryDayofWeek = {"일", "월", "화", "수", "목", "금", "토"};
 
-    public MyHabitRecyclerViewAdapter(){
+    public MyHabitListRecyclerViewAdapter(){
         mMyHabitList = new ArrayList<>();
 
     }
@@ -38,12 +38,12 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         // XML 디자인한 부분 안에 내용 변경
 //        ((RowCell)holder).imageView.setImageDrawable();
         ((RowCell)holder).goalText.setText( mMyHabitList.get(position).getGoal());
-        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getDayFull()+""+mMyHabitList.get(position).getUnit());
-        ((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDidDay()+""+mMyHabitList.get(position).getUnit());
+        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getFull()+""+mMyHabitList.get(position).getUnit());
+        //((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDidDay()+""+mMyHabitList.get(position).getUnit());
 
 
         String tmpDayofWeek ="";
-        int intDayofWeek = mMyHabitList.get(position).getDayofWeek();
+        int intDayofWeek = mMyHabitList.get(position).getDaysum();
         for(int i = 1 ; i < 8 ; i ++){
             if((intDayofWeek & ( 1<< i) ) > 0) {
                 tmpDayofWeek += strArryDayofWeek[i-1];
@@ -79,7 +79,7 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public Habit getHabit(int position){
+    public UserHabitDetail getHabit(int position){
         if( mMyHabitList.isEmpty()){
             return null;
         }
@@ -89,7 +89,7 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
     @Override
-    public List<Habit> getAllHabit(){
+    public List<UserHabitDetail> getAllHabit(){
         if( mMyHabitList.isEmpty() ){
             return null;
         }
@@ -98,14 +98,14 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void addHabit(Habit habit){
+    public void addHabit(UserHabitDetail habit){
 
         this.mMyHabitList.add(habit);
         notifyItemInserted(mMyHabitList.indexOf(habit));
     }
 
     @Override
-    public void setHabit(List<Habit> habitList){
+    public void setHabit(List<UserHabitDetail> habitList){
         this.mMyHabitList.addAll(habitList);
         notifyDataSetChanged();
     }
@@ -116,19 +116,19 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyItemRemoved(position);
     }
 
-    public void removeHabit(Habit habit) {
+    public void removeHabit(UserHabitDetail habit) {
         this.mMyHabitList.remove(habit);
         notifyDataSetChanged();
     }
 
     @Override
-    public void changeHabit(int position, Habit habit) {
+    public void changeHabit(int position, UserHabitDetail habit) {
         this.mMyHabitList.remove(position);
         this.mMyHabitList.add(habit);
 
         notifyDataSetChanged();
     }
-    public void changeHabit (Habit habit) {
+    public void changeHabit (UserHabitDetail habit) {
         this.mMyHabitList.remove(habit);
         this.mMyHabitList.add(habit);
 

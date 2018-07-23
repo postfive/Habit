@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.habitlist.HabitRecyclerViewAdapter;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.habits.HabitMaker;
-import com.postfive.habit.habits.factory.Habit;
+
 import com.postfive.habit.view.habit.HabitActivity;
 
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class HabitListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         for(int i = 0 ; i < 3 ; i ++) {
-            Log.d(TAG, "목표 : "+habitList.get(i).getGoal());
+            Log.d(TAG, "목표 : "+habitList.get(i).getName());
         }
 
         // 어댑터를 연결 시켜 주는 부분
@@ -72,10 +74,15 @@ public class HabitListActivity extends AppCompatActivity {
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+
                 Habit habit = myRecyclerViewAdapter.getHabit(position);
+
+                UserHabitDetail userHabitDetail = new UserHabitDetail(habit);
                 Intent intent = new Intent(getApplicationContext(), HabitActivity.class);
 
-                intent.putExtra("habit", habit.getType());
+                Log.d(TAG, "Habit Select TEST  habitcode"+ userHabitDetail.getHabitcode() + " name : "+userHabitDetail.getName());
+                intent.putExtra("object", userHabitDetail);
                 startActivity(intent);
             }
         });

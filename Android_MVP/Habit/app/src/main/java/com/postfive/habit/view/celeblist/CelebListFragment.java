@@ -1,70 +1,46 @@
 package com.postfive.habit.view.celeblist;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
+import com.postfive.habit.adpater.celeblist.CelebRecyclerViewAdapter;
+import com.postfive.habit.db.CelebHabitMaster;
+import com.postfive.habit.db.CelebHabitViewModel;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.view.celeb.CelebActivity;
+import com.postfive.habit.view.habit.HabitActivity;
+
+import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CelebListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CelebListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CelebListFragment extends Fragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+//    private Button mBtnCeleb;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    private Button mBtnCeleb;
-
+    private CelebRecyclerViewAdapter mCelebRecyclerViewAdapter;
     public CelebListFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CelebListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CelebListFragment newInstance(String param1, String param2) {
-        CelebListFragment fragment = new CelebListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -73,68 +49,55 @@ public class CelebListFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_celeb_list, container, false);
+        int width = getResources().getDisplayMetrics().widthPixels;
+        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
 
-        mBtnCeleb = (Button)view.findViewById(R.id.btn_celeb);
-        mBtnCeleb.setOnClickListener(this);
+//        mBtnCeleb = (Button) view.findViewById(R.id.btn_celeb);
+//        mBtnCeleb.setOnClickListener(this);
 
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
+        recyclerView.setAdapter(mCelebRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setNestedScrollingEnabled(false);
+
+        CelebHabitViewModel celebHabitViewModel = ViewModelProviders.of(this).get(CelebHabitViewModel.class);
+
+        // 데이터가 변경될 때 호출
+        celebHabitViewModel.getCelebHabitList().observe(this, new Observer<List<CelebHabitMaster>>() {
+            @Override
+            public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
+/*                for(CelebHabitMaster tmp : celebHabitMasters) {
+                    Toast.makeText(getContext(), "유명인 리스트 "+tmp.getName(), Toast.LENGTH_SHORT).show();
+                }*/
+                mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
+            }
+        });
+
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                CelebHabitMaster habit = mCelebRecyclerViewAdapter.getHabit(position);
+
+                Intent intent = new Intent(getContext(), CelebActivity.class);
+                Toast.makeText(getContext(), "유명인 선택 "+habit.getName(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("celebcode", habit.getCelebcode());
+                startActivity(intent);
+            }
+        });
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-/*        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_celeb:
+            /*case R.id.btn_celeb:
                 Intent intent = new Intent(getContext(), CelebActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
             default :
                 break;
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

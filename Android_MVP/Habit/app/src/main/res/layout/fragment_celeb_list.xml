@@ -6,17 +6,26 @@
     android:orientation="vertical"
     tools:context=".view.celeblist.CelebListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CelebFragment" />
+        >
 
-    <Button
-        android:id="@+id/btn_celeb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="선택" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/celeb_fragment" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_celeb_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

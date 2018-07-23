@@ -1,6 +1,6 @@
 package com.postfive.habit.adpater.habitlist;
 
-import com.postfive.habit.habits.factory.Habit;
+import com.postfive.habit.db.Habit;
 
 public interface HabitRecyclerViewModel {
 

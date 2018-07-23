@@ -1,6 +1,7 @@
 package com.postfive.habit.habits.storage;
 
-import com.postfive.habit.habits.factory.Habit;
+
+import com.postfive.habit.db.Habit;
 
 public class DrinkWaterHabit extends Habit {
 
@@ -10,24 +11,14 @@ public class DrinkWaterHabit extends Habit {
 
     @Override
     public void prepare() {
-        setGoal("물마시기");
-        setTypeName("물마시기");
-        setFull(4*66);
-        setDayFull(4);
-        setUnit("L");
-        setOnce(2);
+        setHabitcode(1);
+        setName("물마시기");
         setType("drinkwater");
-        setTime("m");
-
-        addUnitList("L");
-        addUnitList("mL");
-        addUnitList("cc");
-
-        dayofWeek = 124;
-
-//        for(int i = 1 ;  i < 8 ; i++)
-//            setDayofWeek(i, true);
+        setUnitcode(1);
+        setTime(0);
+        setFull(10);
+        setOnce(2);
+        setDaysum(6);
     }
-
 
 }

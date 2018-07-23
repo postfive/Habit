@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.HabitListActivity">
+    tools:context=".view.myhabitlist.MyHabitListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_habit_list"
@@ -43,5 +43,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
+
+    <Button
+        android:id="@+id/btn_habit2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getHabit"
+        android:text="유명인습관보기" />
+
+    <Button
+        android:id="@+id/btn_habit3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getAllUserD"
+        android:text="유져습관 보기" />
 
 </LinearLayout>

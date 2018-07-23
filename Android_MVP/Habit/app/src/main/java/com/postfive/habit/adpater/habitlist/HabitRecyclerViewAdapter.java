@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.postfive.habit.R;
-import com.postfive.habit.habits.factory.Habit;
+import com.postfive.habit.db.Habit;
 
 import java.util.List;
 
@@ -44,8 +44,8 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // XML 디자인한 부분 안에 내용 변경
-        Log.d("HabitRecyclerView", mHabitList.get(position).getGoal() +"/ "+ Integer.toString(position));
-        ((RowCell)holder).textView.setText( mHabitList.get(position).getGoal()) ;
+        Log.d("HabitRecyclerView", mHabitList.get(position).getName() +"/ "+ Integer.toString(position));
+        ((RowCell)holder).textView.setText( mHabitList.get(position).getName()) ;
     }
 
     @Override

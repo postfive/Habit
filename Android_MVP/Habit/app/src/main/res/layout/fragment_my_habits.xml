@@ -6,16 +6,27 @@
     android:orientation="vertical"
     tools:context=".view.myhabits.MyHabitsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id ="@+id/recyclerview_my_habits_fragemnt_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MyHabitFragment" />
+        android:layout_height="wrap_content">
 
+    </android.support.v7.widget.RecyclerView>
     <Button
         android:id="@+id/btn_my_habits_ist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/habit_list" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="습관 가저오기" />
 
 </LinearLayout>

@@ -1,24 +1,19 @@
 package com.postfive.habit.habits.storage;
 
-import com.postfive.habit.habits.factory.Habit;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.habits.factory.OldHabit;
 
 public class UserSetHabit extends Habit {
+
     @Override
     public void prepare() {
-        setGoal("사용자 정의");
-        setTypeName("사용자 정의");
-
-        setFull(2*66);
-        setDayFull(4);
-        setUnit("번");
-        setOnce(2);
+        setHabitcode(0);
+        setName("줄넘기하기");
         setType("userset");
-        addUnitList("번");
-
-        setTime("n");
-
-        dayofWeek = 124;
-//        for(int i = 1 ;  i < 8 ; i++)
-//            setDayofWeek(i, true);
+        setUnitcode(2);
+        setTime(2);
+        setFull(10);
+        setOnce(1);
+        setDaysum(130);
     }
 }

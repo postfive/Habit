@@ -1,109 +1,141 @@
 package com.postfive.habit.view.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.postfive.habit.FirebaseUse;
 import com.postfive.habit.R;
+import com.postfive.habit.UserSettingValue;
+import com.postfive.habit.db.AppDatabase;
+import com.postfive.habit.db.CelebHabit;
+import com.postfive.habit.db.CelebHabitDetail;
+import com.postfive.habit.db.CelebHabitMaster;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.HabitDao;
+import com.postfive.habit.db.HabitRespository;
+import com.postfive.habit.db.Unit;
+import com.postfive.habit.db.UserHabitDao;
+import com.postfive.habit.db.UserHabitDao2;
+import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.view.main.MainActivity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "LoginActivity";
-    private static final int GOOGLE_SIGN_IN = 9001;
+    private static final String PREFS_NAME = "Init";
 
-    // 구글
-    private SignInButton mSigninBtn;
+    private AppDatabase mAppDatabase;
+    private UserHabitRespository mUserHabitRespository;
+    private HabitRespository mHabitRespository;
+
+    UserSettingValue mUserSettingValue;
 
     private Button mBtnLookAround;
+    private TextView mTextView;
 
-    // Firebase auth
-//    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-
-    private GoogleSignInClient mGoogleSignInClient;
-    private GoogleSignInOptions mGoogleSignInOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-/*        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();*/
+
+        mUserSettingValue = new UserSettingValue(this);
+        // 컴포넌트 초기화
+        initComponent();
 
 
-        mFirebaseUser = FirebaseUse.getUser();
+        new CheckTypesTask().execute();
+        // 앱 최초 실행 여부 확인
+        if(mUserSettingValue.init()) {
+            // 디비 초기화
 
-        // 로그인 여부 확인
-        if ( mFirebaseUser == null ) {
-            // 로그인 안되어있을때
-            Toast.makeText(this, "로그인이 필요합니다", Toast.LENGTH_SHORT).show();
-        }else{
-            Log.d(TAG, "get Uid "+mFirebaseUser.getUid());
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            connectDB();
+            populateWithTestData();
         }
 
-        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // google-services.json의 클라이언트 id
-                .requestEmail()
-                .build();
 
-        initComponent();
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog asyncDialog = new ProgressDialog(
+                LoginActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다..");
+
+            // show dialog
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    //asyncDialog.setProgress(i * 30);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            asyncDialog.dismiss();
+
+            Intent lookAround = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(lookAround);
+            finish();
+            super.onPostExecute(result);
+
+        }
+    }
+
+
+
 
     private void initComponent() {
-        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions);
 
-        // [START initialize_auth]
-//        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = FirebaseUse.getUser();
-        // Google 로그인 버튼
-        mSigninBtn = (SignInButton) findViewById(R.id.btn_sign_google);
+
         mBtnLookAround = (Button)findViewById(R.id.btn_look_around);
-
-        mSigninBtn.setOnClickListener(this);
         mBtnLookAround.setOnClickListener(this);
-    }
 
+        mTextView = (TextView)findViewById(R.id.textview_state);
+    }
 
     @Override
     public void onClick(View v) {
 
         switch(v.getId()){
-            case R.id.btn_sign_google :
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
-                break;
             case R.id.btn_look_around :
                 Intent lookAround = new Intent(this, MainActivity.class);
                 startActivity(lookAround);
+                finish();
             default :
                 break;
         }
@@ -111,56 +143,95 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GOOGLE_SIGN_IN){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+    }
 
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 연결 끊기
+        //disconnectDB();
+    }
 
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
-                Toast.makeText(LoginActivity.this, "인증실패",Toast.LENGTH_LONG).show();
-            }
-        }
+    private void connectDB(){
+
+        mUserHabitRespository = new UserHabitRespository(getApplication());
+        mHabitRespository = new HabitRespository(getApplication());
+    }
+
+    private void disconnectDB(){
+
+
+        mUserHabitRespository.destroyInstance();
+        mHabitRespository.destroyInstance();
     }
 
 
-    // [START auth_with_google]
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+    private void populateWithTestData()
+    {
+        Log.d(TAG, "DB TEST  초기화 시작");
+        // 설정 값 있을때는 그냥 종료
+
+        // 다 지우고
+        mHabitRespository.deleteAll();
+
+        // 유명인 set
+
+        Habit drinkwater = new Habit(1, "물마시기", "drinkwater", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 2, 6, "water.jpg", "blue");
+        Habit prestudy = new Habit(2, "예습하기", "prestudy", Unit.NUMBER_UNIT, Habit.AFTERNOON_TIME, 10, 1, 12, "study.jpg", "red");
+        Habit skiprope = new Habit(3, "줄넘기 하기", "skiprope", Unit.NUMBER_UNIT, Habit.NIGHT_TIME, 10, 1, 12,"rope.jpg", "black");
+
+        List<Habit> habitli = new ArrayList<>();
+        habitli.add(drinkwater);
+        habitli.add(prestudy);
+        habitli.add(skiprope);
+        mHabitRespository.insertAllHabit(habitli);
 
 
-        // [START_EXCLUDE silent]
-        //showProgressDialog();
-        // [END_EXCLUDE]
+        CelebHabitMaster celebHabitmaster = new CelebHabitMaster("박보람",1,"박보람의 40kg \n다이어트 습관", "하루하루 0.5kg씩 줄이는 습관", "박보람 처럼 40kg 만들어서 하와이 가자!",  "img_parkboram_list.jpg");
+        CelebHabitMaster celebHabitmaster2 = new CelebHabitMaster("호날두",2,"호날두 처럼 \n졸라 멋쟁이 되기", "호날두 같이 존멋 되기", "호날두 처럼 존멋되서 유벤 직관가자!",  "img_ronaldo_list.jpg");
+        CelebHabitMaster celebHabitmaster3 = new CelebHabitMaster("안영이",3,"모든 팀에서 탐내\n는 슈퍼 신입 되기", "밟아보세요 선배님. 그래봤자 발만 아프실거에요", "슈퍼 신입! 슈퍼 직장인!",  "img_ahnyoungi.jpg");
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
-        Task<AuthResult> authResultTask = FirebaseUse.getFirebaseAuth().signInWithCredential(credential);
-//        Toast.makeText(LoginActivity.this, "cc", Toast.LENGTH_LONG).show();
+        CelebHabitDetail celebHabitd1 = new CelebHabitDetail(1, Habit.ALLDAY_TIME, 1, 1, "물마시기", "하루에 6L 물마시기", 6, 6, 2, "L", "img_parkboram_detail_1.png");
+        CelebHabitDetail celebHabitd2 = new CelebHabitDetail(1, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음날 예습하기", 6, 1, 1, "번", "img_parkboram_detail_2.png");
+        CelebHabitDetail celebHabitd3 = new CelebHabitDetail(1, Habit.NIGHT_TIME, 2, 3, "줄넘기하기", "쌩쌩이 10번", 6, 1, 1, "번", "img_parkboram_detail_3.png");
 
-        authResultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                /*FirebaseUser firebaseUser = authResult.getUser();
-                Toast.makeText(AuthActitivy.this, firebaseUser.getEmail(),Toast.LENGTH_LONG).show();
-                firebaseUser.getEmail();*/
-                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "addOnSuccessListener get Uid "+mFirebaseUser.getUid());
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+        CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", 30, 10, 2, "L", "aaaa");
+        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", 124, 1, 1, "번", "aaaa");
+        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", 124, 100, 1, "번", "aaaa");
 
+
+        mHabitRespository.insertCelebHabitMaster(celebHabitmaster);
+        mHabitRespository.insertCelebHabitMaster(celebHabitmaster2);
+        mHabitRespository.insertCelebHabitMaster(celebHabitmaster3);
+
+        mHabitRespository.insertCelebHabitDetail(celebHabitd1);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd2);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd3);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd21);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd22);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd23);
+
+        Unit unitLiquid1 = new Unit(Unit.LIQUID_UNIT, "L");
+        Unit unitLiquid2 = new Unit(Unit.LIQUID_UNIT, "mL");
+        Unit unitLiquid3 = new Unit(Unit.LIQUID_UNIT, "cc");
+        Unit numberLiquid = new Unit(Unit.NUMBER_UNIT, "회");
+
+        List<Unit> unitList = new ArrayList<>();
+        unitList.add(unitLiquid1);
+        unitList.add(unitLiquid2);
+        unitList.add(unitLiquid3);
+        unitList.add(numberLiquid);
+        mHabitRespository.insertUnit(unitList);
+
+        Log.d(TAG, "DB TEST 초기화 종료 ");
+
+        disconnectDB();
     }
+
 }

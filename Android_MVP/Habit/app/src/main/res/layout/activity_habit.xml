@@ -200,7 +200,6 @@
                         android:layout_height="wrap_content"
                         android:textOff="@string/everyday"
                         android:textOn="@string/everyday"
-
                         />
                     <ToggleButton
                         android:id="@+id/togglebtn_everyweek"
@@ -314,17 +313,13 @@
 
                 </RelativeLayout>
 
-                <Button
-                    android:id="@+id/btn_addtime"
+                <ToggleButton
+                    android:id="@+id/toggleBtn_all"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_time" />
-                <android.support.v7.widget.RecyclerView
-                    android:id = "@+id/recyclerview_habit_time_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
+                    android:text="ToggleButton"
+                    android:textOff="하루종일"
+                    android:textOn="하루종일" />
 
                 <ToggleButton
                     android:id="@+id/toggleBtn_morning"

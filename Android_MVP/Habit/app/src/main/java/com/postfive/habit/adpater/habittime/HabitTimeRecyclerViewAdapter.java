@@ -1,22 +1,16 @@
 package com.postfive.habit.adpater.habittime;
 
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.postfive.habit.R;
-import com.postfive.habit.adpater.habitlist.HabitRecyclerViewAdapter;
-import com.postfive.habit.habits.factory.Habit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class HabitTimeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements  HabitTimeRecyclerViewModel {

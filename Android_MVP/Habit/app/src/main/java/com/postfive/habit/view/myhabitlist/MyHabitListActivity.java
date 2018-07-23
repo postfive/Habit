@@ -8,47 +8,40 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.postfive.habit.FirebaseUse;
+
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
-import com.postfive.habit.adpater.myhabitlist.MyHabitRecyclerViewAdapter;
+import com.postfive.habit.adpater.myhabitlist.MyHabitListRecyclerViewAdapter;
+import com.postfive.habit.db.CelebHabitDetail;
+import com.postfive.habit.db.CelebHabitMaster;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.HabitRespository;
+import com.postfive.habit.db.UserHabitDetail;
+import com.postfive.habit.db.UserHabitRespository;
+import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.habits.HabitMaker;
-import com.postfive.habit.habits.factory.Habit;
 import com.postfive.habit.habits.factory.HabitFactory;
-import com.postfive.habit.habits.storage.DrinkWaterHabit;
-import com.postfive.habit.habits.storage.PreStudyHabit;
-import com.postfive.habit.habits.storage.SkipRopeHabit;
-import com.postfive.habit.habits.storage.UserSetHabit;
 import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.habit.HabitActivity;
-import com.postfive.habit.view.login.LoginActivity;
+
 import com.postfive.habit.view.main.MainActivity;
 
 import java.util.List;
-import java.util.Map;
 
 public class MyHabitListActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "MyHabitListActivity";
     private Button mBtnHait;
+    private Button mBtnHait2;
     private RecyclerView mRecyclerView;
-    private MyHabitRecyclerViewAdapter mRecyclerViewAdapter;
-    /* firebase */
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private FirebaseDatabase mFirebaseDatabase;
+    private MyHabitListRecyclerViewAdapter mRecyclerViewAdapter;
+
+    private UserHabitRespository mUserHabitRespository;
+    private HabitRespository mabitRespository;
+
     private HabitFactory mHabitFactory;
 
     @Override
@@ -64,12 +57,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
 
         initComponent();
 
-        initFirebase();
-        displayMyHabitList();
-
-        Log.d(TAG, "MyHabitListActivity Create get Uid "+mFirebaseUser.getUid());
-
-
+        connectDB();
     }
 
     private void initComponent() {
@@ -89,23 +77,26 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerViewAdapter = new MyHabitRecyclerViewAdapter();
+        mRecyclerViewAdapter = new MyHabitListRecyclerViewAdapter();
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        connectDB();
+        List<UserHabitDetail> detailList = mUserHabitRespository.getAllUserHabitDetail();
 
+        mRecyclerViewAdapter.setHabit(detailList);
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Habit habit = mRecyclerViewAdapter.getHabit(position);
+                UserHabitDetail habit = mRecyclerViewAdapter.getHabit(position);
                 Intent intent = new Intent(getApplicationContext(), HabitActivity.class);
 
-                intent.putExtra("habit", habit.getType());
-                intent.putExtra("key", habit.getKey());
                 intent.putExtra("object", habit);
                 startActivity(intent);
             }
         });
 
         mHabitFactory = new HabitMaker();
+
+        disconnectDB();
     }
 
 
@@ -124,7 +115,6 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     // 뒤로
     private void onClickHome(){
         Intent intent = new Intent(this, MainActivity.class);
-        //setResult(RESULT_CANCELED, intent);
         startActivity(intent);
         finish();
     }
@@ -136,113 +126,122 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
                 Intent intent = new Intent(this, HabitListActivity.class);
                 startActivity(intent);
                 break;
+
             default:
                 break;
         }
     }
+    private void connectDB(){
 
-    private void initFirebase(){
-
-        mFirebaseUser = FirebaseUse.getUser();
-
-        if(mFirebaseUser == null){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        mFirebaseDatabase = FirebaseUse.getDatabase();
+        mUserHabitRespository = new UserHabitRespository(getApplication());
+        mabitRespository = new HabitRespository(getApplication());
     }
 
-    private void displayMyHabitList(){
+    private void disconnectDB(){
 
-        mFirebaseDatabase.getReference("user_habit_d/"+mFirebaseUser.getUid())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        // 추가 됬을때
-/////////////// 나중에 함수로 묶자
-                        String key = dataSnapshot.getKey();
+        mUserHabitRespository.destroyInstance();
 
-                        Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+    }
 
-//                        mHabitFactory.createHabit();
-                        String strType = map.get("type").toString();
-                        Habit habit = mHabitFactory.createHabit(strType);
-                        habit.prepare();
-                        habit.setGoal(map.get("goal").toString());
-                        habit.setKey(key);
-                        habit.setOnce(Integer.parseInt(map.get("once").toString()));
-                        habit.setFull(Integer.parseInt(map.get("full").toString()));
-                        habit.setDayFull(Integer.parseInt(map.get("dayFull").toString()));
-                        habit.setDidDay(Integer.parseInt(map.get("didDay").toString()));
-                        habit.setDayofWeek(Integer.parseInt(map.get("dayofWeek").toString()));
-                        habit.setUnit(map.get("unit").toString());
-                        List<String> timeList = (List<String>)map.get("time");
-                        for(String tmp : timeList){
-                            if(tmp == null)
-                                continue;
-                            habit.setTime(tmp);
-                            Log.d(TAG, tmp);
-                        }
-/////////////////// 나중에 함수로 묶자
+    /* 확 인용 ~~~ */
+    public void getAllUserD(View v)
+    {
+        connectDB();
+        List<UserHabitDetail> detailList = mUserHabitRespository.getAllUserHabitDetail();
+        Log.d(TAG,"go");
 
-//                        //TODO recyclerviewadapter 에 추가
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n순서 | 습관코드 | 우선순위 | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+        for(int i = 0 ; i < detailList.size(); i ++){
+            UserHabitDetail tmp = detailList.get(i);
+            ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |    "+ tmp.getPriority() +"    |    "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
+            sb.append("\n");
+        }
+
+        Log.d(TAG, "DB TEST SELECT USER HABIT DETAIL " + sb.toString());
+        //mRecyclerViewAdapter.addHabit(detailList.get(0));
+        getAllUserS();
+    }
+
+    void getAllUserS()
+    {
+        List<UserHabitState> detailList = mUserHabitRespository.getAllUserHabitState();
+        Log.d(TAG,"go");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n요일 | 우선순위 | 순서  | 습관코드 | m우선순위 | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+        for(int i = 0 ; i < detailList.size(); i ++){
+            UserHabitState tmp = detailList.get(i);
+            ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+            sb.append(tmp.getDayofweek() +"    |    "+ tmp.getPriority() +"   |  "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+            sb.append("\n");
+        }
+
+        Log.d(TAG, "DB TEST SELECT USER HABIT STATE " + sb.toString());
+        Log.d(TAG,"finish");
+        disconnectDB();
+    }
+
+
+
+    public void getHabit(View v)
+    {
+        List<Habit> detailList = mabitRespository.getAllHabit();
+        Log.d(TAG,"go");
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < detailList.size(); i ++){
+            Habit tmp = detailList.get(i);
+            sb.append(" / "+tmp.getHabitcode() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+  tmp.getDaysum() +"/"+ tmp.getFull());
+            sb.append("\n");
+        }
+
+        Log.d(TAG, "DB TEST SELECT HABIT " + sb.toString());
+        Log.d(TAG,"finish");
+        getCelebDetail();
+    }
+    void getCelebDetail()
+    {
+        List<CelebHabitDetail> detailList = mabitRespository.getAllCelebHabitDetail();
+        Log.d(TAG,"go");
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < detailList.size(); i ++){
+            CelebHabitDetail tmp = detailList.get(i);
+            sb.append(tmp.getCelebcode()+"/"+tmp.getName()+"/"+tmp.getHabitcode() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+  tmp.getDaysum() +"/"+ tmp.getFull());
+            sb.append("\n");
+        }
+
+        Log.d(TAG, "DB TEST SELECT Celeb HABIT Detail " + sb.toString());
+        Log.d(TAG,"finish");
+        getCelebMaster();
+    }
+    void getCelebMaster()
+    {
+        List<CelebHabitMaster> detailList = mabitRespository.getAllCelebHabitMater();
+        Log.d(TAG,"go");
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < detailList.size(); i ++){
+            CelebHabitMaster tmp = detailList.get(i);
+            sb.append(tmp.getCelebcode()+"/"+tmp.getName()+"/"+tmp.getName() +"/"+ tmp.getResolution() +"/"+ tmp.getTitle());
+            sb.append("\n");
+        }
+
+        Log.d(TAG, "DB TEST SELECT Celeb HABIT Master " + sb.toString());
+        Log.d(TAG,"finish");
+        //
+        // disconnectDB();
+    }
+
+/*
+    //TODO recyclerviewadapter 에 추가
                         mRecyclerViewAdapter.addHabit(habit);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        // 변경 됬을때
-                        Habit habit = null;
-
-                        Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
-                        String strType =  map.get("type");
-                       // habit = getHabitData(strType, dataSnapshot);
-
-                        //TODO recyclerviewadapter 에서 변경
-                       // mRecyclerViewAdapter.changeHabit(habit);
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        Toast.makeText(MyHabitListActivity.this
-                                ,"삭제",Toast.LENGTH_LONG).show();
-                        Habit habit = null;
-
-                        Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
-                        String strType =  map.get("type");
-                    //    habit = getHabitData(strType, dataSnapshot);
-
-                        //TODO recyclerviewadapter 에서 제거
-                       // mRecyclerViewAdapter.removeHabit(habit);
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // 읽기 취소 됬을때, 데이터 읽을 권한이 없을때
-                        //databaseError.toException()
-                    }
-                });
-    }
-
-
-    private Habit getHabitData(String strType, DataSnapshot dataSnapshot) {
-        Habit habit = null;
-        if(strType.equals("drinkwater")){
-            habit = dataSnapshot.getValue(DrinkWaterHabit.class);
-        }else if (strType.equals("skiprope")){
-            habit = dataSnapshot.getValue(SkipRopeHabit.class);
-        }else if (strType.equals("prestudy")) {
-            habit = dataSnapshot.getValue(PreStudyHabit.class);
-        }else {
-            habit = dataSnapshot.getValue(UserSetHabit.class);
-        }
-
-        return habit;
-    }
+    //TODO recyclerviewadapter 에서 변경
+    // mRecyclerViewAdapter.changeHabit(habit);
+    //TODO recyclerviewadapter 에서 제거
+    // mRecyclerViewAdapter.removeHabit(habit);*/
 }
