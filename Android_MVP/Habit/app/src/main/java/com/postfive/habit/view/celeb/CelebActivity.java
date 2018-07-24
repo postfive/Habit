@@ -239,6 +239,11 @@ public class CelebActivity extends AppCompatActivity  {
         }
     }
 
+    private void setHabits() {
+
+    }
+
+
     private void setHabit() {
         Toast.makeText(this,"저장!", Toast.LENGTH_LONG).show();;
         List<UserHabitDetail> userHabitDetailList  = new ArrayList<>();
@@ -250,11 +255,9 @@ public class CelebActivity extends AppCompatActivity  {
 
         //connectCelebDB();
 
-        UserHabitRespository mUserHabitRespository = new UserHabitRespository(getApplication());
 
         for(int i = 0 ; i < 4 ;i++) {
 
-            // 시간별로 가져오기
             List<CelebHabitDetail> celebTimeTmp  = new ArrayList<>();
             for(int k = 0 ; k < mCelebHabitDetailList.size() ; k ++){
                 CelebHabitDetail tmp = mCelebHabitDetailList.get(k);
@@ -264,6 +267,7 @@ public class CelebActivity extends AppCompatActivity  {
             }
 
 
+            userStatedaypriority = 0;
             Log.d(TAG, "for i "+ Integer.toString(i) );
             for (int j = 0; j < celebTimeTmp.size(); j++) {
 //                user detail 습관 넣기
@@ -281,12 +285,11 @@ public class CelebActivity extends AppCompatActivity  {
                 // user state 습관 넣기
                 for (int k = 1; k < 8; k++) {
                     //Log.d(TAG, "for k "+ Integer.toString(k) );
-                    if ((usrtmp.getDaysum() & (1 << k)) > 0) {
-                        userStatedaypriority = mUserHabitRespository.getMaxPriorityUserHabitState(usrtmp.getTime(), k);
+
+                    if ((tmp.getDaysum() & (1 << k)) > 0) {
                         userStatedaypriority++;
                         userStateseq++;
-//                        UserHabitState statetmp = new UserHabitState(userStateseq, userStatedaypriority, k, usrtmp);
-                        UserHabitState statetmp = new UserHabitState(userStateseq, k, usrtmp);
+                        UserHabitState statetmp = new UserHabitState(userStateseq, userStatedaypriority, k, usrtmp);
                         userHabitStateList.add(statetmp);
 
                     }
@@ -296,75 +299,7 @@ public class CelebActivity extends AppCompatActivity  {
             celebTimeTmp = null;
 
         }
-
-
-        mUserHabitRespository.insertAllUserHabit(userHabitDetailList, userHabitStateList);
-
-        mUserHabitRespository.destroyInstance();
-        Toast.makeText(this,"저장! 완료", Toast.LENGTH_LONG).show();;
-        //disconnectDB();
-    }
-
-
-
-    private void setHabit2() {
-        Toast.makeText(this,"저장!", Toast.LENGTH_LONG).show();;
-        List<UserHabitDetail> userHabitDetailList  = new ArrayList<>();
-        List<UserHabitState> userHabitStateList  = new ArrayList<>();
-        int userDetailIdx = 0;
-        int userStatedaypriority = 0 ;
-        int userStateseq = 0 ;
-
-
-        //connectCelebDB();
-
         UserHabitRespository mUserHabitRespository = new UserHabitRespository(getApplication());
-
-
-        for(int i = 0 ; i < 4 ;i++) {
-
-            // 시간별로 가져오기
-            List<CelebHabitDetail> celebTimeTmp  = new ArrayList<>();
-            for(int k = 0 ; k < mCelebHabitDetailList.size() ; k ++){
-                CelebHabitDetail tmp = mCelebHabitDetailList.get(k);
-                if(tmp.getTime() == i){
-                    celebTimeTmp.add(tmp);
-                }
-            }
-
-
-            Log.d(TAG, "for i "+ Integer.toString(i) );
-            for (int j = 0; j < celebTimeTmp.size(); j++) {
-//                user detail 습관 넣기
-                CelebHabitDetail tmp = celebTimeTmp.get(j);
-                //Log.d(TAG,  tmp.getTime() +"/"+ tmp.getPriority() +"/"+ tmp.getHabitcode() +"/"+  tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-
-                if (tmp == null)
-                    continue;
-                Log.d(TAG, "for j "+ Integer.toString(j) );
-                userDetailIdx++;
-                UserHabitDetail usrtmp = new UserHabitDetail(userDetailIdx, tmp);
-                userHabitDetailList.add(usrtmp);
-                //Log.d(TAG,   usrtmp.getTime() +"/"+  usrtmp.getPriority() +"/"+ usrtmp.getHabitcode() +"/"+usrtmp.getName() +"/"+ usrtmp.getGoal() +"/"+ usrtmp.getDaysum() +"/"+ usrtmp.getFull() +"/"+ usrtmp.getUnit() );
-
-                // user state 습관 넣기
-                for (int k = 1; k < 8; k++) {
-                    //Log.d(TAG, "for k "+ Integer.toString(k) );
-                    if ((usrtmp.getDaysum() & (1 << k)) > 0) {
-                        userStatedaypriority = mUserHabitRespository.getMaxPriorityUserHabitState(usrtmp.getTime(), k);
-                        userStatedaypriority++;
-                        userStateseq++;
-//                        UserHabitState statetmp = new UserHabitState(userStateseq, userStatedaypriority, k, usrtmp);
-                        UserHabitState statetmp = new UserHabitState(userStateseq, k, usrtmp);
-                        userHabitStateList.add(statetmp);
-
-                    }
-                }
-            }
-
-            celebTimeTmp = null;
-
-        }
 
 
         mUserHabitRespository.insertAllUserHabit(userHabitDetailList, userHabitStateList);

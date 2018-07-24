@@ -1,10 +1,14 @@
 package com.postfive.habit.view.myhabits;
 
-import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
+import com.postfive.habit.adpater.myhabitlist.MyHabitListRecyclerViewAdapter;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
+import com.postfive.habit.db.UserHabitViewModel;
+import com.postfive.habit.view.HabitList.HabitListActivity;
+import com.postfive.habit.view.habit.HabitActivity;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
 import java.util.Calendar;
@@ -30,14 +38,12 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "MyHabitsFragment";
     private Button btnHabitsList;
-    private Button btnTodayHabits; // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
-    private int day = 1; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
+    private Button btnTodayHabits;
     private UserHabitRespository mUserHabitRespository;
+
     private MyHabitRecyclerViewAdapter mMyHabitRecyclerViewAdapter;
 
-    private List<UserHabitState> mUserHabitStatesList;
-    private List<UserHabitState> mUserHabitStatesTomorrowList;
-    private List<UserHabitState> mUserHabitStatesYesterdayList;
+    private int day_count = 0;
 
     public MyHabitsFragment() {
         // Required empty public constructor
@@ -45,24 +51,19 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Toast.makeText(context, "onAttach", Toast.LENGTH_SHORT).show();
-
-    }
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getContext(), "onCreate", Toast.LENGTH_SHORT).show();
+
+        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication());
+        Calendar today = Calendar.getInstance();
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Toast.makeText(getContext(), "onCreateView", Toast.LENGTH_SHORT).show();
-
-        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication());
         View view = inflater.inflate(R.layout.fragment_my_habits, container, false);
 
         btnHabitsList = (Button)view.findViewById(R.id.btn_my_habits_ist);
@@ -78,129 +79,74 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         recyclerView.setAdapter(mMyHabitRecyclerViewAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
         Calendar day = Calendar.getInstance();
-        // 오늘 요일
-        int today = day.get(Calendar.DAY_OF_WEEK);
-        // TODO 오늘 습관 가져오기
-        mUserHabitStatesList = mUserHabitRespository.getDayHabit(today);
-        // TODO 내일 습관
-        int tomorrow = today +1;
-        if(tomorrow > 7)
-            tomorrow =1 ;
-        mUserHabitStatesTomorrowList = mUserHabitRespository.getDayHabit(tomorrow);
-        // TODO 어제 습관
-        int yesterday = today - 1;
-        if(yesterday < 1)
-            yesterday = 7 ;
-        mUserHabitStatesYesterdayList = mUserHabitRespository.getDayHabit(yesterday);
-        // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
 
 
-        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);
+        // 오늘 습관 가져오기
+        List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day.get(Calendar.DAY_OF_WEEK));
+
+/*
+        Log.d(TAG, "요일  |  타입  |  목표  |  오늘한량 | 오늘목표량 | ");
+        for(UserHabitState tmp : userHabitStatesList) {
+
+            Log.d(TAG, "오늘 습관 "+tmp.getDayofweek()+" "+tmp.getHabitcode()+" "+tmp.getGoal() +"  " +tmp.getDid() +" "+tmp.getFull());
+        }
+*/
+
+        mMyHabitRecyclerViewAdapter.setAllHabit(userHabitStatesList);
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // TODO 리스트 클릭시  수행
                 UserHabitState tmp = mMyHabitRecyclerViewAdapter.getHabit(position);
+
                 tmp.setDid(tmp.getDid()+tmp.getOnce());
                 mMyHabitRecyclerViewAdapter.changeHabit(position, tmp);
                 // update
                 mUserHabitRespository.updateUserHabitState(tmp);
             }
         });
+
+        /* UserHabitViewModel userHabitViewModel = ViewModelProviders.of(this).get(UserHabitViewModel.class);
+        // 지금 할일
+       userHabitViewModel.getTodayUserHabitStateLive().observe(this, new Observer<List<UserHabitState>>() {
+            @Override
+            public void onChanged(@Nullable List<UserHabitState> userHabitStates) {
+                Log.d(TAG, "hi size "+ Integer.toString(userHabitStates.size()));
+
+
+                mMyHabitRecyclerViewAdapter.setAllHabit(userHabitStates);
+            }
+        });*/
+
+        // 다한일
+
+        // 놓친일
+
+
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //UI 변경 작업 가능
-        Toast.makeText(getContext(), "onActivityCreated", Toast.LENGTH_SHORT).show();
-
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
-        Calendar day = Calendar.getInstance();
-        // 오늘 요일
-        int today = day.get(Calendar.DAY_OF_WEEK);
-        // TODO 오늘 습관 가져오기
-        mUserHabitStatesList = mUserHabitRespository.getDayHabit(today);
-        // TODO 내일 습관
-        int tomorrow = today +1;
-        if(tomorrow > 7)
-            tomorrow =1 ;
-        mUserHabitStatesTomorrowList = mUserHabitRespository.getDayHabit(tomorrow);
-        // TODO 어제 습관
-        int yesterday = today - 1;
-        if(yesterday < 1)
-            yesterday = 7 ;
-        mUserHabitStatesYesterdayList = mUserHabitRespository.getDayHabit(yesterday);
-        // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
-
-
-        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);
-
-        // Fragment가 화면에 표시될때 사용자의 Action과 상호작용 불가
-        Toast.makeText(getContext(), "onStart", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        // Fragment가 화면에 완전히 표시되었을때 사용자의 Action과 상호작용 가능
-        Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // 사용자와 상호작용 중지
-        /// 리소스 해제
-        Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
-        mUserHabitRespository.destroyInstance();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // 현재 프래그먼트가 안보일때 다른 프래그먼트가 보일때
-        Toast.makeText(getContext(), "onStop", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // 리소스 해제
-        // backstack을 사용했다면 다시 돌아올때 onCreateView 호출
-        Toast.makeText(getContext(), "onDestroyView", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(getContext(), "onDestroy", Toast.LENGTH_SHORT).show();
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        // Activitiy 와 연결이 끊기기 직전 호 출
-        Toast.makeText(getContext(), "onDetach", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Activity와 동일 Fragment가 사랄질때 호출
-        // Bundle 상태를 저장할 수 있도록 호출
-        Toast.makeText(getContext(), "onSaveInstanceState", Toast.LENGTH_SHORT).show();
+    public void onStop() {
+        super.onStop();
+        mUserHabitRespository.destroyInstance();
     }
 
     @Override
@@ -210,27 +156,15 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 Intent intent = new Intent(getContext(), MyHabitListActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.btn_today :   // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
+            case R.id.btn_today :
+                Calendar day = Calendar.getInstance();
 
-                if(day == 8)
-                    day = 1;
-                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day);
-                day ++;
+                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day.get(Calendar.DAY_OF_WEEK));
 
-
-                StringBuilder sb = new StringBuilder();
-                sb.append("\n요일 | 우선순위 | 순서  | 습관코드 | m우선순위 | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userHabitStatesList.size(); i ++){
-                    UserHabitState tmp = userHabitStatesList.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb.append( tmp.getDayofweek() +"    |    "+ tmp.getPriority() +"   |  "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb.append("\n");
+                Log.d(TAG, "요일  |  타입  |  목표  |  오늘한량 | 오늘목표량 | ");
+                for(UserHabitState tmp : userHabitStatesList) {
+                    Log.d(TAG, tmp.getDayofweek()+" "+tmp.getHabitcode()+" "+tmp.getGoal() +"  " +tmp.getDid() +" "+tmp.getFull());
                 }
-
-                Log.d(TAG, "DB TEST SELECT USER HABIT State " + sb.toString());
-                Log.d(TAG,"finish");
-
             default:
                 break;
         }

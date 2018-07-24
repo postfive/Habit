@@ -10,28 +10,28 @@ import android.support.annotation.NonNull;
 public class CelebHabitMaster {
     @NonNull
     @ColumnInfo(name ="name")
-    private String name;  // 유명인사 이름
+    public String name;  // 유명인사 이름
 
     @NonNull
     @ColumnInfo(name ="celebcode")
-    private int celebcode; // 유명인사 코드
+    public int celebcode; // 유명인사 코드
 
     @NonNull
     @ColumnInfo(name ="title")
-    private String title;  // 제목
+    public String title;  // 제목
 
     @NonNull
     @ColumnInfo(name ="subtitle")
-    private String subtitle; // 부제목
+    public String subtitle; // 부제목
 
     @NonNull
     @ColumnInfo(name ="resolution")
-    private String resolution; // 다짐
+    public String resolution; // 다짐
 
 
     @NonNull
     @ColumnInfo(name ="img")
-    private String img; // 이미지
+    public String img; // 이미지
 
 
     public CelebHabitMaster(@NonNull String name, @NonNull int celebcode, @NonNull String title, @NonNull String subtitle, @NonNull String resolution, @NonNull String img ){

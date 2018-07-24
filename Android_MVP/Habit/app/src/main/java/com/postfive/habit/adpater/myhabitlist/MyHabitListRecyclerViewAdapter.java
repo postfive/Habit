@@ -111,13 +111,6 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public void setAllHabit(List<UserHabitDetail> habitList){
-        this.mMyHabitList.clear();
-        this.mMyHabitList.addAll(habitList);
-        notifyDataSetChanged();
-    }
-
-    @Override
     public void removeHabit(int position) {
         this.mMyHabitList.remove(position);
         notifyItemRemoved(position);

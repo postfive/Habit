@@ -32,40 +32,30 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id = "@+id/recyclerview_my_habit_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
-                android:id = "@+id/recyclerview_my_habit_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            </android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:id="@+id/btn_habit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
-            <Button
-                android:id="@+id/btn_add_habit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants"
-                android:text="@string/add_habit" />
+    <Button
+        android:id="@+id/btn_habit2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getHabit"
+        android:text="유명인습관보기" />
 
-            <Button
-                android:id="@+id/btn_habit2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="getHabit"
-                android:text="유명인습관보기" />
+    <Button
+        android:id="@+id/btn_habit3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getAllUserD"
+        android:text="유져습관 보기" />
 
-            <Button
-                android:id="@+id/btn_habit3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="getAllUserD"
-                android:text="유져습관 보기" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

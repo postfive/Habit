@@ -25,7 +25,6 @@ import com.postfive.habit.adpater.habittime.HabitTimeRecyclerViewAdapter;
 import com.postfive.habit.db.AppDatabase;
 import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.Habit;
-import com.postfive.habit.db.Unit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
@@ -35,25 +34,29 @@ import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 
-public class HabitActivity extends AppCompatActivity {
+public class HabitActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
 
     private static final String TAG = "HabitActivity";
 
+    /* firebase */
+/*    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseDatabase mFirebaseDatabase;*/
+
+    private AppDatabase mDb;
     private UserHabitRespository mUserHabitRespository;
 
-    private HashMap<String, Integer> mUnitMap = new HashMap<>();
     private HabitFactory mHabitFactory;
     private UserHabitDetail mHabit;
 
     /* 화면 component */
-    private TextView mHabitType ;               //목표
+    private TextView mHabitType ;             //목표
     private EditText mGoalEdtText ;             //목표
-    private EditText mDayGoalEdtText;           // 일목표
+    private EditText mDayGoalEdtText;       // 일목표
     private EditText mOnceEdtText ;             // 일 회 수행 양(?)
     private Spinner mSpinnerUnit;               // 단위
     private TextView mUnitTextview;
@@ -73,6 +76,8 @@ public class HabitActivity extends AppCompatActivity {
     private HabitTimeRecyclerViewAdapter mHabitTimeRecyclerViewAdapter;
 
     private ArrayAdapter<String> arrayAdapter;
+
+    private AppDatabase  db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +99,6 @@ public class HabitActivity extends AppCompatActivity {
         int habitCode = receivedIntent.getIntExtra("habit", 0);
         mHabit = (UserHabitDetail) receivedIntent.getSerializableExtra("object");
 
-
         if(mHabit == null) {
 
             Habit templeHabit = mHabitFactory.createHabit(habitCode);
@@ -103,12 +107,13 @@ public class HabitActivity extends AppCompatActivity {
 
         }
 
-
         Log.d(TAG, "seq " +mHabit.getName()+" / " +Integer.toString(mHabit.getTime()));
         //TODO 수정인 경우 여기서 mHabit에 모든 값 setting  해야겟군
         setComponent(mHabit);
     }
 
+    private void getHabit(String habitkey) {
+    }
 
         /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
@@ -180,9 +185,16 @@ public class HabitActivity extends AppCompatActivity {
         mDayofWeekToggleBtn[4] = (ToggleButton)findViewById(R.id.togglebtn_thursday);
         mDayofWeekToggleBtn[5] = (ToggleButton)findViewById(R.id.togglebtn_friday);
         mDayofWeekToggleBtn[6] = (ToggleButton)findViewById(R.id.togglebtn_saturday);
+        //
+//        for(int i = 0 ; i < 7 ; i ++){
+//            mDayofWeekToggleBtn[i].setOnClickListener(this);
+//        }
 
+        //
         mEveryDayToggleBtn = (ToggleButton)findViewById(R.id.togglebtn_everyday);
         mEveryWeekToggleBtn = (ToggleButton)findViewById(R.id.togglebtn_everyweek);
+        mEveryWeekToggleBtn.setOnClickListener(this);
+        mEveryWeekToggleBtn.setOnClickListener(this);
 
         // 시간 아침 오후 저녁toggleBtn_morning
         mMorningTimeToggleBtn   = (ToggleButton)findViewById(R.id.toggleBtn_morning);     // 아침 버튼
@@ -215,27 +227,20 @@ public class HabitActivity extends AppCompatActivity {
         //
 
 
-        connectDB();
-        List<String> unitList = mUserHabitRespository.getHabitUnit(habit.getHabitcode());
-        disconnectDB();
-//        Log.d(TAG, "get UnitList ?? "+ Integer.toString(unitList.size()));
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, unitList );
+        // unit spinner 설정
+//        List<String> unitList = new ArrayList<>(habit.getUnitList().keySet());
+//        List<String> unitList = new ArrayList<String>();
+//        for(String tmp : habit.getUnitList().split("/")) {
+//            unitList.add(tmp);
+//        }
+//        unitList.addAll();
+        // TODO 여기는 따로 2차원으로 배열 만들꺼임.
+        /*List<String> unitList = habit.getUnitList();
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, unitList );
         mSpinnerUnit.setAdapter(arrayAdapter);
-        mSpinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mHabit.setUnit((String) mSpinnerUnit.getItemAtPosition(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        mSpinnerUnit.setOnItemSelectedListener(this);
         mSpinnerUnit.setId(0);
-        mHabit.setUnit(unitList.get(0));
-        mUnitTextview.setText(unitList.get(0));
+        mUnitTextview.setText(unitList.get(0));*/
 
 
         // 시간SET
@@ -256,6 +261,7 @@ public class HabitActivity extends AppCompatActivity {
              mAllTimeToggleBtn.setChecked(false);
          }else if(habit.getTime() == 0) {
              // TODO 하루종일
+
              mMorningTimeToggleBtn.setChecked(false);
              mAfternoonTimeToggleBtn.setChecked(false);
              mNightTimeToggleBtn.setChecked(false);
@@ -267,7 +273,6 @@ public class HabitActivity extends AppCompatActivity {
              mAllTimeToggleBtn.setChecked(false);
          }
 
-        Log.d(TAG, "what time??? "+ mHabit.getTime());
         setDayofWeekToggle(habit);
 
     }
@@ -314,180 +319,134 @@ public class HabitActivity extends AppCompatActivity {
 
         switch(v.getId()){
             case R.id.togglebtn_sunday :
-                mHabit.setDaysumUsingOf(Calendar.SUNDAY, mDayofWeekToggleBtn[0].isChecked());
+                mHabit.setDaysumUsingOf(1, mDayofWeekToggleBtn[0].isChecked());
                 break;
             case R.id.togglebtn_monday :
-                mHabit.setDaysumUsingOf(Calendar.MONDAY, mDayofWeekToggleBtn[1].isChecked());
+                mHabit.setDaysumUsingOf(2, mDayofWeekToggleBtn[1].isChecked());
                 break;
             case R.id.togglebtn_tuesday :
-                mHabit.setDaysumUsingOf(Calendar.TUESDAY, mDayofWeekToggleBtn[2].isChecked());
+                mHabit.setDaysumUsingOf(3, mDayofWeekToggleBtn[2].isChecked());
                 break;
             case R.id.togglebtn_wednesday :
-                mHabit.setDaysumUsingOf(Calendar.WEDNESDAY, mDayofWeekToggleBtn[3].isChecked());
+                mHabit.setDaysumUsingOf(4, mDayofWeekToggleBtn[3].isChecked());
                 break;
             case R.id.togglebtn_thursday :
-                mHabit.setDaysumUsingOf(Calendar.THURSDAY, mDayofWeekToggleBtn[4].isChecked());
+                mHabit.setDaysumUsingOf(5, mDayofWeekToggleBtn[4].isChecked());
                 break;
             case R.id.togglebtn_friday :
-                mHabit.setDaysumUsingOf(Calendar.FRIDAY, mDayofWeekToggleBtn[5].isChecked());
+                mHabit.setDaysumUsingOf(6, mDayofWeekToggleBtn[5].isChecked());
                 break;
             case R.id.togglebtn_saturday :
-                mHabit.setDaysumUsingOf(Calendar.SATURDAY, mDayofWeekToggleBtn[6].isChecked());
+                mHabit.setDaysumUsingOf(7, mDayofWeekToggleBtn[6].isChecked());
                 break;
             default :
                 break;
 
         }
-/*
+        Log.d(TAG, " aa DayofWeek "+ Integer.toString(mHabit.getDaysum()));
+
         if (mHabit.getDaysum() != 254) {
             mEveryDayToggleBtn.setChecked(false);
             mEveryWeekToggleBtn.setChecked(true);
         }else {
             mEveryDayToggleBtn.setChecked(true);
             mEveryWeekToggleBtn.setChecked(false);
-        }*/
-
-Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
-        if (mHabit.getDaysum() == 254) {
-            Log.d(TAG, "DaySUM 254 "+ Integer.toString(mHabit.getDaysum()));
-            mEveryDayToggleBtn.setChecked(true);
-            mEveryWeekToggleBtn.setChecked(false);
-        } else if (mHabit.getDaysum() == 0){
-            Log.d(TAG, "DaySUM 0 "+ Integer.toString(mHabit.getDaysum()));
-            mEveryDayToggleBtn.setChecked(false);
-            mEveryWeekToggleBtn.setChecked(false);
-        }else{
-            Log.d(TAG, "DaySUM 254 "+ Integer.toString(mHabit.getDaysum()));
-            mEveryDayToggleBtn.setChecked(false);
-            mEveryWeekToggleBtn.setChecked(true);
         }
-
-        Log.d(TAG, "Every dayday" +Integer.toString(mHabit.getDaysum()));
     }
 
-    /**
-     * 빈도 매일선택
-     *  일 월 화 수 목 금 토 set
-     * @param v
-     */
-    public void onClickEveryDay(View v){
+    // 매일 버튼 클릭
+    public void onClickEveryDay(){
         // 습관 미선택시 안됨
         if(mHabit == null){
             return;
         }
-
         boolean isEveryDay = mEveryDayToggleBtn.isChecked();
-        mEveryWeekToggleBtn.setChecked(!isEveryDay);
 
         if(isEveryDay){
-            Log.d(TAG, "Everyday true");
-        }else{
-            Log.d(TAG, "Everyday false");
+            onClickEveryWeek();
+            return;
         }
 
         // 요일 버튼 set
         for(int i = 1 ; i < 8 ; i ++){
             ToggleButton tmpDayofWeekToggleBtn = mDayofWeekToggleBtn[i-1];
-            tmpDayofWeekToggleBtn.setChecked(isEveryDay);
+            tmpDayofWeekToggleBtn.setChecked(true);
         }
-
-        // true 이면 매일 아니면 오늘
-        if(isEveryDay) {
-            // habit 클래스 set
-            mHabit.setDaysum(254);
-        }else{
-            Calendar calendar = Calendar.getInstance();
-            int tmpDayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            mDayofWeekToggleBtn[tmpDayofWeek].setChecked(true);
-            mHabit.setDaysum(0);
-            mHabit.setDaysumUsingOf(tmpDayofWeek, true);
-        }
-        Log.d(TAG, "Every Day " + Integer.toString(mHabit.getDaysum()));
+        // habit 클래스 set
+        mHabit.setDaysum(254);
     }
 
-    /**
-     * 빈도 매주선택
-     *  오늘 날짜 Set
-     * @param v
-     */    public void onClickEveryWeek(View v){
+    // 매주 선택
+    public void onClickEveryWeek(){
         // 습관 미선택시 안됨
         if(mHabit == null){
             return;
         }
 
         boolean isEveryWeek = mEveryWeekToggleBtn.isChecked();
-        mEveryDayToggleBtn.setChecked(!isEveryWeek);
 
         if(isEveryWeek){
-            Log.d(TAG, "isEveryWeek true");
-        }else{
-            Log.d(TAG, "isEveryWeek false");
+            onClickEveryDay();
+            return;
         }
 
         // 요일 버튼 set
         for(int i = 1 ; i < 8 ; i ++){
             ToggleButton tmpDayofWeekToggleBtn = mDayofWeekToggleBtn[i-1];
-            tmpDayofWeekToggleBtn.setChecked(!isEveryWeek);
+            tmpDayofWeekToggleBtn.setChecked(false);
         }
         // habit 클래스 set
 
-        if(isEveryWeek){
-            // 오늘만 활성화
-            Calendar calendar = Calendar.getInstance();
-            int tmpDayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            mDayofWeekToggleBtn[tmpDayofWeek-1].setChecked(true);
-            mHabit.setDaysum(0);
-            mHabit.setDaysumUsingOf(tmpDayofWeek, true);
+        // 오늘만 활성화
+        Calendar calendar = Calendar.getInstance();
+        int tmpDayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        mDayofWeekToggleBtn[tmpDayofWeek].setChecked(true);
 
-        }else{
-            mHabit.setDaysum(254);
-        }
+        mHabit.setDaysumUsingOf(tmpDayofWeek, true);
+    }
+    /* Spinner 선택 이벤트 */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.d(TAG, "Every Week " + Integer.toString(mHabit.getDaysum()));
+        if(mHabit == null)
+            return;
+        // 스피너에서 선택한 단위로 set
+//        List<String> unitList = mHabit.getUnitList();
+//        List<String> unitList = new ArrayList<>(mHabit.getUnitList().keySet());
+//        for(String tmp : mHabit.getUnitList().split("/")) {
+//            unitList.add(tmp);
+//        }
+
+
+
+//        mUnitTextview.setText(unitList.get(position));
+
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
-    public void onClickTime(View v){
+    }
+    /* Spinner 선택 이벤트 종료 */
 
+    /* 버튼 클릭 이벤트 */
+    @Override
+    public void onClick(View v) {
         switch (v.getId()){
-            case R.id.toggleBtn_all:
-                mMorningTimeToggleBtn.setChecked(false);
-                mAfternoonTimeToggleBtn.setChecked(false);
-                mNightTimeToggleBtn.setChecked(false);
-                mAllTimeToggleBtn.setChecked(true);
-                mHabit.setTime(0);
+            case R.id.togglebtn_everyday :
+                onClickEveryDay();
                 break;
-            case R.id.toggleBtn_morning :
-                mMorningTimeToggleBtn.setChecked(true);
-                mAfternoonTimeToggleBtn.setChecked(false);
-                mNightTimeToggleBtn.setChecked(false);
-                mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(1);
+            case R.id.togglebtn_everyweek :
+                onClickEveryWeek();
                 break;
-            case R.id.toggleBtn_afternoon :
-                mMorningTimeToggleBtn.setChecked(false);
-                mAfternoonTimeToggleBtn.setChecked(true);
-                mNightTimeToggleBtn.setChecked(false);
-                mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(2);
-                break;
-            case R.id.toggleBtn_night :
-                mMorningTimeToggleBtn.setChecked(false);
-                mAfternoonTimeToggleBtn.setChecked(false);
-                mNightTimeToggleBtn.setChecked(true);
-                mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(3);
-                break;
-            default :
-                mMorningTimeToggleBtn.setChecked(false);
-                mAfternoonTimeToggleBtn.setChecked(false);
-                mNightTimeToggleBtn.setChecked(false);
-                mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(-1); // 마지막에 -1이면 안되게 하기
+            default:
                 break;
         }
 
-        Log.d(TAG, "what time??? "+ mHabit.getTime());
+    }
+    public void setTime(View v){
+
+
 
     }
 
@@ -539,16 +498,10 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
             return;
         }
 
-        if(mHabit.getUnit().length()<1){
-            Toast.makeText(this, "단위 선택이 되지 않았습니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
         connectDB();
 
+        mHabit.setUnit("L");
         if(mHabit.getHabitseq() == 0 ) {
-            Log.d(TAG, "DB TEST 날짜 확인 :  " +mHabit.getDaysum() + " 시간 확인 : "+mHabit.getTime() +" 단위 확인 : "+mHabit.getUnit());
             saveHait();
         }else{
             updateHait();
@@ -558,7 +511,7 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
     private void saveHait() {
         int detailSeq = mUserHabitRespository.getMaxSeqHabitDetail();
-        int priority  = mUserHabitRespository.getMaxPriorityHabitDetail(mHabit.getTime());
+        int priority = mUserHabitRespository.getMaxPriorityHabitDetail(mHabit.getTime());
         int stateSeq  = mUserHabitRespository.getMaxSeqUserHabitState();
 
         mHabit.setHabitseq(detailSeq+1);
@@ -590,7 +543,7 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
         }
 
-        //mUserHabitRespository.insertUserHabit(mHabit , userHabitStateList);
+        mUserHabitRespository.insertUserHabit(mHabit,userHabitStateList);
     }
 
     //TODO 업데이트 안했다~
@@ -598,18 +551,19 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
         // 찾기
         List<UserHabitState> userHabitStateList = mUserHabitRespository.getMasterSeqUserHabitState(mHabit.getHabitseq());
         // update
-        // transaction 으로 detail 과state를 같이 해야한다.
 
-        // 1. UserHabitDetail.habitseq 과 같은 UserHabitState를 찾아온다.
-        // 2. 찾아온 UserHabitState와
-
-        // 키가 되는 값
         for(int i = 0 ; i < userHabitStateList.size() ; i ++){
             UserHabitState tmp = userHabitStateList.get(i);
 
         }
     }
 
+
+    private UserHabitState updateState(UserHabitState userHabitState){
+//        userHabitState.set
+
+        return userHabitState;
+    }
     private void connectDB(){
 
         mUserHabitRespository = new UserHabitRespository(getApplication());

@@ -123,9 +123,6 @@ public interface UserHabitDao {
     @Query("SELECT * FROM unit_d WHERE unitcode =:unitcode")
     List<Unit> getUnit(int unitcode);
 
-    @Query("SELECT unit_d.unit FROM unit_d INNER JOIN habit_m where unit_d.unitcode = habit_m.unitcode and habit_m.habitcode =:habitcode")
-    List<String> getHabitUnitList(int habitcode);
-
 
     @Insert
     void insertUnit(List<Unit> unit);

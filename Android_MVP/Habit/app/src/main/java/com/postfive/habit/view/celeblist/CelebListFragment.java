@@ -29,11 +29,12 @@ import com.postfive.habit.view.habit.HabitActivity;
 import java.util.List;
 
 
-public class CelebListFragment extends Fragment {
+public class CelebListFragment extends Fragment implements View.OnClickListener{
+//    private Button mBtnCeleb;
 
     private CelebRecyclerViewAdapter mCelebRecyclerViewAdapter;
-
     public CelebListFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -49,21 +50,26 @@ public class CelebListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_celeb_list, container, false);
         int width = getResources().getDisplayMetrics().widthPixels;
-
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
+
+//        mBtnCeleb = (Button) view.findViewById(R.id.btn_celeb);
+//        mBtnCeleb.setOnClickListener(this);
+
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
 
-        // DB ViewModelProviders  설정
         CelebHabitViewModel celebHabitViewModel = ViewModelProviders.of(this).get(CelebHabitViewModel.class);
-        // Live Data 데이터가 변경될 때 호출
+
+        // 데이터가 변경될 때 호출
         celebHabitViewModel.getCelebHabitList().observe(this, new Observer<List<CelebHabitMaster>>() {
             @Override
             public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
-
+/*                for(CelebHabitMaster tmp : celebHabitMasters) {
+                    Toast.makeText(getContext(), "유명인 리스트 "+tmp.getName(), Toast.LENGTH_SHORT).show();
+                }*/
                 mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
             }
         });
@@ -74,22 +80,24 @@ public class CelebListFragment extends Fragment {
                 CelebHabitMaster habit = mCelebRecyclerViewAdapter.getHabit(position);
 
                 Intent intent = new Intent(getContext(), CelebActivity.class);
-
                 Toast.makeText(getContext(), "유명인 선택 "+habit.getName(), Toast.LENGTH_SHORT).show();
-
                 intent.putExtra("celebcode", habit.getCelebcode());
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        mCelebRecyclerViewAdapter = null;
-
+    public void onClick(View v) {
+        switch (v.getId()){
+            /*case R.id.btn_celeb:
+                Intent intent = new Intent(getContext(), CelebActivity.class);
+                startActivity(intent);
+                break;*/
+            default :
+                break;
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.postfive.habit.view.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,26 +10,33 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.db.AppDatabase;
+import com.postfive.habit.db.CelebHabit;
 import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.HabitDao;
 import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.Unit;
+import com.postfive.habit.db.UserHabitDao;
+import com.postfive.habit.db.UserHabitDao2;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.view.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "LoginActivity";
     private static final String PREFS_NAME = "Init";
 
+    private AppDatabase mAppDatabase;
     private UserHabitRespository mUserHabitRespository;
     private HabitRespository mHabitRespository;
 
@@ -174,8 +182,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 유명인 set
 
         Habit drinkwater = new Habit(1, "물마시기", "drinkwater", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 2, 6, "water.jpg", "blue");
-        Habit prestudy = new Habit(2, "예습하기", "prestudy", Unit.COUNT_UNIT, Habit.AFTERNOON_TIME, 10, 1, 12, "study.jpg", "red");
-        Habit skiprope = new Habit(3, "줄넘기 하기", "skiprope", Unit.COUNT_UNIT, Habit.NIGHT_TIME, 10, 1, 12,"rope.jpg", "black");
+        Habit prestudy = new Habit(2, "예습하기", "prestudy", Unit.NUMBER_UNIT, Habit.AFTERNOON_TIME, 10, 1, 12, "study.jpg", "red");
+        Habit skiprope = new Habit(3, "줄넘기 하기", "skiprope", Unit.NUMBER_UNIT, Habit.NIGHT_TIME, 10, 1, 12,"rope.jpg", "black");
 
         List<Habit> habitli = new ArrayList<>();
         habitli.add(drinkwater);
@@ -212,26 +220,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Unit unitLiquid1 = new Unit(Unit.LIQUID_UNIT, "L");
         Unit unitLiquid2 = new Unit(Unit.LIQUID_UNIT, "mL");
         Unit unitLiquid3 = new Unit(Unit.LIQUID_UNIT, "cc");
-
-        Unit countUnit = new Unit(Unit.COUNT_UNIT, "회");
-
-        Unit timeUnit1 = new Unit(Unit.TIME_UNIT, "분");
-        Unit timeUnit2 = new Unit(Unit.TIME_UNIT, "시");
-
-        Unit setUnit = new Unit(Unit.SET_UNIT, "Set");
-
-        Unit walkUnit = new Unit(Unit.WALK_UNIT, "걸음");
+        Unit numberLiquid = new Unit(Unit.NUMBER_UNIT, "회");
 
         List<Unit> unitList = new ArrayList<>();
         unitList.add(unitLiquid1);
         unitList.add(unitLiquid2);
         unitList.add(unitLiquid3);
-        unitList.add(countUnit);
-        unitList.add(timeUnit1);
-        unitList.add(timeUnit2);
-        unitList.add(setUnit);
-        unitList.add(walkUnit);
-
+        unitList.add(numberLiquid);
         mHabitRespository.insertUnit(unitList);
 
         Log.d(TAG, "DB TEST 초기화 종료 ");
