@@ -54,17 +54,18 @@ public class Habit  {
 
 
     @Ignore
+    public static int ALLDAY_TIME = 0;
+    @Ignore
     public static int MORNING_TIME = 1;
     @Ignore
     public static int AFTERNOON_TIME = 2;
     @Ignore
     public static int NIGHT_TIME = 3;
-    @Ignore
-    public static int ALLDAY_TIME = 4;
 
     public Habit(){
 
     }
+
     @Ignore
     public Habit(@NonNull int habitcode, @NonNull String name, @NonNull String type, @NonNull int unitcode, @NonNull int time, @NonNull int full, @NonNull int once, @NonNull int daysum, @NonNull String color, @NonNull String img) {
         this.habitcode = habitcode;

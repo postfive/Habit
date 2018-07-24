@@ -15,7 +15,7 @@ public interface UserHabitDao {
 
     /*=========== 조회 시작 ============*/
     // 전체 습관
-    @Query("SELECT * FROM USER_HABIT_D  ORDER BY TIME, PRIORITY ASC")
+    @Query("SELECT * FROM USER_HABIT_D  ORDER BY TIME ASC")
     LiveData<List<UserHabitDetail>> getAllHabitLive();
 
 /*    // 현재 할 습관
@@ -29,14 +29,14 @@ public interface UserHabitDao {
         @Query("SELECT * FROM USER_HABIT_S " +
                 "WHERE DAYOFWEEK = :dayofweek " +
                 "AND   (FULL > DID)" +
-                "ORDER BY TIME, PRIORITY")
+                "ORDER BY TIME")
         LiveData<List<UserHabitState>> getTodayHabitLive(int dayofweek);
     // 전체 습관
-    @Query("SELECT * FROM USER_HABIT_D ORDER BY TIME, PRIORITY ASC")
+    @Query("SELECT * FROM USER_HABIT_D ORDER BY TIME ASC")
     List<UserHabitDetail> getAllHabit();
 
     // 습관 상태 키값으로 찾기
-    @Query("SELECT * FROM USER_HABIT_S ORDER BY TIME, PRIORITY ASC")
+    @Query("SELECT * FROM USER_HABIT_S ORDER BY TIME ASC")
     List<UserHabitState> getAllHabitState();
 
     // 습관 상태 키값으로 찾기
@@ -44,10 +44,10 @@ public interface UserHabitDao {
     List<UserHabitState> getAllHabitState(int masterseq);
 
     // 오늘 습관
-    @Query("SELECT * FROM USER_HABIT_S WHERE DAYOFWEEK = :dayofweek ORDER BY TIME, PRIORITY")
+    @Query("SELECT * FROM USER_HABIT_S WHERE DAYOFWEEK = :dayofweek ORDER BY TIME")
     List<UserHabitState> getTodayHabit(int dayofweek);
 
-    // 선택한 습관
+/*    // 선택한 습관
     @Query("SELECT * FROM USER_HABIT_D WHERE habitcode=:habitcode and priority =:masterpriority AND TIME = :time ")
     UserHabitDetail getHabit(int habitcode, int masterpriority, int time);
 
@@ -57,7 +57,7 @@ public interface UserHabitDao {
 
     // 우선순위 구하기
     @Query("SELECT MAX(priority) FROM USER_HABIT_s where TIME =:time AND DAYOFWEEK =:dayofweek GROUP BY TIME")
-    int getMaxPriorityHabitState(int time, int dayofweek);
+    int getMaxPriorityHabitState(int time, int dayofweek);*/
 
     /*=========== 조회 끝 ============*/
 

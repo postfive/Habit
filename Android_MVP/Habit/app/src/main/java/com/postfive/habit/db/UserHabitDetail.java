@@ -13,19 +13,19 @@ public class UserHabitDetail implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "habitseq")
-    public int habitseq;  // 키값 1 2 3 4 ~
+    private int habitseq;  // 키값 1 2 3 4 ~
 
     @NonNull
     @ColumnInfo(name = "habitcode")
-    public int habitcode;  // 물마시기 0001
+    private int habitcode;  // 물마시기 0001
 
-    @NonNull
+/*    @NonNull
     @ColumnInfo(name = "priority")
-    public int priority; // 1++ 그냥 max
+    private int priority; // 1++ 그냥 max*/
 
     @NonNull
     @ColumnInfo(name = "time")
-    public int time; // 1 : mornig  / 2 : after / 3 : night / 0 : all
+    private int time; // 1 : mornig  / 2 : after / 3 : night / 0 : all
 
 /*
     @NonNull
@@ -35,39 +35,40 @@ public class UserHabitDetail implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "name")
-    public String name; // 이름 ex 물마시기
+    private String name; // 이름 ex 물마시기
 
     @NonNull
     @ColumnInfo(name = "goal")
-    public String goal; // 목표 문구 개인 설정 가능
+    private String goal; // 목표 문구 개인 설정 가능
 
     @NonNull
     @ColumnInfo(name = "daysum")
-    public int daysum; // 요일표시
+    private int daysum; // 요일표시
 
     @NonNull
     @ColumnInfo(name = "full")
-    public int full; // 하루 할 양
+    private int full; // 하루 할 양
 
     @NonNull
     @ColumnInfo(name = "once")
-    public int once; // 하루 할 양
+    private int once; // 하루 할 양
 
     @NonNull
     @ColumnInfo(name = "unit")
-    public String unit;  // 단위 L ml 번
+    private String unit ="";  // 단위 L ml 번
 
     @ColumnInfo(name = "img")
-    public String img;  // 이미지 url
+    private String img;  // 이미지 url
 
     @ColumnInfo(name = "color")
-    public String color;  // 이미지 url
+    private String color;  // 이미지 url
 
-    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int priority, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
+//    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int priority, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
+    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
         this.habitseq = habitseq;
         this.habitcode = habitcode;
 
-        this.priority = priority;
+//        this.priority = priority;
         this.time = time;
         this.name = name;
         this.goal = goal;
@@ -83,7 +84,7 @@ public class UserHabitDetail implements Serializable {
     public UserHabitDetail(@NonNull int habitseq , @NonNull CelebHabitDetail celebHabit) {
         this.habitseq = habitseq;
         this.habitcode = celebHabit.getHabitcode();
-        this.priority = celebHabit.getPriority();
+//        this.priority = celebHabit.getPriority();
         this.time = celebHabit.getTime();
         this.name = celebHabit.getName();
         this.goal = celebHabit.getGoal();
@@ -98,7 +99,7 @@ public class UserHabitDetail implements Serializable {
     public UserHabitDetail( @NonNull Habit habit) {
         this.habitseq = 0;
         this.habitcode = habit.getHabitcode();
-        this.priority = 0;
+//        this.priority = 0;
         this.time = habit.getTime();
         this.name = habit.getName();
         this.goal = habit.getName();
@@ -133,14 +134,14 @@ public class UserHabitDetail implements Serializable {
 
     }
 
-    @NonNull
+/*    @NonNull
     public int getPriority() {
         return priority;
     }
 
     public void setPriority(@NonNull int priority) {
         this.priority = priority;
-    }
+    }*/
 
     @NonNull
     public String getName() {

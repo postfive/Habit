@@ -3,7 +3,9 @@ package com.postfive.habit.db;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -28,6 +30,9 @@ public abstract class UserHabitDao2 {
     /*=========== 추가 끝 ============*/
 
 
+    @Update
+    abstract void updateUserHabitDetail(UserHabitDetail a);
+
     /*=========== 삭제 시작 ============*/
     // 유저 습관 디테일 삭제
     @Delete
@@ -36,6 +41,9 @@ public abstract class UserHabitDao2 {
     // 유저 습관 디테일 수정
     @Delete
     abstract void deleteUserHabitState(UserHabitState a);
+
+    @Query("DELETE FROM USER_HABIT_S WHERE masterseq =:masterseq")
+    abstract void deleteUserHabitState(int masterseq);
     /*=========== 삭제 끝 ============*/
 
 
@@ -51,5 +59,12 @@ public abstract class UserHabitDao2 {
     void insertUserHabit(UserHabitDetail userHabitDetail, List<UserHabitState> userHabitStateList ){
         insertUserHabitDetail(userHabitDetail);
         insertAllUserHabitState(userHabitStateList);
+    }
+
+    @Transaction
+    void updateUserHabit(UserHabitDetail mHabit, int habitseq, List<UserHabitState> mUserHabitStateList) {
+        updateUserHabitDetail(mHabit);
+        deleteUserHabitState(habitseq);
+        insertAllUserHabitState(mUserHabitStateList);
     }
 }

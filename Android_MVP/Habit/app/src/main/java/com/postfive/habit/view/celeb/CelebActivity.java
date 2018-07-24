@@ -262,7 +262,6 @@ public class CelebActivity extends AppCompatActivity  {
             }
 
 
-            userStatedaypriority = 0;
             Log.d(TAG, "for i "+ Integer.toString(i) );
             for (int j = 0; j < celebTimeTmp.size(); j++) {
 //                user detail 습관 넣기
@@ -271,6 +270,7 @@ public class CelebActivity extends AppCompatActivity  {
 
                 if (tmp == null)
                     continue;
+
                 Log.d(TAG, "for j "+ Integer.toString(j) );
                 userDetailIdx++;
                 UserHabitDetail usrtmp = new UserHabitDetail(userDetailIdx, tmp);
@@ -278,13 +278,12 @@ public class CelebActivity extends AppCompatActivity  {
                 //Log.d(TAG,   usrtmp.getTime() +"/"+  usrtmp.getPriority() +"/"+ usrtmp.getHabitcode() +"/"+usrtmp.getName() +"/"+ usrtmp.getGoal() +"/"+ usrtmp.getDaysum() +"/"+ usrtmp.getFull() +"/"+ usrtmp.getUnit() );
 
                 // user state 습관 넣기
-                for (int k = 1; k < 8; k++) {
+                for (int dayofweek = 1; dayofweek < 8; dayofweek++) {
                     //Log.d(TAG, "for k "+ Integer.toString(k) );
 
-                    if ((tmp.getDaysum() & (1 << k)) > 0) {
-                        userStatedaypriority++;
+                    if ((tmp.getDaysum() & (1 << dayofweek)) > 0) {
                         userStateseq++;
-                        UserHabitState statetmp = new UserHabitState(userStateseq, k, usrtmp);
+                        UserHabitState statetmp = new UserHabitState(userStateseq, dayofweek, usrtmp);
                         userHabitStateList.add(statetmp);
 
                     }
@@ -303,5 +302,4 @@ public class CelebActivity extends AppCompatActivity  {
         Toast.makeText(this,"저장! 완료", Toast.LENGTH_LONG).show();;
         //disconnectDB();
     }
-
 }

@@ -1,12 +1,8 @@
 package com.postfive.habit.db;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.postfive.habit.UserSettingValue;
 
@@ -106,6 +102,7 @@ public class UserHabitRespository {
 
     }
 
+
     private class InsertUserAllUserHabitDetail extends AsyncTask<List<UserHabitDetail>, Void, Void> {
 
         UserHabitDao mUserHabitDao;
@@ -136,9 +133,34 @@ public class UserHabitRespository {
         }
     }
 
+    public void updateUserHabit(UserHabitDetail mHabit, List<UserHabitState> insertHabitStateList) {
+
+        new UpdateUserHabitAsyncTask(mUserHabitDao2, mHabit, insertHabitStateList).execute();
+    }
+
+    private class UpdateUserHabitAsyncTask extends AsyncTask<Void, Void, Void> {
+        private UserHabitDao2 mUserHabitDao2;
+        private UserHabitDetail mHabit;
+        private List<UserHabitState> mUserHabitStateList;
+        UpdateUserHabitAsyncTask(UserHabitDao2 mUserHabitDao2, UserHabitDetail mHabit, List<UserHabitState> insertHabitStateList) {
+            this.mUserHabitDao2 = mUserHabitDao2;
+            this.mHabit = mHabit;
+            this.mUserHabitStateList = insertHabitStateList;
+        }
+
+        @Override
+        protected Void doInBackground(Void... Voids) {
+            mUserHabitDao2.updateUserHabit(mHabit, mHabit.getHabitseq(), mUserHabitStateList);
+            return null;
+        }
+
+    }
+
     public void insertAllUserHabitState(List<UserHabitState> userHabitStateList) {
         new InsertUserAllUserHabitState(mUserHabitDao).execute(userHabitStateList);
     }
+
+
     private class InsertUserAllUserHabitState extends AsyncTask<List<UserHabitState>, Void, Void> {
 
         UserHabitDao mUserHabitDao;
@@ -285,6 +307,7 @@ public class UserHabitRespository {
 
 
 
+/*
 
     public int getMaxPriorityHabitDetail(int time ) {
 
@@ -314,40 +337,41 @@ public class UserHabitRespository {
         }
 
     }
+*/
 
 
-
-    public int getMaxPriorityUserHabitState(int time, int dayofweek) {
-        Integer[] input = new Integer[2];
-        input[0] = time;
-        input[1] = dayofweek;
-
-        int habit = 0;
-        try {
-            habit = new QueryMaxPriorityHabitState(mUserHabitDao).execute(input).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return habit;
-    }
-
-    private class QueryMaxPriorityHabitState extends AsyncTask<Integer[] , Void, Integer> {
-        UserHabitDao mUserHabitDao;
-        QueryMaxPriorityHabitState(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected Integer doInBackground(Integer[]... integers) {
-            Integer[] input  = integers[0];
-            Integer result = mUserHabitDao.getMaxPriorityHabitState(input[0], input[1]);
-            return result;
-        }
-
-    }
+//
+//    public int getMaxPriorityUserHabitState(int time, int dayofweek) {
+//        Integer[] input = new Integer[2];
+//        input[0] = time;
+//        input[1] = dayofweek;
+//
+//        int habit = 0;
+//        try {
+//            habit = new QueryMaxPriorityHabitState(mUserHabitDao).execute(input).get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return habit;
+//    }
+//
+//    private class QueryMaxPriorityHabitState extends AsyncTask<Integer[] , Void, Integer> {
+//        UserHabitDao mUserHabitDao;
+//        QueryMaxPriorityHabitState(UserHabitDao mUserHabitDao) {
+//            this.mUserHabitDao = mUserHabitDao;
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(Integer[]... integers) {
+//            Integer[] input  = integers[0];
+//            Integer result = mUserHabitDao.getMaxPriorityHabitState(input[0], input[1]);
+//            return result;
+//        }
+//
+//    }
 
 
 
@@ -420,11 +444,11 @@ public class UserHabitRespository {
         }
 
     }
-    public List<UserHabitState> getMasterSeqUserHabitState(int masterseq) {
+    public List<UserHabitState> getHabitStateMasterSeq(int masterseq) {
         List<UserHabitState> habitList = null;
 //        getAllHabitState
         try {
-            habitList = new QueryMasterSeqStateListAsyncTask(mUserHabitDao).execute(masterseq).get();
+            habitList = new QueryStateListMasterSeqAsyncTask(mUserHabitDao).execute(masterseq).get();
         } catch (InterruptedException e){
             e.printStackTrace();
         } catch (ExecutionException e){
@@ -434,10 +458,10 @@ public class UserHabitRespository {
     }
 
 
-    private class QueryMasterSeqStateListAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState>> {
+    private class QueryStateListMasterSeqAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState>> {
         private UserHabitDao mHabitDao;
 
-        QueryMasterSeqStateListAsyncTask(UserHabitDao mUserHabitDao) {
+        QueryStateListMasterSeqAsyncTask(UserHabitDao mUserHabitDao) {
             this.mHabitDao = mUserHabitDao;
         }
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,10 +21,7 @@ import android.widget.ToggleButton;
 
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.habittime.HabitTimeRecyclerViewAdapter;
-import com.postfive.habit.db.AppDatabase;
-import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.Habit;
-import com.postfive.habit.db.Unit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
@@ -239,22 +235,22 @@ public class HabitActivity extends AppCompatActivity {
 
 
         // 시간SET
-         if(habit.getTime() == 1){
+         if(habit.getTime() == Habit.MORNING_TIME){
              mMorningTimeToggleBtn.setChecked(true);
              mAfternoonTimeToggleBtn.setChecked(false);
              mNightTimeToggleBtn.setChecked(false);
              mAllTimeToggleBtn.setChecked(false);
-         }else if(habit.getTime() == 2){
+         }else if(habit.getTime() == Habit.AFTERNOON_TIME){
              mMorningTimeToggleBtn.setChecked(false);
              mAfternoonTimeToggleBtn.setChecked(true);
              mNightTimeToggleBtn.setChecked(false);
              mAllTimeToggleBtn.setChecked(false);
-         }else if(habit.getTime() == 3){
+         }else if(habit.getTime() == Habit.NIGHT_TIME){
              mMorningTimeToggleBtn.setChecked(false);
              mAfternoonTimeToggleBtn.setChecked(false);
              mNightTimeToggleBtn.setChecked(true);
              mAllTimeToggleBtn.setChecked(false);
-         }else if(habit.getTime() == 0) {
+         }else if(habit.getTime() == Habit.ALLDAY_TIME) {
              // TODO 하루종일
              mMorningTimeToggleBtn.setChecked(false);
              mAfternoonTimeToggleBtn.setChecked(false);
@@ -455,28 +451,28 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
                 mAfternoonTimeToggleBtn.setChecked(false);
                 mNightTimeToggleBtn.setChecked(false);
                 mAllTimeToggleBtn.setChecked(true);
-                mHabit.setTime(0);
+                mHabit.setTime(Habit.ALLDAY_TIME);
                 break;
             case R.id.toggleBtn_morning :
                 mMorningTimeToggleBtn.setChecked(true);
                 mAfternoonTimeToggleBtn.setChecked(false);
                 mNightTimeToggleBtn.setChecked(false);
                 mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(1);
+                mHabit.setTime(Habit.MORNING_TIME);
                 break;
             case R.id.toggleBtn_afternoon :
                 mMorningTimeToggleBtn.setChecked(false);
                 mAfternoonTimeToggleBtn.setChecked(true);
                 mNightTimeToggleBtn.setChecked(false);
                 mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(2);
+                mHabit.setTime(Habit.AFTERNOON_TIME);
                 break;
             case R.id.toggleBtn_night :
                 mMorningTimeToggleBtn.setChecked(false);
                 mAfternoonTimeToggleBtn.setChecked(false);
                 mNightTimeToggleBtn.setChecked(true);
                 mAllTimeToggleBtn.setChecked(false);
-                mHabit.setTime(3);
+                mHabit.setTime(Habit.NIGHT_TIME);
                 break;
             default :
                 mMorningTimeToggleBtn.setChecked(false);
@@ -558,13 +554,14 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
     private void saveHait() {
         int detailSeq = mUserHabitRespository.getMaxSeqHabitDetail();
-        int priority  = mUserHabitRespository.getMaxPriorityHabitDetail(mHabit.getTime());
+//        int priority  = mUserHabitRespository.getMaxPriorityHabitDetail(mHabit.getTime());
         int stateSeq  = mUserHabitRespository.getMaxSeqUserHabitState();
 
         mHabit.setHabitseq(detailSeq+1);
 //        mHabit.setPriority(priority+1);
 
-        Toast.makeText(this, "DB TEST get Seq "+Integer.toString(detailSeq) + " / "+ Integer.toString(stateSeq) +"/"+  Integer.toString(priority), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "DB TEST get Seq "+Integer.toString(detailSeq) + " / "+ Integer.toString(stateSeq) , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "DB TEST get Seq "+Integer.toString(detailSeq) + " / "+ Integer.toString(stateSeq) +"/"+  Integer.toString(priority), Toast.LENGTH_SHORT).show();
 
 
         List<UserHabitState> userHabitStateList  = new ArrayList<>();
@@ -578,7 +575,7 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
         for (int dayofweek = 1; dayofweek < 8; dayofweek++) {
             if ((mHabit.getDaysum() & (1 << dayofweek)) > 0) {
-                userStatepriority = mUserHabitRespository.getMaxPriorityUserHabitState(mHabit.getTime(), dayofweek);
+                //userStatepriority = mUserHabitRespository.getMaxPriorityUserHabitState(mHabit.getTime(), dayofweek);
                 Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
                 userStatepriority++;
                 userStateSeq++;
@@ -592,24 +589,37 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
         }
 
-        //mUserHabitRespository.insertUserHabit(mHabit , userHabitStateList);
+        mUserHabitRespository.insertUserHabit(mHabit , userHabitStateList);
     }
 
     //TODO 업데이트 안했다~
     private void updateHait() {
-        // 찾기
-        List<UserHabitState> userHabitStateList = mUserHabitRespository.getMasterSeqUserHabitState(mHabit.getHabitseq());
-        // update
         // transaction 으로 detail 과state를 같이 해야한다.
 
-        // 1. UserHabitDetail.habitseq 과 같은 UserHabitState를 찾아온다.
-        // 2. 찾아온 UserHabitState와
 
-        // 키가 되는 값
-        for(int i = 0 ; i < userHabitStateList.size() ; i ++){
-            UserHabitState tmp = userHabitStateList.get(i);
-
+        // 2. 찾아온 UserHabitState와 비교하면서 요일별로 확인 하며 담는다.
+        //    - update 있으면 값 변경
+        //    - insert 없으면 새로 만들어준다.
+        int stateseq = mUserHabitRespository.getMaxSeqUserHabitState();
+        List<UserHabitState> insertHabitStateList = new ArrayList<>();
+        int daySum = mHabit.getDaysum();
+        for(int dayofweek = 1 ; dayofweek < 8 ; dayofweek ++){
+            if ((mHabit.getDaysum() & (1 << dayofweek)) > 0) {
+                stateseq++;
+                insertHabitStateList.add(new UserHabitState(stateseq, dayofweek, mHabit));
+            }
         }
+
+        // Detail은 UPDATE
+        // State는 DELETE INSERT
+        mUserHabitRespository.updateUserHabit(mHabit, insertHabitStateList);
+        // 4. UserHabitDetail update
+        //    UserHabitState - delete
+        //                   - update
+        //                   - insert
+        //    그냥 지우고 새로 넣는거는 어떨까?
+        // 키가 되는 값
+
     }
 
     private void connectDB(){
