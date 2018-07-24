@@ -22,17 +22,17 @@
             android:gravity="fill_vertical|center_horizontal"
             android:theme="@style/AppTheme.Toolbar">
 
-                <TextView
-                    android:id="@+id/textview_habit_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_habit"
-                    android:theme="@style/AppTheme.Toolbar.Title" />
+            <TextView
+                android:id="@+id/textview_habit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_habit"
+                android:layout_gravity="center_horizontal"
+                android:theme="@style/AppTheme.Toolbar.Title" />
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
-
 
     <TextView
         android:id="@+id/textView_habit_type"
