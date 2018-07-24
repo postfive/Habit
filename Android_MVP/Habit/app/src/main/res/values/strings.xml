@@ -20,6 +20,7 @@
     <string name="oneday_goal">하루목표</string>
     <string name="once_doing">1회 수행</string>
     <string name="save_habit">알람저장</string>
+    <string name="edit_habit">습관편집</string>
 
 
     <string name="body">습관</string>
