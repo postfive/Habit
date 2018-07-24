@@ -108,17 +108,8 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if(allHabit == null)
             return;
 
-        if(allHabit.size()>1) {
-            mMyHabitList.clear();
-            mMyHabitList.addAll(allHabit);
-            notifyDataSetChanged();
-        }else if (allHabit.size() == 1){
-            changeHabit(allHabit.get(0));
-        }
-        else{
-            return;
-
-        }
+        mMyHabitList.clear();
+        mMyHabitList.addAll(allHabit);
 
     }
 
@@ -141,11 +132,6 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyItemRemoved(position);
     }
 
-    public void removeHabit(UserHabitState habit) {
-        this.mMyHabitList.remove(habit);
-        notifyDataSetChanged();
-    }
-
     @Override
     public void changeHabit(int position, UserHabitState habit) {
 
@@ -153,10 +139,10 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         notifyDataSetChanged();
     }
-    public void changeHabit (UserHabitState habit) {
+    /*public void changeHabit (UserHabitState habit) {
         this.mMyHabitList.remove(habit);
         this.mMyHabitList.add(habit);
 
         notifyDataSetChanged();
-    }
+    }*/
 }

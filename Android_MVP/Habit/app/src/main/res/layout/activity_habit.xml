@@ -194,20 +194,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <ToggleButton
                         android:id="@+id/togglebtn_everyday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="onClickEveryDay"
                         android:textOff="@string/everyday"
-                        android:textOn="@string/everyday"
-                        />
+                        android:textOn="@string/everyday" />
+
                     <ToggleButton
                         android:id="@+id/togglebtn_everyweek"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="onClickEveryWeek"
                         android:textOff="@string/everyweek"
-                        android:textOn="@string/everyweek"
-                        />
+                        android:textOn="@string/everyweek" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -317,6 +319,7 @@
                     android:id="@+id/toggleBtn_all"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onClickTime"
                     android:text="ToggleButton"
                     android:textOff="하루종일"
                     android:textOn="하루종일" />
@@ -325,6 +328,7 @@
                     android:id="@+id/toggleBtn_morning"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onClickTime"
                     android:text="ToggleButton"
                     android:textOff="오전"
                     android:textOn="오전" />
@@ -333,6 +337,7 @@
                     android:id="@+id/toggleBtn_afternoon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onClickTime"
                     android:text="ToggleButton"
                     android:textOff="오후"
                     android:textOn="오후" />
@@ -341,6 +346,7 @@
                     android:id="@+id/toggleBtn_night"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onClickTime"
                     android:text="ToggleButton"
                     android:textOff="저녁"
                     android:textOn="저녁" />

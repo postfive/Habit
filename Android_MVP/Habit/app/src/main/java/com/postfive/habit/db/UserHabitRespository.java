@@ -502,6 +502,38 @@ public class UserHabitRespository {
             super.onPostExecute(unitList);
         }
     }
+    public List<String> getHabitUnit(int habitCode){
+
+        List<String> unitList = null;
+        try {
+            unitList = new QueryHabitUnitListAsyncTask(mUserHabitDao).execute(habitCode).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return unitList;
+    }
+
+    private class QueryHabitUnitListAsyncTask extends AsyncTask<Integer, Void, List<String> > {
+        private UserHabitDao mUserHabitDao;
+
+        QueryHabitUnitListAsyncTask(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected List<String> doInBackground(Integer... Integers) {
+            List<String> unitList = mUserHabitDao.getHabitUnitList(Integers[0]);
+            return unitList;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> unitList) {
+            super.onPostExecute(unitList);
+        }
+    }
 
 
     public void insertUnit(List<Unit> unitList){

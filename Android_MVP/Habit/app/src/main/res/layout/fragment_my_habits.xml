@@ -6,27 +6,32 @@
     android:orientation="vertical"
     tools:context=".view.myhabits.MyHabitsFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id ="@+id/recyclerview_my_habits_fragemnt_list"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
-    <Button
-        android:id="@+id/btn_my_habits_ist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/habit_list" />
+            <android.support.v7.widget.RecyclerView
+                android:id ="@+id/recyclerview_my_habits_fragemnt_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
 
-    <EditText
+            </android.support.v7.widget.RecyclerView>
+            <Button
+                android:id="@+id/btn_my_habits_ist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_list" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_today"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="습관 가저오기" />
-
+            <Button
+                android:id="@+id/btn_today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="습관 가저오기" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

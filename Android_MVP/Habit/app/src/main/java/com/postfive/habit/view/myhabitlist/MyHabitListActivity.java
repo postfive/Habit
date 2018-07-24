@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.postfive.habit.ItemClickSupport;
@@ -22,8 +23,6 @@ import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
-import com.postfive.habit.habits.HabitMaker;
-import com.postfive.habit.habits.factory.HabitFactory;
 import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.habit.HabitActivity;
 
@@ -35,25 +34,18 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
 
     private static final String TAG = "MyHabitListActivity";
     private Button mBtnHait;
-    private Button mBtnHait2;
     private RecyclerView mRecyclerView;
     private MyHabitListRecyclerViewAdapter mRecyclerViewAdapter;
-
+    private List<UserHabitDetail> mHabitList;
     private UserHabitRespository mUserHabitRespository;
     private HabitRespository mabitRespository;
-
-    private HabitFactory mHabitFactory;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_habit_list);
+
+        //Toast.makeText(this, "onCreate ", Toast.LENGTH_SHORT).show();
 
         initComponent();
 
@@ -70,7 +62,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        mBtnHait = (Button)findViewById(R.id.btn_habit);
+        mBtnHait = (Button)findViewById(R.id.btn_add_habit);
         mBtnHait.setOnClickListener(this);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_my_habit_list);
@@ -79,10 +71,12 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
 
         mRecyclerViewAdapter = new MyHabitListRecyclerViewAdapter();
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        connectDB();
-        List<UserHabitDetail> detailList = mUserHabitRespository.getAllUserHabitDetail();
 
-        mRecyclerViewAdapter.setHabit(detailList);
+        connectDB();
+
+        mHabitList = mUserHabitRespository.getAllUserHabitDetail();
+
+        mRecyclerViewAdapter.setHabit(mHabitList);
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
@@ -94,11 +88,51 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        mHabitFactory = new HabitMaker();
+//        mHabitFactory = new HabitMaker();
 
         disconnectDB();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Toast.makeText(this, "onStart ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Toast.makeText(this, "onResume ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Toast.makeText(this, "onRestart ", Toast.LENGTH_SHORT).show();
+        // 다시 화면 돌아왔을때 리스트 다시 조회
+        connectDB();
+        mHabitList = mUserHabitRespository.getAllUserHabitDetail();
+        mRecyclerViewAdapter.setAllHabit(mHabitList);
+        disconnectDB();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Toast.makeText(this, "onStop ", Toast.LENGTH_SHORT).show();
+        // 메모리 해제
+        mHabitList = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(this, "onDestroy ", Toast.LENGTH_SHORT).show();
+
+    }
 
     /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
@@ -122,7 +156,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btn_habit :
+            case R.id.btn_add_habit :
                 Intent intent = new Intent(this, HabitListActivity.class);
                 startActivity(intent);
                 break;
@@ -134,6 +168,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     private void connectDB(){
 
         mUserHabitRespository = new UserHabitRespository(getApplication());
+        // 아래 테스트 끝나면 제거
         mabitRespository = new HabitRespository(getApplication());
     }
 
