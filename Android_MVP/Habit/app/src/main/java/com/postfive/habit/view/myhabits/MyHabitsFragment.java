@@ -16,6 +16,8 @@ import android.widget.Button;
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
+import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
@@ -29,12 +31,15 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "MyHabitsFragment";
     private Button btnHabitsList;
     private Button btnTodayHabits; // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
-    private int day = 1; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
+    private int day = 0; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
+    private int time = 0; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
     private UserHabitRespository mUserHabitRespository;
 
     private MyHabitRecyclerViewAdapter mMyHabitRecyclerViewAdapter;
 
     private List<UserHabitState> mUserHabitStatesList;
+    private List<UserHabitState> mTodayCompliteHabitStatesList;
+    private List<UserHabitState> mTodayPassCompliteHabitStatesList;
     private List<UserHabitState> mUserHabitStatesTomorrowList;
     private List<UserHabitState> mUserHabitStatesYesterdayList;
 
@@ -82,8 +87,17 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day.get(Calendar.DAY_OF_WEEK));
         // 오늘 요일
         int today = day.get(Calendar.DAY_OF_WEEK);
-        // TODO 오늘 습관 가져오기
-        mUserHabitStatesList = mUserHabitRespository.getDayHabit(today);
+
+        int nowTime = Habit.ALLDAY_TIME;
+        // TODO 현재 지금
+        mUserHabitStatesList = mUserHabitRespository.getNowHabit(nowTime);
+
+        // TODO 오늘 완성
+        mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
+
+        // TODO 오늘 놓친것
+        mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(nowTime);
+
         // TODO 내일 습관
         int tomorrow = today +1;
         if(tomorrow > 7)
@@ -126,7 +140,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
-        Calendar day = Calendar.getInstance();
+/*        Calendar day = Calendar.getInstance();
         // 오늘 요일
         int today = day.get(Calendar.DAY_OF_WEEK);
         // TODO 오늘 습관 가져오기
@@ -144,7 +158,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
 
 
-        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);
+        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);*/
 
         // Fragment가 화면에 표시될때 사용자의 Action과 상호작용 불가
 //        Toast.makeText(getContext(), "onStart", Toast.LENGTH_SHORT).show();
@@ -206,19 +220,72 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 if(day == 8)
                     day = 1;
 
+
+                List<UserHabitDetail> userHabitDetailList = mUserHabitRespository.getAllUserHabitDetail();
+                StringBuilder sb1 = new StringBuilder();
+                sb1.append("\nD_seq | 날짜합 | 시간 |  습관코드 |  이름 | 목표 | 하루 목표 | 날짜합 | 전체 | 단위 \n");
+
+                for(int i = 0 ; i < userHabitDetailList.size(); i ++){
+                    UserHabitDetail tmp = userHabitDetailList.get(i);
+                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+                    sb1.append( tmp.getHabitseq() +"  | "+  tmp.getDaysum() +"  | "+tmp.getTime() +"    |    "+tmp.getHabitcode() +"    | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb1.append("\n");
+                }
+
+                Log.d(TAG, "DB TEST SELECT USER HABIT Detail " + sb1.toString());
+                Log.d(TAG,"finish");
+
                 List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day);
                 day ++;
                 StringBuilder sb = new StringBuilder();
-                sb.append("\n요일 |  순서  | 습관코드 | D_seq | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+                sb.append("\n요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
 
                 for(int i = 0 ; i < userHabitStatesList.size(); i ++){
                     UserHabitState tmp = userHabitStatesList.get(i);
                     ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb.append( tmp.getDayofweek() +"    |     "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
                     sb.append("\n");
                 }
 
                 Log.d(TAG, "DB TEST SELECT USER HABIT State " + sb.toString());
+                Log.d(TAG,"finish");
+
+
+                mUserHabitRespository.getNowHabit(time);
+
+                List<UserHabitState> userNowHabitStatesList = mUserHabitRespository.getDayHabit(day);
+
+                time ++;
+                if(time==4)
+                    time =0;
+                StringBuilder sb3 = new StringBuilder();
+                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+                for(int i = 0 ; i < userNowHabitStatesList.size(); i ++){
+                    UserHabitState tmp = userNowHabitStatesList.get(i);
+                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+                    sb3.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb3.append("\n");
+                }
+
+                Log.d(TAG, "DB TEST SELECT Now USER HABIT State " + sb3.toString());
+                Log.d(TAG,"finish");
+
+
+                // TODO 오늘 놓친것
+                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(time);
+
+                StringBuilder sb4 = new StringBuilder();
+                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+                for(int i = 0 ; i < userPassHabitStatesList.size(); i ++){
+                    UserHabitState tmp = userPassHabitStatesList.get(i);
+                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+                    sb4.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb4.append("\n");
+                }
+
+                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb4.toString());
                 Log.d(TAG,"finish");
 
             default:

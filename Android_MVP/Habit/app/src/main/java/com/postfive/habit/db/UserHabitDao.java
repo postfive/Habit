@@ -32,7 +32,7 @@ public interface UserHabitDao {
                 "ORDER BY TIME")
         LiveData<List<UserHabitState>> getTodayHabitLive(int dayofweek);
     // 전체 습관
-    @Query("SELECT * FROM USER_HABIT_D ORDER BY TIME ASC")
+    @Query("SELECT * FROM USER_HABIT_D ORDER BY habitseq ASC")
     List<UserHabitDetail> getAllHabit();
 
     // 습관 상태 키값으로 찾기
@@ -128,6 +128,18 @@ public interface UserHabitDao {
 
     @Insert
     void insertUnit(List<Unit> unit);
-    // 이거 repository 에 추가
+
+    @Query("SELECT * FROM user_habit_s " +
+            "WHERE DAYOFWEEK =:dayofweek " +
+            "AND TIME IN(:timeList) " +
+            "AND DID < FULL " +
+            "ORDER BY TIME, MASTERSEQ ASC")
+    List<UserHabitState> getTodayTimeHabit(int dayofweek, List<Integer> timeList);
+
+    @Query("SELECT * FROM user_habit_s " +
+            "WHERE DAYOFWEEK =:dayofweek " +
+            "AND DID >= FULL " +
+            "ORDER BY TIME, MASTERSEQ ASC")
+    List<UserHabitState> getCompliteHabit(int dayofweek);
 
 }

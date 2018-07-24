@@ -1,14 +1,13 @@
 package com.postfive.habit.db;
 
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.postfive.habit.UserSettingValue;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -248,6 +247,120 @@ public class UserHabitRespository {
         }
     }
     // 전체 습관 get 종료 ////////
+
+
+    public List<UserHabitState> getComplite() {
+        List<UserHabitState> userHabitStatesList = null;
+
+        try {
+            userHabitStatesList = new QueryUserCompliteHabitListAsyncTask(mUserHabitDao).execute().get();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return userHabitStatesList;
+    }
+
+
+    private class QueryUserCompliteHabitListAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState> > {
+        private UserHabitDao mUserHabitDao;
+
+        QueryUserCompliteHabitListAsyncTask(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected List<UserHabitState> doInBackground(Integer... Integers) {
+
+            List<UserHabitState> habit = mUserHabitDao.getCompliteHabit(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+            return habit;
+        }
+
+        @Override
+        protected void onPostExecute(List<UserHabitState> habit) {
+            super.onPostExecute(habit);
+        }
+    }
+
+
+    public List<UserHabitState> getPassHabit(int nowTime) {
+        List<UserHabitState> userHabitStatesList = null;
+
+        try {
+            userHabitStatesList = new QueryTodayPassHabitListAsyncTask(mUserHabitDao).execute().get();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return userHabitStatesList;
+    }
+
+
+    private class QueryTodayPassHabitListAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState> > {
+        private UserHabitDao mUserHabitDao;
+
+        QueryTodayPassHabitListAsyncTask(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected List<UserHabitState> doInBackground(Integer... Integers) {
+
+            List<Integer> timeList = new ArrayList<>();
+            for(int i = 0 ; i < Integers[0] ; i ++){
+                timeList.add(i);
+            }
+
+            List<UserHabitState> habit = mUserHabitDao.getTodayTimeHabit(Calendar.getInstance().get(Calendar.DAY_OF_WEEK), timeList);
+            return habit;
+        }
+
+        @Override
+        protected void onPostExecute(List<UserHabitState> habit) {
+            super.onPostExecute(habit);
+        }
+    }
+
+    public List<UserHabitState> getNowHabit(int time) {
+        List<UserHabitState> userHabitStatesList = null;
+
+        try {
+            userHabitStatesList = new QueryUserNowHabitListAsyncTask(mUserHabitDao).execute(time).get();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return userHabitStatesList;
+    }
+
+    private class QueryUserNowHabitListAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState> > {
+        private UserHabitDao mUserHabitDao;
+
+        QueryUserNowHabitListAsyncTask(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected List<UserHabitState> doInBackground(Integer... Integers) {
+
+            List<Integer> timeList = new ArrayList<>();
+            for(int i = Integers[0] ; i < 4 ; i ++){
+                timeList.add(i);
+            }
+            timeList.add(0);
+
+            List<UserHabitState> habit = mUserHabitDao.getTodayTimeHabit(Calendar.getInstance().get(Calendar.DAY_OF_WEEK), timeList);
+            return habit;
+        }
+
+        @Override
+        protected void onPostExecute(List<UserHabitState> habit) {
+            super.onPostExecute(habit);
+        }
+    }
 
     // 요일별 습관 get ////////
     public List<UserHabitState> getDayHabit(int dayofweek){
