@@ -24,6 +24,12 @@ public abstract class UserHabitDao2 {
     @Insert(onConflict = IGNORE)
     abstract void insertUserHabitState(UserHabitState a);
 
+
+
+    @Insert(onConflict = IGNORE)
+    abstract void insertAllUserHabitDetail(List<UserHabitDetail> a);
+
+
     // 유저 습관 상태 추가
     @Insert(onConflict = IGNORE)
     abstract void insertAllUserHabitState(List<UserHabitState> a);
@@ -61,6 +67,11 @@ public abstract class UserHabitDao2 {
         insertAllUserHabitState(userHabitStateList);
     }
 
+    @Transaction
+    void insertUserAllHabit(List<UserHabitDetail> userHabitDetail, List<UserHabitState> userHabitStateList ){
+        insertAllUserHabitDetail(userHabitDetail);
+        insertAllUserHabitState(userHabitStateList);
+    }
     @Transaction
     void updateUserHabit(UserHabitDetail mHabit, int habitseq, List<UserHabitState> mUserHabitStateList) {
         updateUserHabitDetail(mHabit);

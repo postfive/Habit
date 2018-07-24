@@ -1,8 +1,11 @@
 package com.postfive.habit.db;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.postfive.habit.UserSettingValue;
 
@@ -12,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class UserHabitRespository {
 
+    private static final String TAG = "UserHabitRespository";
     private AppDatabase db;
     private UserHabitDao mUserHabitDao;
     private UserHabitDao2 mUserHabitDao2;
@@ -20,9 +24,9 @@ public class UserHabitRespository {
     private LiveData<List<UserHabitState>> mYesterdayHabitList;
     private LiveData<List<UserHabitState>> mTomorrowHabitList;
 
+
     public UserHabitRespository(Application application ){
         this.db =  AppDatabase.getInMemoryDatabase(application);
-
         this.mUserHabitDao = db.userhabitModel();
         this.mUserHabitDao2 = db.userhabitModel2();
         this.mUserHabitList = this.mUserHabitDao.getAllHabitLive();
@@ -92,11 +96,79 @@ public class UserHabitRespository {
     }
 
     public void insertAllUserHabit(List<UserHabitDetail> userHabitDetailList, List<UserHabitState> userHabitStateList) {
-        new InsertUserAllUserHabitDetail(mUserHabitDao).execute(userHabitDetailList);
-        new InsertUserAllUserHabitState(mUserHabitDao).execute(userHabitStateList);
+        new insertAllUserHabitAsyncTask(mUserHabitDao2, userHabitDetailList, userHabitStateList).execute();
 
     }
 
+    private class insertAllUserHabitAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        UserHabitDao2 mUserHabitDao2;
+        List<UserHabitDetail> mUserHabitDetailList;
+        List<UserHabitState> mUserHabitStateList;
+
+
+        public insertAllUserHabitAsyncTask(UserHabitDao2 mUserHabitDao2, List<UserHabitDetail> userHabitDetailList, List<UserHabitState> userHabitStateList) {
+            this.mUserHabitDao2 = mUserHabitDao2;
+            this.mUserHabitDetailList = userHabitDetailList;
+            this.mUserHabitStateList = userHabitStateList;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Log.d(TAG, "Progress TEST start");
+            // show dialog
+//            asyncDialog.show();
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mUserHabitDao2.insertUserAllHabit(mUserHabitDetailList, mUserHabitStateList);
+            return null;
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Log.d(TAG, "Progress TEST onProgressUpdate");
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Log.d(TAG, "Progress TEST onPostExecute");
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+
+            Log.d(TAG, "Progress TEST onCancelled");
+        }
+
+    }
+
+
+    public void insertAllUserHabitState(List<UserHabitState> userHabitStateList) {
+        new InsertUserAllUserHabitState(mUserHabitDao).execute(userHabitStateList);
+    }
+
+    private class InsertUserAllUserHabitState extends AsyncTask<List<UserHabitState>, Void, Void> {
+
+        UserHabitDao mUserHabitDao;
+        InsertUserAllUserHabitState(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<UserHabitState>... lists) {
+            List<UserHabitState> listDetail = lists[0];
+            mUserHabitDao.insertAllUserHabitState(listDetail);
+            return null;
+        }
+    }
     public void insertAllUserHabitDetail(List<UserHabitDetail> userHabitDetailList) {
         new InsertUserAllUserHabitDetail(mUserHabitDao).execute(userHabitDetailList);
 
@@ -156,25 +228,6 @@ public class UserHabitRespository {
 
     }
 
-    public void insertAllUserHabitState(List<UserHabitState> userHabitStateList) {
-        new InsertUserAllUserHabitState(mUserHabitDao).execute(userHabitStateList);
-    }
-
-
-    private class InsertUserAllUserHabitState extends AsyncTask<List<UserHabitState>, Void, Void> {
-
-        UserHabitDao mUserHabitDao;
-        InsertUserAllUserHabitState(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected Void doInBackground(List<UserHabitState>... lists) {
-            List<UserHabitState> listDetail = lists[0];
-            mUserHabitDao.insertAllUserHabitState(listDetail);
-            return null;
-        }
-    }
 
     private class QueryUserAllHabitListAsyncTask extends AsyncTask<Void, Void, List<UserHabitDetail> > {
         private UserHabitDao mUserHabitDao;
@@ -631,22 +684,5 @@ public class UserHabitRespository {
     }
 
 
-
-    // 요일별 습관 get 종료 ////////
-
-    // 유명인사 set 에서 추가하기
-    // 1. d에 추가
-    // 2. s에 추가 이거는 요일 별로
-            // 요일별로 추가할때는 qriority 가 있음
-
-
-
-    // 하나 추가하기
-    // _d 그리고 _s에도 추가시켜줘야함
-
-    // 수정하기
-    // _d 도수정 _에도 수정해야함
-
-    // 1회 수행 1회 취소는 화면에서 하고 수정 끝나면 db 저장
 
 }

@@ -1,10 +1,15 @@
 package com.postfive.habit.db;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.widget.ContentFrameLayout;
+
+import com.postfive.habit.view.login.LoginActivity;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -20,9 +25,9 @@ public class HabitRespository {
     private LiveData<List<Habit>> mHabitList;
     private LiveData<List<CelebHabitMaster>> mCelebList;
 
+
     public HabitRespository(Application application) {
         this.db = AppDatabase.getInMemoryDatabase(application);
-
         this.mHabitDao = db.habitModel();
         this.mUserHabitDao = db.userhabitModel();
         this.mCelebHabitDao = db.celebModel();
@@ -46,6 +51,14 @@ public class HabitRespository {
     public LiveData<List<Habit>> getAllHabitLive() {return mHabitList; }
     // 전체 가져오기 실시간
 
+
+
+    // 전체 가져오기 실시간
+    public LiveData<List<CelebHabitMaster>> getAllCelebLive() {return mCelebList; }
+    // 전체 가져오기 실시간
+
+
+
     // 전체 가져오기 한번에
     public List<Habit> getAllHabit(){
         List<Habit> habitList = null;
@@ -59,14 +72,6 @@ public class HabitRespository {
         }
         return habitList;
     }
-
-
-    // 전체 가져오기 실시간
-    public LiveData<List<CelebHabitMaster>> getAllCelebLive() {return mCelebList; }
-    // 전체 가져오기 실시간
-
-
-
 
     private class QueryHabitListAsyncTask extends AsyncTask<Void, Void, List<Habit>> {
         private HabitDao mAsyncTaskHabitDao;
@@ -256,6 +261,7 @@ public class HabitRespository {
 
     }
 
+/*
 
     public List<CelebHabitDetail> selectTimeCeleb(int time, int celebcode) {
         Integer[] input = new Integer[2];
@@ -275,6 +281,7 @@ public class HabitRespository {
 
     }
 
+
     private class SelectTimeCeleb extends AsyncTask<Integer[] , Void, List<CelebHabitDetail>> {
         CelebHabit mCelebHabitDao;
         SelectTimeCeleb(CelebHabit mCelebHabitDao) {
@@ -289,7 +296,7 @@ public class HabitRespository {
         }
 
     }
-
+*/
 
 
 
@@ -400,6 +407,8 @@ public class HabitRespository {
         UserHabitDao mUserHabitDao;
         HabitDao mHabitDao;
         CelebHabit mCelebHabit;
+
+
         public DeleteAllAsyncTask(UserHabitDao mUserHabitDao
                 , HabitDao mHabitDao
                 , CelebHabit mCelebHabit) {
@@ -407,6 +416,7 @@ public class HabitRespository {
             this.mHabitDao = mHabitDao;
             this.mCelebHabit = mCelebHabit;
         }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -418,6 +428,8 @@ public class HabitRespository {
             mCelebHabit.delAllCelebHabitMaster();
             return null;
         }
+
+
     }
 
 
