@@ -2,7 +2,6 @@ package com.postfive.habit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 public class UserSettingValue {
     private static UserSettingValue mUserSettingValue = null;
@@ -238,7 +237,7 @@ public class UserSettingValue {
 
         // 설정값 변수 설정 종료
 
-        Toast.makeText(mContext, "설정값 초기화", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "설정값 초기화", //Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -346,14 +345,14 @@ public class UserSettingValue {
     public boolean init() {
         boolean getBoolean = settings.getBoolean("isAppinit", false);
 
-        Toast.makeText(mContext, "SharedPreference read", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "SharedPreference read", //Toast.LENGTH_LONG).show();
 
         if (getBoolean) {
-            Toast.makeText(mContext, "최초 실행 아님", Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, "최초 실행 아님", //Toast.LENGTH_LONG).show();
             readValue();
             return false;
         } else{
-            Toast.makeText(mContext, "최초 실행", Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, "최초 실행", //Toast.LENGTH_LONG).show();
             resetValue();
             return true;
         }
@@ -372,7 +371,7 @@ public class UserSettingValue {
 
         setResolutionValue(settings.getString("resolution", "안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!"));
 
-        Toast.makeText(mContext, "설정값 읽어오기 ", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "설정값 읽어오기 ", //Toast.LENGTH_LONG).show();
 
     }
     public static int getMorningPushHour() {

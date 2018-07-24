@@ -16,4 +16,6 @@ public interface MyHabitListRecyclerViewModel {
     public void addHabit(UserHabitDetail habit);
 
     public void setHabit(List<UserHabitDetail> habitList);
+
+    public void setAllHabit(List<UserHabitDetail> habitList);
 }

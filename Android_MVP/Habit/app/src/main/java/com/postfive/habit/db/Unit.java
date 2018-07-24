@@ -20,10 +20,15 @@ public class Unit {
 
     /* Unit CODE */
     @Ignore
-    public static int LIQUID_UNIT = 1; // 액체
-
+    public static int LIQUID_UNIT = 1; // 시간
     @Ignore
-    public static int NUMBER_UNIT = 2; // 횟수
+    public static int TIME_UNIT = 2; // 시간
+    @Ignore
+    public static int COUNT_UNIT = 3; // 횟수
+    @Ignore
+    public static int SET_UNIT = 4; // 세트
+    @Ignore
+    public static int WALK_UNIT = 5; // 걸음
 
 
     public Unit(@NonNull int unitcode, @NonNull String unit) {

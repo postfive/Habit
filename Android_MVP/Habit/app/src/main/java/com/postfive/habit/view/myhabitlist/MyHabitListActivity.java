@@ -35,20 +35,14 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
 
     private static final String TAG = "MyHabitListActivity";
     private Button mBtnHait;
-    private Button mBtnHait2;
     private RecyclerView mRecyclerView;
     private MyHabitListRecyclerViewAdapter mRecyclerViewAdapter;
 
     private UserHabitRespository mUserHabitRespository;
     private HabitRespository mabitRespository;
 
-    private HabitFactory mHabitFactory;
+    private List<UserHabitDetail> mHabitList;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +64,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        mBtnHait = (Button)findViewById(R.id.btn_habit);
+        mBtnHait = (Button)findViewById(R.id.btn_add_habit);
         mBtnHait.setOnClickListener(this);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_my_habit_list);
@@ -80,9 +74,9 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         mRecyclerViewAdapter = new MyHabitListRecyclerViewAdapter();
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         connectDB();
-        List<UserHabitDetail> detailList = mUserHabitRespository.getAllUserHabitDetail();
+        mHabitList = mUserHabitRespository.getAllUserHabitDetail();
 
-        mRecyclerViewAdapter.setHabit(detailList);
+        mRecyclerViewAdapter.setHabit(mHabitList);
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
@@ -94,11 +88,52 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        mHabitFactory = new HabitMaker();
+//        mHabitFactory = new HabitMaker();
+
 
         disconnectDB();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Toast.makeText(this, "onStart ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Toast.makeText(this, "onResume ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Toast.makeText(this, "onRestart ", Toast.LENGTH_SHORT).show();
+        // 다시 화면 돌아왔을때 리스트 다시 조회
+        connectDB();
+        mHabitList = mUserHabitRespository.getAllUserHabitDetail();
+        mRecyclerViewAdapter.setAllHabit(mHabitList);
+        disconnectDB();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Toast.makeText(this, "onStop ", Toast.LENGTH_SHORT).show();
+        // 메모리 해제
+        mHabitList = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(this, "onDestroy ", Toast.LENGTH_SHORT).show();
+
+    }
 
     /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
@@ -122,7 +157,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btn_habit :
+            case R.id.btn_add_habit :
                 Intent intent = new Intent(this, HabitListActivity.class);
                 startActivity(intent);
                 break;
@@ -134,6 +169,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     private void connectDB(){
 
         mUserHabitRespository = new UserHabitRespository(getApplication());
+        // 아래 테스트 끝나면 제거
         mabitRespository = new HabitRespository(getApplication());
     }
 
@@ -151,12 +187,13 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG,"go");
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n순서 | 습관코드 | 우선순위 | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+        sb.append("\n순서 | 습관코드 |  시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
 
         for(int i = 0 ; i < detailList.size(); i ++){
             UserHabitDetail tmp = detailList.get(i);
             ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |    "+ tmp.getPriority() +"    |    "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
+//            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |    "+ tmp.getPriority() +"    |    "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
+            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |     "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
             sb.append("\n");
         }
 
@@ -171,12 +208,12 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG,"go");
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\n요일 | 우선순위 | 순서  | 습관코드 | m우선순위 | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+        sb.append("\n요일 |  순서  | 습관코드 | d_seq | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
 
         for(int i = 0 ; i < detailList.size(); i ++){
             UserHabitState tmp = detailList.get(i);
             ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-            sb.append(tmp.getDayofweek() +"    |    "+ tmp.getPriority() +"   |  "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+            sb.append(tmp.getDayofweek() +"    |     "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
             sb.append("\n");
         }
 

@@ -239,11 +239,6 @@ public class CelebActivity extends AppCompatActivity  {
         }
     }
 
-    private void setHabits() {
-
-    }
-
-
     private void setHabit() {
         Toast.makeText(this,"저장!", Toast.LENGTH_LONG).show();;
         List<UserHabitDetail> userHabitDetailList  = new ArrayList<>();
@@ -289,7 +284,7 @@ public class CelebActivity extends AppCompatActivity  {
                     if ((tmp.getDaysum() & (1 << k)) > 0) {
                         userStatedaypriority++;
                         userStateseq++;
-                        UserHabitState statetmp = new UserHabitState(userStateseq, userStatedaypriority, k, usrtmp);
+                        UserHabitState statetmp = new UserHabitState(userStateseq, k, usrtmp);
                         userHabitStateList.add(statetmp);
 
                     }

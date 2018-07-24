@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
 
-        Toast.makeText(this, " "+Integer.toString(UserSettingValue.getAfternoonPushHour()) , Toast.LENGTH_LONG).show();
-        Toast.makeText(this, " "+UserSettingValue.getResolutionValue() , Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, " "+Integer.toString(UserSettingValue.getAfternoonPushHour()) , //Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, " "+UserSettingValue.getResolutionValue() , Toast.LENGTH_LONG).show();
 
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
         BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
