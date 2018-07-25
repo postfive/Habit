@@ -2,6 +2,7 @@ package com.postfive.habit.adpater.myhabit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.dd.processbutton.iml.SubmitProcessButton;
 import com.postfive.habit.R;
 import com.postfive.habit.db.Habit;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.view.habit.HabitActivity;
@@ -200,7 +202,9 @@ public class CustomPagerAdapter extends PagerAdapter {
                 tmpDayofWeek += strArryDayofWeek[i-1];
             }
         }
-        //habitImg.setImageDrawable();
+        Drawable drawable = mContext.getResources().getDrawable(userHabitState.getIcon());
+
+        habitImg.setImageDrawable(drawable);
         wDayV.setText(""+tmpDayofWeek);
 
 
@@ -380,12 +384,13 @@ public class CustomPagerAdapter extends PagerAdapter {
                     break;
                 case 7:
                     //Go modiActivity
-                    Intent intent = new Intent(mContext.getApplicationContext(), HabitActivity.class);
-// DB 에서 HabitDetail 가져오기
-//            ////////////////
 
-//                    intent.putExtra("object", habit);
+                    Intent intent = new Intent(mContext, HabitActivity.class);
+
+                    UserHabitDetail habit = new UserHabitDetail(0,tmpState);
+                    intent.putExtra("object", habit);
                     mContext.startActivity(intent);
+
 
                     break;
                 default:

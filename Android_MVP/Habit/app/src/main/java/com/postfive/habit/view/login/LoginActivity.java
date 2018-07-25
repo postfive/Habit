@@ -190,9 +190,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         CelebHabitMaster celebHabitmaster3 = new CelebHabitMaster("안영이",3,"모든 팀에서 탐내\n는 슈퍼 신입 되기", "밟아보세요 선배님. 그래봤자 발만 아프실거에요", "슈퍼 신입! 슈퍼 직장인!",  "img_ahnyoungi.jpg");
 
 
-        CelebHabitDetail celebHabitd1 = new CelebHabitDetail(1, Habit.ALLDAY_TIME, 1, 1, "물마시기", "하루에 6L 물마시기", 6, 6, 2, "L", "img_parkboram_detail_1.png", "blue", R.drawable.ic_water);
-        CelebHabitDetail celebHabitd2 = new CelebHabitDetail(1, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음날 예습하기", 6, 1, 1, "번", "img_parkboram_detail_2.png", "blue", R.drawable.ic_dry_fruits);
-        CelebHabitDetail celebHabitd3 = new CelebHabitDetail(1, Habit.NIGHT_TIME, 2, 3, "줄넘기하기", "쌩쌩이 10번", 6, 1, 1, "번", "img_parkboram_detail_3.png", "blue", R.drawable.ic_walking);
+        CelebHabitDetail celebHabitd1 = new CelebHabitDetail(1, Habit.ALLDAY_TIME, 1, 1, "물마시기", "하루에 6L 물마시기", 30, 6, 2, "L", "img_parkboram_detail_1.png", "blue", R.drawable.ic_water);
+        CelebHabitDetail celebHabitd2 = new CelebHabitDetail(1, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음날 예습하기", 28, 100, 5, "번", "img_parkboram_detail_2.png", "blue", R.drawable.ic_dry_fruits);
+        CelebHabitDetail celebHabitd3 = new CelebHabitDetail(1, Habit.NIGHT_TIME, 2, 3, "줄넘기하기", "쌩쌩이 10번", 62, 10, 1, "번", "img_parkboram_detail_3.png", "blue", R.drawable.ic_walking);
 
         CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", 30, 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
         CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", 124, 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
