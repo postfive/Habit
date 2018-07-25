@@ -57,14 +57,16 @@ public class UserHabitDetail implements Serializable {
     @ColumnInfo(name = "unit")
     private String unit ="";  // 단위 L ml 번
 
-    @ColumnInfo(name = "img")
-    private String img;  // 이미지 url
-
+    @NonNull
     @ColumnInfo(name = "color")
     private String color;  // 이미지 url
 
+    @NonNull
+    @ColumnInfo(name ="icon")
+    private int icon; // 단위
+
 //    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int priority, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
-    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
+    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, @NonNull String color, @NonNull int icon) {
         this.habitseq = habitseq;
         this.habitcode = habitcode;
 
@@ -77,8 +79,8 @@ public class UserHabitDetail implements Serializable {
         this.full = full;
         this.once = once;
         this.unit = unit;
-        this.img = img;
         this.color = color;
+        this.icon = icon;
     }
 
     public UserHabitDetail(@NonNull int habitseq , @NonNull CelebHabitDetail celebHabit) {
@@ -92,8 +94,22 @@ public class UserHabitDetail implements Serializable {
         this.full = celebHabit.getFull();
         this.once = celebHabit.getOnce();
         this.unit = celebHabit.getUnit();
-        this.img = celebHabit.getImg();
-        this.color = "";
+        this.color = celebHabit.getColor();
+        this.icon = celebHabit.getIcon();
+    }
+
+    public UserHabitDetail(@NonNull int habitseq , @NonNull UserHabitState userHabitState) {
+        this.habitseq = userHabitState.getMasterseq();
+        this.habitcode = userHabitState.getHabitcode();
+        this.time = userHabitState.getTime();
+        this.name = userHabitState.getName();
+        this.goal = userHabitState.getGoal();
+        this.daysum = userHabitState.getDaysum();
+        this.full = userHabitState.getFull();
+        this.once = userHabitState.getOnce();
+        this.unit = userHabitState.getUnit();
+        this.color = userHabitState.getColor();
+        this.icon = userHabitState.getIcon();
     }
 
     public UserHabitDetail( @NonNull Habit habit) {
@@ -107,8 +123,8 @@ public class UserHabitDetail implements Serializable {
         this.full = habit.getFull();
         this.once = habit.getOnce();
         this.unit = "";
-        this.img = habit.getImg();
         this.color = habit.getColor();
+        this.icon = habit.getIcon();
     }
 
     @NonNull
@@ -197,15 +213,6 @@ public class UserHabitDetail implements Serializable {
         this.unit = unit;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-
     public String getColor() {
         return color;
     }
@@ -223,6 +230,14 @@ public class UserHabitDetail implements Serializable {
         this.once = once;
     }
 
+    @NonNull
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(@NonNull int icon) {
+        this.icon = icon;
+    }
 /*
     @NonNull
     public String getType() {
@@ -232,14 +247,14 @@ public class UserHabitDetail implements Serializable {
     public void setType(@NonNull String type) {
         this.type = type;
     }*/
-public void setDaysumUsingOf(int mDayofWeek, boolean isSet) {
+    public void setDaysumUsingOf(int mDayofWeek, boolean isSet) {
 
-    if(isSet){
+        if(isSet){
         // 해당요일 설정
-        this.daysum |= (1 << mDayofWeek);
-    }else {
+            this.daysum |= (1 << mDayofWeek);
+        }else {
         // 해당요일 해제
-        this.daysum &= ~(1 << mDayofWeek);
+            this.daysum &= ~(1 << mDayofWeek);
+        }
     }
-}
 }

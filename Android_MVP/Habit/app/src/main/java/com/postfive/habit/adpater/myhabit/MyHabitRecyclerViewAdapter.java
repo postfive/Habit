@@ -1,5 +1,8 @@
 package com.postfive.habit.adpater.myhabit;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +22,11 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<UserHabitState> mMyHabitList;
     private int index = -1;
     private String[] strArryDayofWeek = {"일", "월", "화", "수", "목", "금", "토"};
+    private Context mContext;
 
-    public MyHabitRecyclerViewAdapter(){
+    public MyHabitRecyclerViewAdapter(Context context){
         mMyHabitList = new ArrayList<>();
-
+        this.mContext = context;
     }
 
     @Override
@@ -41,6 +45,9 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         ((RowCell)holder).goalText.setText( mMyHabitList.get(position).getGoal());
         ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getFull()+""+mMyHabitList.get(position).getUnit());
         ((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDid()+""+mMyHabitList.get(position).getUnit());
+        Drawable drawable = mContext.getResources().getDrawable(mMyHabitList.get(position).getIcon());
+
+        ((RowCell)holder).imageView.setImageDrawable(drawable);
 
 
         String tmpDayofWeek ="";
@@ -110,7 +117,7 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         mMyHabitList.clear();
         mMyHabitList.addAll(allHabit);
-
+        notifyDataSetChanged();
     }
 
     @Override

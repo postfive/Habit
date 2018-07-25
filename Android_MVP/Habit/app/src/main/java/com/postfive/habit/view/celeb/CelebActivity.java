@@ -275,7 +275,7 @@ public class CelebActivity extends AppCompatActivity  {
                 userDetailIdx++;
                 UserHabitDetail usrtmp = new UserHabitDetail(userDetailIdx, tmp);
                 userHabitDetailList.add(usrtmp);
-                //Log.d(TAG,   usrtmp.getTime() +"/"+  usrtmp.getPriority() +"/"+ usrtmp.getHabitcode() +"/"+usrtmp.getName() +"/"+ usrtmp.getGoal() +"/"+ usrtmp.getDaysum() +"/"+ usrtmp.getFull() +"/"+ usrtmp.getUnit() );
+                Log.d(TAG,   usrtmp.getTime() +"/"+ usrtmp.getHabitcode() +"/"+usrtmp.getName() +"/"+ usrtmp.getGoal() +"/"+ usrtmp.getDaysum() +"/"+ usrtmp.getFull() +"/"+ usrtmp.getUnit() );
 
                 // user state 습관 넣기
                 for (int dayofweek = 1; dayofweek < 8; dayofweek++) {
@@ -296,10 +296,13 @@ public class CelebActivity extends AppCompatActivity  {
         UserHabitRespository mUserHabitRespository = new UserHabitRespository(getApplication());
 
 
+        Log.d(TAG, "왜지 어디지 "+Integer.toString(userHabitDetailList.size()));
         mUserHabitRespository.insertAllUserHabit(userHabitDetailList, userHabitStateList);
 
-        mUserHabitRespository.destroyInstance();
         Toast.makeText(this,"저장! 완료", Toast.LENGTH_LONG).show();;
         //disconnectDB();
+        mUserHabitRespository.destroyInstance();
+
+        finish();
     }
 }

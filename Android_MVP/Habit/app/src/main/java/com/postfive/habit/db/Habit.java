@@ -52,6 +52,10 @@ public class Habit  {
     @ColumnInfo(name = "color")
     private String color;    // 한번 할양
 
+    @NonNull
+    @ColumnInfo(name = "icon")
+    private int icon;    // 한번 할양
+
 
     @Ignore
     public static int ALLDAY_TIME = 0;
@@ -67,7 +71,7 @@ public class Habit  {
     }
 
     @Ignore
-    public Habit(@NonNull int habitcode, @NonNull String name, @NonNull String type, @NonNull int unitcode, @NonNull int time, @NonNull int full, @NonNull int once, @NonNull int daysum, @NonNull String color, @NonNull String img) {
+    public Habit(@NonNull int habitcode, @NonNull String name, @NonNull String type, @NonNull int unitcode, @NonNull int time, @NonNull int full, @NonNull int once, @NonNull int daysum, @NonNull String color, @NonNull String img, @NonNull int icon) {
         this.habitcode = habitcode;
         this.name = name;
         this.type = type;
@@ -78,6 +82,7 @@ public class Habit  {
         this.daysum = daysum;
         this.img = img;
         this.color = color;
+        this.icon = icon;
     }
 
     public void prepare(){}
@@ -174,4 +179,12 @@ public class Habit  {
         this.color = color;
     }
 
+    @NonNull
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(@NonNull int icon) {
+        this.icon = icon;
+    }
 }

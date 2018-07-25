@@ -52,7 +52,16 @@ public class CelebHabitDetail {
     @ColumnInfo(name ="img")
     public String img; // 이미지
 
-    public CelebHabitDetail(@NonNull int celebcode, @NonNull int time, @NonNull int priority, @NonNull int habitcode, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, @NonNull String img) {
+    @NonNull
+    @ColumnInfo(name ="icon")
+    private int icon; // 단위
+
+    @NonNull
+    @ColumnInfo(name ="color")
+    private String color; // 단위
+
+
+    public CelebHabitDetail(@NonNull int celebcode, @NonNull int time, @NonNull int priority, @NonNull int habitcode, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, @NonNull String img, @NonNull String color, @NonNull int icon) {
         this.celebcode = celebcode;
         this.time = time;
         this.priority = priority;
@@ -64,6 +73,9 @@ public class CelebHabitDetail {
         this.once = once;
         this.unit = unit;
         this.img = img;
+        this.icon = icon;
+        this.color = color;
+
     }
 
     @NonNull
@@ -163,5 +175,24 @@ public class CelebHabitDetail {
 
     public void setGoal(@NonNull String goal) {
         this.goal = goal;
+    }
+
+
+    @NonNull
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(@NonNull int icon) {
+        this.icon = icon;
+    }
+
+    @NonNull
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(@NonNull String color) {
+        this.color = color;
     }
 }

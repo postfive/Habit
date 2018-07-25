@@ -76,7 +76,7 @@ public abstract class AppDatabase extends android.arch.persistence.room.RoomData
         @Override
         protected Void doInBackground(final Void... params) {
 
-            populateWithTestData(mUserHabitDao, mUserHabitDao2, mCelebModel,  mHabitModel);
+//            populateWithTestData(mUserHabitDao, mUserHabitDao2, mCelebModel,  mHabitModel);
             return null;
         }
     }
@@ -88,6 +88,7 @@ public abstract class AppDatabase extends android.arch.persistence.room.RoomData
     }
 
 
+/*
 
     private static void populateWithTestData(UserHabitDao mUserHabitDao
                                                 , UserHabitDao2 mUserHabitDao2
@@ -126,5 +127,6 @@ public abstract class AppDatabase extends android.arch.persistence.room.RoomData
 
         Log.d(TAG, "초기화 종료 ");
     }
+*/
 
 }
