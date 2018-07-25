@@ -75,7 +75,6 @@ public class HabitListActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-
                 Habit habit = myRecyclerViewAdapter.getHabit(position);
 
                 UserHabitDetail userHabitDetail = new UserHabitDetail(habit);
