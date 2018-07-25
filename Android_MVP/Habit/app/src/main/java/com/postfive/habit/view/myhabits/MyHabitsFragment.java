@@ -98,6 +98,8 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         // TODO 오늘 놓친것
         mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(nowTime);
 
+        ///github update test
+
         // TODO 내일 습관
         int tomorrow = today +1;
         if(tomorrow > 7)
