@@ -75,7 +75,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         btnTodayHabits = (Button)view.findViewById(R.id.btn_today);
         btnTodayHabits.setOnClickListener(this);
 
-        mMyHabitRecyclerViewAdapter = new MyHabitRecyclerViewAdapter();
+        mMyHabitRecyclerViewAdapter = new MyHabitRecyclerViewAdapter(getContext());
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_my_habits_fragemnt_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(mMyHabitRecyclerViewAdapter);
@@ -96,7 +96,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
 
         // TODO 오늘 놓친것
-        mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(nowTime);
+//        mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(nowTime);
 
         // TODO 내일 습관
         int tomorrow = today +1;
@@ -140,12 +140,13 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
-/*        Calendar day = Calendar.getInstance();
+        Calendar day = Calendar.getInstance();
         // 오늘 요일
         int today = day.get(Calendar.DAY_OF_WEEK);
         // TODO 오늘 습관 가져오기
         mUserHabitStatesList = mUserHabitRespository.getDayHabit(today);
-        // TODO 내일 습관
+
+/*        // TODO 내일 습관
         int tomorrow = today + 1;
         if (tomorrow > 7)
             tomorrow = 1;
@@ -155,10 +156,10 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         if (yesterday < 1)
             yesterday = 7;
         mUserHabitStatesYesterdayList = mUserHabitRespository.getDayHabit(yesterday);
-        // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
+        // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////*/
 
 
-        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);*/
+        mMyHabitRecyclerViewAdapter.setAllHabit(mUserHabitStatesList);
 
         // Fragment가 화면에 표시될때 사용자의 Action과 상호작용 불가
 //        Toast.makeText(getContext(), "onStart", Toast.LENGTH_SHORT).show();
@@ -221,7 +222,17 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                     day = 1;
 
 
+                mUserHabitRespository = new UserHabitRespository(getActivity().getApplication());
                 List<UserHabitDetail> userHabitDetailList = mUserHabitRespository.getAllUserHabitDetail();
+
+                if( userHabitDetailList == null) {
+                    Log.d(TAG, "왜지 어디지 NULLLLL");
+                    return;
+                }else{
+                    Log.d(TAG, " 어디지 " + Integer.toString(userHabitDetailList.size()));
+                }
+
+
                 StringBuilder sb1 = new StringBuilder();
                 sb1.append("\nD_seq | 날짜합 | 시간 |  습관코드 |  이름 | 목표 | 하루 목표 | 날짜합 | 전체 | 단위 \n");
 
@@ -273,10 +284,11 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
 
                 // TODO 오늘 놓친것
+                time = 1;
                 List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(time);
 
                 StringBuilder sb4 = new StringBuilder();
-                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+                sb4.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
 
                 for(int i = 0 ; i < userPassHabitStatesList.size(); i ++){
                     UserHabitState tmp = userPassHabitStatesList.get(i);
@@ -288,6 +300,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb4.toString());
                 Log.d(TAG,"finish");
 
+                mUserHabitRespository.destroyInstance();
             default:
                 break;
         }

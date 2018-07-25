@@ -288,7 +288,7 @@ public class UserHabitRespository {
         List<UserHabitState> userHabitStatesList = null;
 
         try {
-            userHabitStatesList = new QueryTodayPassHabitListAsyncTask(mUserHabitDao).execute().get();
+            userHabitStatesList = new QueryTodayPassHabitListAsyncTask(mUserHabitDao).execute(nowTime).get();
         } catch (InterruptedException e){
             e.printStackTrace();
         } catch (ExecutionException e){

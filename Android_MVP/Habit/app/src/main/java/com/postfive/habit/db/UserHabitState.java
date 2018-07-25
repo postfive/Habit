@@ -64,7 +64,15 @@ public class UserHabitState {
     @ColumnInfo(name ="unit")
     private String unit; // 단위
 
-    public UserHabitState(@NonNull int habitstateseq, @NonNull int habitcode, @NonNull int masterseq, @NonNull int dayofweek, @NonNull int daysum, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int did, @NonNull int once, @NonNull int full, @NonNull String unit) {
+    @NonNull
+    @ColumnInfo(name ="icon")
+    private int icon; // 단위
+
+    @NonNull
+    @ColumnInfo(name ="color")
+    private String color; // 단위
+
+    public UserHabitState(@NonNull int habitstateseq, @NonNull int habitcode, @NonNull int masterseq, @NonNull int dayofweek, @NonNull int daysum, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int did, @NonNull int once, @NonNull int full, @NonNull String unit, @NonNull String color, @NonNull int icon) {
 //    public UserHabitState(@NonNull int habitstateseq, @NonNull int habitcode, @NonNull int masterseq, @NonNull int dayofweek, @NonNull int priority, @NonNull int daysum, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int did, @NonNull int once, @NonNull int full, @NonNull String unit) {
         this.habitstateseq = habitstateseq;
         this.habitcode = habitcode;
@@ -80,6 +88,8 @@ public class UserHabitState {
         this.once = once;
         this.full = full;
         this.unit = unit;
+        this.icon = icon;
+        this.color = color;
     }
 
 //    public UserHabitState(@NonNull int habitstateseq, @NonNull int priority, @NonNull int dayofweek, UserHabitDetail habitDetail) {
@@ -104,6 +114,8 @@ public class UserHabitState {
         this.once = habitDetail.getOnce();
         this.full = habitDetail.getFull();
         this.unit = habitDetail.getUnit();
+        this.icon = habitDetail.getIcon();
+        this.color = habitDetail.getColor();
     }
 
 
@@ -233,6 +245,23 @@ public class UserHabitState {
         this.unit = unit;
     }
 
+    @NonNull
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(@NonNull int icon) {
+        this.icon = icon;
+    }
+
+    @NonNull
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(@NonNull String color) {
+        this.color = color;
+    }
 
 /*    @NonNull
     public String getType() {
