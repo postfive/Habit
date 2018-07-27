@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.postfive.habit.ItemClickSupport;
@@ -47,6 +49,17 @@ public class CelebListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_celeb_list, container, false);
+
+        NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview);
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
+            layoutParams.topMargin = result;
+            nestedscrollview.setLayoutParams(layoutParams);
+        }
         int width = getResources().getDisplayMetrics().widthPixels;
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
 
@@ -56,6 +69,9 @@ public class CelebListFragment extends Fragment {
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
+
+
+
 
         // DB ViewModelProviders  설정
         CelebHabitViewModel celebHabitViewModel = ViewModelProviders.of(this).get(CelebHabitViewModel.class);

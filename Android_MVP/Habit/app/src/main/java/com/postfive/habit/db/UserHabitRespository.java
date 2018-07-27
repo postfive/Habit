@@ -309,7 +309,7 @@ public class UserHabitRespository {
         protected List<UserHabitState> doInBackground(Integer... Integers) {
 
             List<Integer> timeList = new ArrayList<>();
-            for(int i = 0 ; i < Integers[0] ; i ++){
+            for(int i = 1 ; i < Integers[0] ; i ++){
                 timeList.add(i);
             }
 

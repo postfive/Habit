@@ -8,6 +8,7 @@ import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+
 
         loadFragment(new MyHabitsFragment());
 
@@ -146,4 +149,15 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 }

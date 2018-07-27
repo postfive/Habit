@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
+import com.postfive.habit.Utils;
 import com.postfive.habit.db.AppDatabase;
 import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.CelebHabitMaster;
@@ -19,9 +20,11 @@ import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.Unit;
 import com.postfive.habit.db.UserHabitRespository;
+import com.postfive.habit.noti.HabitNoti;
 import com.postfive.habit.view.main.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -50,15 +53,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initComponent();
 
 
-        new CheckTypesTask().execute();
+
         // 앱 최초 실행 여부 확인
         if(mUserSettingValue.init()) {
             // 디비 초기화
-
+            new CheckTypesTask().execute();
             connectDB();
             populateWithTestData();
+        }else{
+            new CheckTypesTask().execute();
         }
 
+        new HabitNoti(this).Alarm();
 
 
     }
@@ -194,9 +200,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         CelebHabitDetail celebHabitd2 = new CelebHabitDetail(1, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음날 예습하기", 28, 100, 5, "번", "img_parkboram_detail_2.png", "blue", R.drawable.ic_dry_fruits);
         CelebHabitDetail celebHabitd3 = new CelebHabitDetail(1, Habit.NIGHT_TIME, 2, 3, "줄넘기하기", "쌩쌩이 10번", 62, 10, 1, "번", "img_parkboram_detail_3.png", "blue", R.drawable.ic_walking);
 
-        CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", 30, 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
-        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", 124, 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
-            CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", 124, 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
+        CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", Utils.setDaySum(Calendar.FRIDAY,true) , 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
+        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", Utils.setDaySum(Calendar.FRIDAY,true) , 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
+        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
+        CelebHabitDetail celebHabitd24 = new CelebHabitDetail(2, Habit.ALLDAY_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 하루종일 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
 
 
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster);
@@ -209,6 +216,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mHabitRespository.insertCelebHabitDetail(celebHabitd21);
         mHabitRespository.insertCelebHabitDetail(celebHabitd22);
         mHabitRespository.insertCelebHabitDetail(celebHabitd23);
+        mHabitRespository.insertCelebHabitDetail(celebHabitd24);
 
         Unit unitLiquid1 = new Unit(Unit.LIQUID_UNIT, "L");
         Unit unitLiquid2 = new Unit(Unit.LIQUID_UNIT, "mL");

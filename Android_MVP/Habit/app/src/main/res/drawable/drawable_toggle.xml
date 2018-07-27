@@ -4,10 +4,11 @@
     <!-- 클릭 했을 경우 -->
     <item
         android:state_checked="true"
-        android:drawable="@drawable/drawable_circle_toggle_on"/>
+        android:drawable="@drawable/drawable_toggle_on"/>
 
     <!-- 클릭하지 않은 경우 -->
     <item
-        android:drawable="@drawable/drawable_circle_toggle_off"/>
+        android:drawable="@drawable/drawable_toggle_off"/>
+
 
 </selector>

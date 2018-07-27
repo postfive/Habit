@@ -12,7 +12,8 @@
         android:configChanges="keyboardHidden|orientation">
         <activity
             android:name=".view.main.MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main">
 
 
         </activity>
@@ -31,9 +32,14 @@
         <activity android:name=".view.celeb.CelebActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".view.habit.HabitActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan">
+
+
+        </activity>
         <activity android:name=".view.HabitList.HabitListActivity">
         </activity>
+        <receiver android:name=".noti.BroadcastD">
+        </receiver>
     </application>
 
 </manifest>

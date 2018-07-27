@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.myhabits.MyHabitsFragment">
-
+    android:orientation="vertical">
+<!--
     <android.support.v7.widget.RecyclerView
         android:id ="@+id/recyclerview_my_habits_fragemnt_list"
         android:layout_width="match_parent"
@@ -27,6 +26,6 @@
         android:id="@+id/btn_today"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="습관 가저오기" />
+        android:text="습관 가저오기" />-->
 
 </LinearLayout>

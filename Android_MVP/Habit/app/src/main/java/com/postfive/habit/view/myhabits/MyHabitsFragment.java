@@ -2,6 +2,7 @@ package com.postfive.habit.view.myhabits;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.postfive.habit.ItemClickSupport;
@@ -25,6 +27,8 @@ import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -84,10 +88,11 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
         //pager.setCurrentItem(1);
+        LinearLayout myhabitTitle = (LinearLayout)view.findViewById(R.id.myhabit_title);
+        myhabitTitle.setBackground(assignImage(view,"img_parkboram_list.jpg"));
 
-//
-//        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication(), );
-
+        Button button = (Button)view.findViewById(R.id.btn_today);
+        button.setOnClickListener(this);
 
         // TODO 현재 지금
         List<UserHabitState> mUserHabitStatesList = mUserHabitRespository.getNowHabit(1);
@@ -102,20 +107,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setToday(date_tv);
-
-/*        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // TODO 리스트 클릭시  수행
-
-                UserHabitState tmp = mMyHabitRecyclerViewAdapter.getHabit(position);
-
-                tmp.setDid(tmp.getDid()+tmp.getOnce());
-                mMyHabitRecyclerViewAdapter.changeHabit(position, tmp);
-                // update
-                mUserHabitRespository.updateUserHabitState(tmp);
-            }
-        });*/
 
         return view;
     }
@@ -268,13 +259,51 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 Log.d(TAG,"finish");
 
 
+
                 // TODO 오늘 놓친것
-                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(time);
+                List<UserHabitState> userPassHabitStatesList2 = mUserHabitRespository.getPassHabit(Habit.MORNING_TIME);
+
+                StringBuilder sb5 = new StringBuilder();
+                sb5.append("\n"+Integer.toString(Habit.MORNING_TIME)+" 아침 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+                for(int i = 0 ; i < userPassHabitStatesList2.size(); i ++){
+
+                    UserHabitState tmp = userPassHabitStatesList2.get(i);
+                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+                    sb5.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb5.append("\n");
+                }
+
+                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb5.toString());
+                Log.d(TAG,"finish");
+
+
+                // TODO 오늘 놓친것
+                List<UserHabitState> userPassHabitStatesList3 = mUserHabitRespository.getPassHabit(Habit.AFTERNOON_TIME);
+
+                StringBuilder sb6 = new StringBuilder();
+                sb6.append("\n"+Integer.toString(Habit.AFTERNOON_TIME)+" 오후 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+
+                for(int i = 0 ; i < userPassHabitStatesList3.size(); i ++){
+
+                    UserHabitState tmp = userPassHabitStatesList3.get(i);
+                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+                    sb6.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+                    sb6.append("\n");
+                }
+
+                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb6.toString());
+                Log.d(TAG,"finish");
+
+
+                // TODO 오늘 놓친것
+                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(Habit.NIGHT_TIME);
 
                 StringBuilder sb4 = new StringBuilder();
-                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+                sb4.append("\n"+Integer.toString(Habit.NIGHT_TIME)+" 저녁 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
 
                 for(int i = 0 ; i < userPassHabitStatesList.size(); i ++){
+
                     UserHabitState tmp = userPassHabitStatesList.get(i);
                     ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
                     sb4.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
@@ -284,10 +313,38 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
                 Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb4.toString());
                 Log.d(TAG,"finish");
 
+
             default:
                 break;
         }
     }
 
+    private Drawable assignImage(View v, String imgUri){
+        InputStream inputStream = null;
+        Drawable img = null;
 
+        try{
+            inputStream = v.getContext().getResources().getAssets().open(imgUri);
+            img = Drawable.createFromStream(inputStream, null);
+            inputStream.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return img;
+    }
+    public void mOnClick(View v){
+        int position;
+
+        switch (v.getId()){
+            case R.id.prev_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position - 1, true);
+                break;
+            case R.id.next_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position + 1, true);
+                break;
+        }
+    }
 }

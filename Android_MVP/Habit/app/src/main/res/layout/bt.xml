@@ -25,7 +25,9 @@
         custom:pb_colorError="@color/red_error"
         custom:pb_colorNormal="@color/holo_red_light"
         custom:pb_colorPressed="@color/blue_pressed"
-        custom:pb_colorProgress="#1010FF" />
+        custom:pb_colorProgress="#1010FF"
+
+        />
     <!--custom:pb_textComplete="Success"-->
     <!--custom:pb_textError="Error"-->
     <!--custom:pb_textProgress="Loading" />-->

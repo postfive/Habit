@@ -2,6 +2,9 @@ package com.postfive.habit.view.habit;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class HabitActivity extends AppCompatActivity {
+public class HabitActivity extends AppCompatActivity implements  CompoundButton.OnCheckedChangeListener{
 
 
     private static final String TAG = "HabitActivity";
@@ -47,16 +51,15 @@ public class HabitActivity extends AppCompatActivity {
     private UserHabitDetail mHabit;
 
     /* 화면 component */
-    private TextView mHabitType ;               //목표
+//    private TextView mHabitType ;               //목표
     private EditText mGoalEdtText ;             //목표
+    private TextInputLayout mGoalTextInputLayout ;             //목표
     private EditText mDayGoalEdtText;           // 일목표
-    private EditText mOnceEdtText ;             // 일 회 수행 양(?)
+//    private EditText mOnceEdtText ;             // 일 회 수행 양(?)
     private Spinner mSpinnerUnit;               // 단위
-    private TextView mUnitTextview;
+//    private TextView mUnitTextview;
     private int [] mDayofWeekToggleBtnId;       // 요일 버튼 id
     private ToggleButton[] mDayofWeekToggleBtn; // 요일 버튼
-    private ToggleButton mEveryDayToggleBtn;    // 매일 버튼
-    private ToggleButton mEveryWeekToggleBtn;   // 매주 버튼
 
 
     private ToggleButton mMorningTimeToggleBtn;     // 아침 버튼
@@ -88,6 +91,8 @@ public class HabitActivity extends AppCompatActivity {
     private void processIntent() {
         Intent receivedIntent = getIntent();
         int habitCode = receivedIntent.getIntExtra("habit", 0);
+        /// 테스트
+        habitCode = 1;
         mHabit = (UserHabitDetail) receivedIntent.getSerializableExtra("object");
 
 
@@ -141,6 +146,7 @@ public class HabitActivity extends AppCompatActivity {
         // Toolbar 설정
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_habit);
         setSupportActionBar(myToolbar);
+//        myToolbar.setPadding(0, getStatusBarHeight(), 0, 0);
 
         // 액션바 뒤로가기 버튼
         ActionBar actionBar = getSupportActionBar();
@@ -148,14 +154,32 @@ public class HabitActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
 
         //
-        mHabitType = (TextView)findViewById(R.id.textView_habit_type);
+//        mHabitType = (TextView)findViewById(R.id.textView_habit_type);
         // 목표 설정
+//        mGoalTextInputLayout = (TextInputLayout) findViewById(R.id.goal_text_input);
+
         mGoalEdtText = (EditText)findViewById(R.id.edittext_goal);
 
+//        mGoalTextInputLayout.setCounterEnabled(true);
+//        mGoalTextInputLayout.setCounterMaxLength(10);
+        mGoalEdtText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+/*                mGoalTextInputLayout.setHint(null);
+                if(hasFocus) {
+                    mGoalTextInputLayout.setError(getString(R.string.error_habit_goal));
+                }else{
+                    mGoalTextInputLayout.setError(null);
+
+                    mGoalTextInputLayout.setHint(getString(R.string.hint_habitname));
+                }*/
+            }
+        });
+
         mDayGoalEdtText = (EditText)findViewById(R.id.edittext_daygoal);       // 일목표
-        mOnceEdtText = (EditText)findViewById(R.id.edittext_once);             // 일 회 수행 양(?)
+//        mOnceEdtText = (EditText)findViewById(R.id.edittext_once);             // 일 회 수행 양(?)
         mSpinnerUnit = (Spinner)findViewById(R.id.spinner_unit);               // 단위
-        mUnitTextview = (TextView)findViewById(R.id.textview_unit);
+//        mUnitTextview = (TextView)findViewById(R.id.textview_unit);
 
         // 요일 토글 버튼 id array
         mDayofWeekToggleBtnId = new int[7];
@@ -177,14 +201,20 @@ public class HabitActivity extends AppCompatActivity {
         mDayofWeekToggleBtn[5] = (ToggleButton)findViewById(R.id.togglebtn_friday);
         mDayofWeekToggleBtn[6] = (ToggleButton)findViewById(R.id.togglebtn_saturday);
 
-        mEveryDayToggleBtn = (ToggleButton)findViewById(R.id.togglebtn_everyday);
-        mEveryWeekToggleBtn = (ToggleButton)findViewById(R.id.togglebtn_everyweek);
 
         // 시간 아침 오후 저녁toggleBtn_morning
         mMorningTimeToggleBtn   = (ToggleButton)findViewById(R.id.toggleBtn_morning);     // 아침 버튼
         mAfternoonTimeToggleBtn = (ToggleButton)findViewById(R.id.toggleBtn_afternoon);   // 오후 버튼
         mNightTimeToggleBtn     = (ToggleButton)findViewById(R.id.toggleBtn_night);       // 저녁 버튼
         mAllTimeToggleBtn       = (ToggleButton)findViewById(R.id.toggleBtn_all);       // 저녁 버튼
+
+        for(int i = 0 ; i < 7 ; i++){
+            mDayofWeekToggleBtn[i].setOnCheckedChangeListener(this);
+        }
+        mMorningTimeToggleBtn.setOnCheckedChangeListener(this);
+        mAfternoonTimeToggleBtn.setOnCheckedChangeListener(this);
+        mNightTimeToggleBtn.setOnCheckedChangeListener(this);
+        mAllTimeToggleBtn.setOnCheckedChangeListener(this);
 
         mHabitFactory = new HabitMaker();
 
@@ -199,14 +229,14 @@ public class HabitActivity extends AppCompatActivity {
         if(habit == null)
             return;
 
-        mHabitType.setText(habit.getName());
+//        mHabitType.setText(habit.getName());
 
         // 목표 set
-        mGoalEdtText.setText(habit.getGoal());
+//        mGoalEdtText.setText(habit.getGoal());
 
         // 1일 목표
         mDayGoalEdtText.setText(Integer.toString(habit.getFull()));
-        mOnceEdtText.setText(Integer.toString(habit.getOnce()));
+//        mOnceEdtText.setText(Integer.toString(habit.getOnce()));
 
         //
 
@@ -214,7 +244,7 @@ public class HabitActivity extends AppCompatActivity {
         connectDB();
         List<String> unitList = mUserHabitRespository.getHabitUnit(habit.getHabitcode());
         disconnectDB();
-//        Log.d(TAG, "get UnitList ?? "+ Integer.toString(unitList.size()));
+        Log.d(TAG, "get UnitList ?? "+ Integer.toString(unitList.size()));
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, unitList );
         mSpinnerUnit.setAdapter(arrayAdapter);
@@ -231,7 +261,7 @@ public class HabitActivity extends AppCompatActivity {
         });
         mSpinnerUnit.setId(0);
         mHabit.setUnit(unitList.get(0));
-        mUnitTextview.setText(unitList.get(0));
+//        mUnitTextview.setText(unitList.get(0));
 
 
         // 시간SET
@@ -287,14 +317,14 @@ public class HabitActivity extends AppCompatActivity {
 
         Log.d(TAG, "DayofWeek "+ Integer.toString(tmpDaySum));
         // 메일
-        if(tmpDaySum== 254) {
+        /*if(tmpDaySum== 254) {
             mEveryDayToggleBtn.setChecked(true);
             mEveryWeekToggleBtn.setChecked(false);
         }
         else {
             mEveryDayToggleBtn.setChecked(false);
             mEveryWeekToggleBtn.setChecked(true);
-        }
+        }*/
     }
 
     /**
@@ -342,6 +372,7 @@ public class HabitActivity extends AppCompatActivity {
             mEveryDayToggleBtn.setChecked(true);
             mEveryWeekToggleBtn.setChecked(false);
         }*/
+/*
 
 Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
         if (mHabit.getDaysum() == 254) {
@@ -357,15 +388,19 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
             mEveryDayToggleBtn.setChecked(false);
             mEveryWeekToggleBtn.setChecked(true);
         }
+*/
 
         Log.d(TAG, "Every dayday" +Integer.toString(mHabit.getDaysum()));
     }
+/*
 
-    /**
+    */
+/**
      * 빈도 매일선택
      *  일 월 화 수 목 금 토 set
      * @param v
-     */
+     *//*
+
     public void onClickEveryDay(View v){
         // 습관 미선택시 안됨
         if(mHabit == null){
@@ -401,11 +436,13 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
         Log.d(TAG, "Every Day " + Integer.toString(mHabit.getDaysum()));
     }
 
-    /**
+    */
+/**
      * 빈도 매주선택
      *  오늘 날짜 Set
      * @param v
-     */    public void onClickEveryWeek(View v){
+     *//*
+    public void onClickEveryWeek(View v){
         // 습관 미선택시 안됨
         if(mHabit == null){
             return;
@@ -441,6 +478,7 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
         Log.d(TAG, "Every Week " + Integer.toString(mHabit.getDaysum()));
     }
+*/
 
 
     public void onClickTime(View v){
@@ -513,13 +551,13 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
             return;
         }
         mHabit.setFull(Integer.parseInt(mDayGoalEdtText.getText().toString()));
-
+/*
         // 하루 수행 확인
         if(mOnceEdtText.getText().toString().length() < 1){
             Toast.makeText(this, "1회 수행 량이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
-        mHabit.setOnce(Integer.parseInt(mOnceEdtText.getText().toString()));
+        mHabit.setOnce(Integer.parseInt(mOnceEdtText.getText().toString()));*/
 
         // 요일 확인
         if(mHabit.getDaysum() < 1){
@@ -550,6 +588,7 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
             updateHait();
         }
         disconnectDB();
+        finish();
     }
 
     private void saveHait() {
@@ -632,6 +671,22 @@ Log.d(TAG, "DaySUM "+ Integer.toString(mHabit.getDaysum()));
 
         mUserHabitRespository.destroyInstance();
     }
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(isChecked)
+            buttonView.setTextColor(ContextCompat.getColor(this, R.color.toggleTextOn));
+        else
+            buttonView.setTextColor(ContextCompat.getColor(this, R.color.toggleTextOff));
+
+    }
 }

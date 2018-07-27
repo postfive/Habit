@@ -61,7 +61,7 @@ public class UserSettingValue {
             return false;
 
         MORNING_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        MORNING_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        MORNING_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 /*
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(MORNING_PUSH, strTime);*/
@@ -76,7 +76,7 @@ public class UserSettingValue {
             return false;
 
         AFTERNOON_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        AFTERNOON_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        AFTERNOON_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -93,7 +93,7 @@ public class UserSettingValue {
             return false;
 
         NIGHT_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        NIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        NIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -110,7 +110,7 @@ public class UserSettingValue {
             return false;
 
         GOODNIGHT_PUSH_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        GOODNIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        GOODNIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -127,7 +127,7 @@ public class UserSettingValue {
             return false;
 
         MORNING_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        MORNING_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        MORNING_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -146,7 +146,7 @@ public class UserSettingValue {
             return false;
 
         AFTERNOON_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        AFTERNOON_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        AFTERNOON_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -165,7 +165,7 @@ public class UserSettingValue {
             return false;
 
         NIGHT_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        NIGHT_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()-1));
+        NIGHT_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
 /*
         SharedPreferences.Editor editor = settings.edit();
@@ -206,10 +206,16 @@ public class UserSettingValue {
         editor.clear();
 
         editor.putBoolean("isAppinit", true);
+/*
         editor.putString("morningPush", "08:00");
         editor.putString("afternoonPush", "11:30");
         editor.putString("nightPush", "16:30");
         editor.putString("goodNightPush", "22:00");
+*/
+        editor.putString("morningPush",   "16:10");
+        editor.putString("afternoonPush", "16:15");
+        editor.putString("nightPush",     "16:30");
+        editor.putString("goodNightPush", "16:45");
 
         editor.putString("morningFrom", "04:00");
         editor.putString("morningTo", "11:30");
@@ -225,10 +231,15 @@ public class UserSettingValue {
         // SharedPreference 데이터 넣기 종료
 
         // 설정값 변수 설정 시작
-        setMorningPush("08:00");
+        /*setMorningPush("08:00");
         setAfternoonPush("11:30");
         setNightPush("16:30");
-        setGoodnightPush("22:00");
+        setGoodnightPush("22:00");*/
+        setMorningPush(  "16:10");
+        setAfternoonPush("16:15");
+        setNightPush(    "16:30");
+        setGoodnightPush("16:45");
+
         setMorningFrom("04:00");
         setAfternoonFrom("11:30");
         setNightFrom("18:00");
