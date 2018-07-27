@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fraLayout_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="@android:color/transparent"
+    android:padding="0dp"
+
+    >
+    <!--show progress-->
+    <RelativeLayout
+        android:id="@+id/proLayout_0_0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"></RelativeLayout>
+
+    <com.dd.processbutton.iml.SubmitProcessButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorError="@color/red_error"
+        custom:pb_colorNormal="@color/holo_red_light"
+        custom:pb_colorPressed="@color/blue_pressed"
+        custom:pb_colorProgress="#1010FF" />
+    <!--custom:pb_textComplete="Success"-->
+    <!--custom:pb_textError="Error"-->
+    <!--custom:pb_textProgress="Loading" />-->
+    <!--android:text="Submit Button"-->
+    <!--android:textColor="@android:color/white"-->
+
+    <!--touch here than tvs are appeared-->
+
+    <LinearLayout
+        android:id="@+id/liLayout_0_0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:padding="0dp"
+        android:translationZ="3dp">
+
+        <!--invisible tvs-->
+        <TextView
+            android:id="@+id/tv_0_0_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/layout_btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="O" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:id="@+id/icon_img"
+            android:layout_weight="0.8"
+            android:padding="15dp"
+            android:src="@drawable/watericon" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/desc">
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1.3"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="TODO"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.7"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="월월월No data"
+                android:textSize="7dp"
+                android:textColor="#d3d3d3"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/minus_0_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="-"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_0_0_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="Val"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/unit_0_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="회"
+            android:textSize="10dp" />
+        <TextView
+            android:id="@+id/maxVal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="Max"
+            android:textSize="10dp" />
+        <TextView
+            android:id="@+id/plus_0_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="+"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_0_0_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:text="수정"
+            android:textSize="10dp" />
+    </LinearLayout>
+</FrameLayout>

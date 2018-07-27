@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.myhabits.MyHabitsFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id ="@+id/recyclerview_my_habits_fragemnt_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:id="@+id/btn_my_habits_ist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/habit_list" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="습관 가저오기" />
+
+</LinearLayout>
