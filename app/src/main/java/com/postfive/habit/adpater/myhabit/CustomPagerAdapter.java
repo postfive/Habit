@@ -31,14 +31,17 @@ public class CustomPagerAdapter extends PagerAdapter {
     private Context mContext;
     ViewPager pager;
     ArrayList<Integer> wrap_id = new ArrayList<>();
+    ArrayList<Integer> wrap_id1 = new ArrayList<>();
+    ArrayList<Integer> wrap_id2 = new ArrayList<>();
+
     ArrayList<Integer> btn_id = new ArrayList<>();
     ArrayList<View> mViews = new ArrayList<>();
 
     List<List<UserHabitState>> days = new ArrayList<>();
     ArrayList<UserHabitState> day = null;
 
-    UserHabitRespository mUserHabitRespository;
-    private String[] strArryDayofWeek = {"일", "월", "화", "수", "목", "금", "토"};
+    UserHabitRespository mUserHabitRepository;
+    private String[] strArrayDayOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
 
     View tempV;
     TextView tempTv;
@@ -47,9 +50,9 @@ public class CustomPagerAdapter extends PagerAdapter {
     int child_id = 0;
     ViewGroup layout;
 
-    public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRespository) {
+    public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
-        this.mUserHabitRespository = mUserHabitRespository;
+        this.mUserHabitRepository = mUserHabitRepository;
     }
 
     @Override
@@ -61,43 +64,50 @@ public class CustomPagerAdapter extends PagerAdapter {
         day = new ArrayList<>(); //0 yesterday 1 today 2 tomorrow
         days.add(day);
 
-        wrap_id.add(0); // each row
         btn_id.add(0);
-        int todayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         collection.addView(layout);
-        if(position == 0)
-            createSet(position, mUserHabitRespository.getDayHabit(todayOfWeek));
-//        createSet(position, mUserHabitRespository.getDayHabit(16));
 
         // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
-//        Calendar day = Calendar.getInstance();
         // 오늘 습관 가져오기
 //        List<UserHabitState> userHabitStatesList =
-        /*// 오늘 요일
-        int today = day.get(Calendar.DAY_OF_WEEK);
+        // 오늘 요일
+        int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        int nowTime = Habit.NIGHT_TIME;
+        if (position == 0) {
+            // TODO 현재 지금
+            wrap_id.add(0); // each row
+            List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(nowTime);
+            createSet(0, position, mUserHabitStatesList);
+            // TODO 오늘 완성
+            wrap_id1.add(1); // each row
 
-        int nowTime = Habit.ALLDAY_TIME;
-        // TODO 현재 지금
-        mUserHabitStatesList = mUserHabitRespository.getNowHabit(nowTime);
+            List<UserHabitState> mTodayCompleteHabitStatesList = mUserHabitRepository.getComplite();
+            createSet(1, position, mTodayCompleteHabitStatesList);
+            // TODO 오늘 놓친것
+            wrap_id2.add(1); // each row
 
-        // TODO 오늘 완성
-        mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
-
-        // TODO 오늘 놓친것
-        mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(nowTime);
-
-        ///github update test
-
-        // TODO 내일 습관
-        int tomorrow = today +1;
-        if(tomorrow > 7)
-            tomorrow =1 ;
-        mUserHabitStatesTomorrowList = mUserHabitRespository.getDayHabit(tomorrow);
+            List<UserHabitState> mTodayMissedHabitStatesList = mUserHabitRepository.getPassHabit(nowTime);
+            createSet(2, position, mTodayMissedHabitStatesList);
+        }
         // TODO 어제 습관
-        int yesterday = today - 1;
-        if(yesterday < 1)
-            yesterday = 7 ;
-        mUserHabitStatesYesterdayList = mUserHabitRespository.getDayHabit(yesterday);*/
+        else if (position == 1) {
+            int yesterday = today - 1;
+            if (yesterday < 1)
+                yesterday = 7;
+            wrap_id.add(0); // each row
+            List<UserHabitState> mUserHabitStatesYesterdayList = mUserHabitRepository.getDayHabit(yesterday);
+            createSet(0, position, mUserHabitStatesYesterdayList);
+        }
+        // TODO 내일 습관
+        else if (position == 2) {
+            int tomorrow = today + 1;
+            if (tomorrow > 7)
+                tomorrow = 1;
+            wrap_id.add(0); // each row
+            List<UserHabitState> mUserHabitStatesTomorrowList = mUserHabitRepository.getDayHabit(tomorrow);
+            createSet(0, position, mUserHabitStatesTomorrowList);
+        }
+
         // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
         return layout;
     }
@@ -109,33 +119,51 @@ public class CustomPagerAdapter extends PagerAdapter {
     }
 
     // 맨처음 db에서 값 가져올때
-    public void createSet(int nDay, List<UserHabitState> List) {
+    public void createSet(int status, int nDay, List<UserHabitState> List) {
         List<UserHabitState> tmpList = null;
-        days.set(nDay, List);
+        if(status == 0)
+            days.set(nDay, List);
         tmpList = List;
 
         //// view 에 데이터 붙이기
-        for(UserHabitState U : tmpList){
-                addCell(nDay, U);
+        for (UserHabitState U : tmpList) {
+            addCell(status, nDay, U);
         }
     }
 
-    public void addCell(int nDay, UserHabitState userHabitState) {
-
+    public void addCell(int status, int nDay, UserHabitState userHabitState) {
         LinearLayout pL = (LinearLayout) ((ViewGroup) layout.getParent()).getParent();
         pager = (ViewPager) pL.findViewById(R.id.pager);
-        int pageNum = pager.getCurrentItem();
+       // int pageNum = pager.getCurrentItem();
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // 껍데기
         FrameLayout route_info_tab = (FrameLayout) inflater.inflate(R.layout.bt, null);
+        LinearLayout inLayout;
         // 각 페이지
-        LinearLayout inLayout = (LinearLayout) layout.findViewById(R.id.inLayout);
+        if(status == 1) {
+            inLayout = (LinearLayout) layout.findViewById(R.id.inLayout1);
+            inLayout.setVisibility(View.VISIBLE);
+        }
+        else if(status == 2) {
+            inLayout = (LinearLayout) layout.findViewById(R.id.inLayout2);
+            inLayout.setVisibility(View.VISIBLE);
+        }
+        else {// status == 0
+            inLayout = (LinearLayout) layout.findViewById(R.id.inLayout);
+        }
         inLayout.addView(route_info_tab);
 
         //Set Id
-        int temp_wrap_id = wrap_id.get(nDay);
-        ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
+        int temp_wrap_id;
 
+        if(status == 1)
+            temp_wrap_id = wrap_id1.get(nDay);
+        else if(status == 2)
+            temp_wrap_id = wrap_id2.get(nDay);
+        else
+            temp_wrap_id = wrap_id.get(nDay);
+
+        ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
         SubmitProcessButton progressIndi = (SubmitProcessButton) wrapView.getChildAt(1);
         ViewGroup innerWrapView = (ViewGroup) wrapView.getChildAt(2);
 
@@ -166,12 +194,13 @@ public class CustomPagerAdapter extends PagerAdapter {
 //        mValues.get(nDay).add(0);
 
         //Add ArrayList
-        mViews.add(innerWrapView);
-        mViews.add(setupBtn);
-        mViews.add(minusBtn);
-        mViews.add(plusBtn);
-        mViews.add(modiBtn);
-
+        if(status == 0) {
+            mViews.add(innerWrapView);
+            mViews.add(setupBtn);
+            mViews.add(minusBtn);
+            mViews.add(plusBtn);
+            mViews.add(modiBtn);
+        }
         child_id = temp_wrap_id * 100;
 
         //Set ID to each View
@@ -188,29 +217,36 @@ public class CustomPagerAdapter extends PagerAdapter {
         wDayV.setId(child_id++);//9
 
         temp_wrap_id++;
-        wrap_id.set(nDay, temp_wrap_id);
+        if(status == 1)
+            wrap_id1.set(nDay, temp_wrap_id);
+        else if(status == 2)
+            wrap_id2.set(nDay, temp_wrap_id);
+        else
+            wrap_id.set(nDay, temp_wrap_id);
+
 
         curValue.setText("" + userHabitState.getDid());
         //userHabitState.getGoal();
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
-        maxValue.setText(""+userHabitState.getFull());
-        String tmpDayofWeek ="";
+        maxValue.setText("" + userHabitState.getFull());
+        String tmpDayofWeek = "";
         int intDayofWeek = userHabitState.getDaysum();
-        for(int i = 1 ; i < 8 ; i ++){
-            if((intDayofWeek & ( 1<< i) ) > 0) {
-                tmpDayofWeek += strArryDayofWeek[i-1];
+        for (int i = 1; i < 8; i++) {
+            if ((intDayofWeek & (1 << i)) > 0) {
+                tmpDayofWeek += strArrayDayOfWeek[i - 1];
             }
         }
         Drawable drawable = mContext.getResources().getDrawable(userHabitState.getIcon());
 
         habitImg.setImageDrawable(drawable);
-        wDayV.setText(""+tmpDayofWeek);
-
+        wDayV.setText("" + tmpDayofWeek);
 
         //Set onClickListener to each View
-        for (View view : mViews) {
-            view.setOnClickListener(onClickListener);
+        if(nDay == 0) {
+            for (View view : mViews) {
+                view.setOnClickListener(onClickListener);
+            }
         }
     }
 
@@ -287,7 +323,6 @@ public class CustomPagerAdapter extends PagerAdapter {
 //            }
 //        });
 //    }
-
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -297,22 +332,23 @@ public class CustomPagerAdapter extends PagerAdapter {
                 index = (id - (id % 100)) / 100;
             }
             // 어제 오늘
-//            int pageNumU = pager.getCurrentItem();
-            int pageNumU = pager.getCurrentItem();
-            Log.e("Test", "" + pageNumU);
+//            int pageNum = pager.getCurrentItem();
+            int pageNum = pager.getCurrentItem();
+            Log.e("Test", "" + pageNum);
 
-            UserHabitState tmpState = days.get(pageNumU).get(index);
+            UserHabitState tmpState = days.get(pageNum).get(index);
             // 오늘////////////////////////////////
-            if (pageNumU == 1) {
+            if (pageNum == 1) {
 //                tmpState = todayList.get(index);
             }
             // 어제 내일
             //////////////////////////////////////////
-
-//            int curVal = mValues.get(pageNumU).get(index);
-//            int curVal = mValues.get(pageNumU).get(index);
+            int maxVal = tmpState.getFull();
+            int conVal = (int) Math.ceil(100 / (float) maxVal);
             int curVal2 = tmpState.getDid();
-            Log.e("Get curVal", "Position: " + pageNumU + ", Index: " + index + ", CurVal: " + curVal2);
+            int pVal;
+
+            Log.e("Get curVal", "Position: " + pageNum + ", Index: " + index + ", CurVal: " + curVal2 + "/" + conVal);
             Log.e("Btn", "Clicked: " + id);
 
             ViewGroup pL = (ViewGroup) ((ViewGroup) v.getParent()).getParent();
@@ -341,16 +377,40 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
+                    if(curVal2 == maxVal){
+                        ViewGroup parent = (ViewGroup)pL.getParent();
+                        parent.removeView(pL);
+                        ViewGroup gparent = (ViewGroup)parent.getParent();
+                        ViewGroup completeV = (ViewGroup)gparent.getChildAt(1);
+                        completeV.addView(pL);
+                        completeV.setVisibility(View.VISIBLE);
+                    }
+                    else if(curVal2 < maxVal){
+
+                        ViewGroup parent = (ViewGroup)pL.getParent();
+                        ViewGroup gparent = (ViewGroup)parent.getParent();
+
+                        if(gparent.getChildAt(1) == parent){
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup)gparent.getChildAt(0);
+                            completeV.addView(pL);
+                            parent.setVisibility(View.INVISIBLE);
+                        }
+                    }
                     break;
                 case 3: // -
-                    Log.e("Btn", "Clicked" + id + ": " + curVal2);
                     //Decrease curValue
                     curVal2--;
+
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id - 2);
+                    tempTv = (TextView) pL.findViewById(id + 1);
+                    if (curVal2 < 0)
+                        curVal2 = 0;
+                    pVal = curVal2 * conVal;
+                    Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
-                    tempPi.setProgress(curVal2);
+                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi.setProgress(pVal);
 
 //                    if (curVal > 0) {
 //                        curVal--;
@@ -358,19 +418,24 @@ public class CustomPagerAdapter extends PagerAdapter {
 //                        tempTv.setText("" + curVal);
 //                        tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
 //                        tempPi.setProgress(curVal);
-//                        mValues.get(pageNumU).set(index, curVal);
+//                        mValues.get(pageNum).set(index, curVal);
 //                        Log.e("MinusBtn", index + "/" + curVal);
 //                    }
                     break;
                 case 6: //+
-                    Log.e("Btn", "Clicked" + id + ": " + curVal2);
                     //Cap to max value
                     curVal2++;
                     tmpState.setDid(curVal2);
                     tempTv = (TextView) pL.findViewById(id - 2);
+                    if (curVal2 > maxVal)
+                        curVal2 = maxVal;
+                    pVal = curVal2 * conVal;
+                    if (pVal > 100)
+                        pVal = 100;
+                    Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
                     tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
-                    tempPi.setProgress(curVal2);
+                    tempPi.setProgress(pVal);
 //                    if (curVal < 100) {
 //                        //Increase curValue
 //                        curVal++;
@@ -378,20 +443,16 @@ public class CustomPagerAdapter extends PagerAdapter {
 //                        tempTv.setText("" + curVal);
 //                        tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
 //                        tempPi.setProgress(curVal);
-//                        mValues.get(pageNumU).set(index, curVal);
+//                        mValues.get(pageNum).set(index, curVal);
 //                        Log.e("PlusBtn", index + "/" + curVal);
 //                    }
                     break;
                 case 7:
                     //Go modiActivity
-
                     Intent intent = new Intent(mContext, HabitActivity.class);
-
-                    UserHabitDetail habit = new UserHabitDetail(0,tmpState);
+                    UserHabitDetail habit = new UserHabitDetail(0, tmpState);
                     intent.putExtra("object", habit);
                     mContext.startActivity(intent);
-
-
                     break;
                 default:
                     Log.e("Btn", "Default");

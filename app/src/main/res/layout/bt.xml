@@ -25,9 +25,7 @@
         custom:pb_colorError="@color/red_error"
         custom:pb_colorNormal="@color/holo_red_light"
         custom:pb_colorPressed="@color/blue_pressed"
-        custom:pb_colorProgress="#1010FF"
-
-        />
+        custom:pb_colorProgress="#1010FF" />
     <!--custom:pb_textComplete="Success"-->
     <!--custom:pb_textError="Error"-->
     <!--custom:pb_textProgress="Loading" />-->
@@ -62,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-
+            android:id="@+id/icon_img"
             android:layout_weight="0.8"
             android:padding="15dp"
             android:src="@drawable/watericon" />
@@ -71,7 +69,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/desc">
 
             <TextView
                 android:id="@+id/tv_desc"

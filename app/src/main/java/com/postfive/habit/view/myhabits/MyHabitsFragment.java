@@ -2,33 +2,25 @@ package com.postfive.habit.view.myhabits;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.myhabit.CustomPagerAdapter;
 import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
-import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -88,29 +80,61 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
         //pager.setCurrentItem(1);
-        LinearLayout myhabitTitle = (LinearLayout)view.findViewById(R.id.myhabit_title);
-        myhabitTitle.setBackground(assignImage(view,"img_parkboram_list.jpg"));
 
-        Button button = (Button)view.findViewById(R.id.btn_today);
-        button.setOnClickListener(this);
+//
+//        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication(), );
+
 
         // TODO 현재 지금
         List<UserHabitState> mUserHabitStatesList = mUserHabitRespository.getNowHabit(1);
 
         adapter.setData(mUserHabitStatesList);
-//        adapter.
-        // TODO 오늘 완성
-        List<UserHabitState> mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
-
-        // TODO 오늘 놓친것
+//        // TODO 오늘 완성
+//        List<UserHabitState> mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
+//
+//        // TODO 오늘 놓친것
 //        List<UserHabitState> mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(8);
 
         TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setToday(date_tv);
 
+        TextView prev_tv = (TextView) view.findViewById(R.id.prev_tv);
+        TextView next_tv = (TextView) view.findViewById(R.id.next_tv);
+
+        prev_tv.setOnClickListener(this);
+        next_tv.setOnClickListener(this);
+
+/*        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                // TODO 리스트 클릭시  수행
+
+                UserHabitState tmp = mMyHabitRecyclerViewAdapter.getHabit(position);
+
+                tmp.setDid(tmp.getDid()+tmp.getOnce());
+                mMyHabitRecyclerViewAdapter.changeHabit(position, tmp);
+                // update
+                mUserHabitRespository.updateUserHabitState(tmp);
+            }
+        });*/
+
         return view;
     }
 
+    public void mPageOnClick(View v) {
+        int position;
+
+        switch (v.getId()) {
+            case R.id.prev_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position - 1, true);
+                break;
+            case R.id.next_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position + 1, true);
+                break;
+        }
+    }
     public void setToday (TextView view){
         Date today = Calendar.getInstance().getTime();//getting date
         SimpleDateFormat formatter = new SimpleDateFormat("오늘 yyyy.MM.dd");
@@ -197,154 +221,100 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        int position;
+
         switch(v.getId()){
-            case R.id.btn_my_habits_ist:
-                Intent intent = new Intent(getContext(), MyHabitListActivity.class);
-                startActivity(intent);
+            case R.id.prev_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position - 1, true);
+
                 break;
-            case R.id.btn_today :   // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
-
-                if(day == 8)
-                    day = 1;
-
-
-                List<UserHabitDetail> userHabitDetailList = mUserHabitRespository.getAllUserHabitDetail();
-                StringBuilder sb1 = new StringBuilder();
-                sb1.append("\nD_seq | 날짜합 | 시간 |  습관코드 |  이름 | 목표 | 하루 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userHabitDetailList.size(); i ++){
-                    UserHabitDetail tmp = userHabitDetailList.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb1.append( tmp.getHabitseq() +"  | "+  tmp.getDaysum() +"  | "+tmp.getTime() +"    |    "+tmp.getHabitcode() +"    | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb1.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT USER HABIT Detail " + sb1.toString());
-                Log.d(TAG,"finish");
-
-                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day);
-                day ++;
-                StringBuilder sb = new StringBuilder();
-                sb.append("\n요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userHabitStatesList.size(); i ++){
-                    UserHabitState tmp = userHabitStatesList.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT USER HABIT State " + sb.toString());
-                Log.d(TAG,"finish");
-
-
-                mUserHabitRespository.getNowHabit(time);
-
-                List<UserHabitState> userNowHabitStatesList = mUserHabitRespository.getDayHabit(day);
-
-                time ++;
-                if(time==4)
-                    time =0;
-                StringBuilder sb3 = new StringBuilder();
-                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userNowHabitStatesList.size(); i ++){
-                    UserHabitState tmp = userNowHabitStatesList.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb3.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb3.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT Now USER HABIT State " + sb3.toString());
-                Log.d(TAG,"finish");
-
-
-
-                // TODO 오늘 놓친것
-                List<UserHabitState> userPassHabitStatesList2 = mUserHabitRespository.getPassHabit(Habit.MORNING_TIME);
-
-                StringBuilder sb5 = new StringBuilder();
-                sb5.append("\n"+Integer.toString(Habit.MORNING_TIME)+" 아침 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userPassHabitStatesList2.size(); i ++){
-
-                    UserHabitState tmp = userPassHabitStatesList2.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb5.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb5.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb5.toString());
-                Log.d(TAG,"finish");
-
-
-                // TODO 오늘 놓친것
-                List<UserHabitState> userPassHabitStatesList3 = mUserHabitRespository.getPassHabit(Habit.AFTERNOON_TIME);
-
-                StringBuilder sb6 = new StringBuilder();
-                sb6.append("\n"+Integer.toString(Habit.AFTERNOON_TIME)+" 오후 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userPassHabitStatesList3.size(); i ++){
-
-                    UserHabitState tmp = userPassHabitStatesList3.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb6.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb6.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb6.toString());
-                Log.d(TAG,"finish");
-
-
-                // TODO 오늘 놓친것
-                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(Habit.NIGHT_TIME);
-
-                StringBuilder sb4 = new StringBuilder();
-                sb4.append("\n"+Integer.toString(Habit.NIGHT_TIME)+" 저녁 시간 ::\n 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-                for(int i = 0 ; i < userPassHabitStatesList.size(); i ++){
-
-                    UserHabitState tmp = userPassHabitStatesList.get(i);
-                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-                    sb4.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-                    sb4.append("\n");
-                }
-
-                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb4.toString());
-                Log.d(TAG,"finish");
-
+            case R.id.next_tv:
+                position = pager.getCurrentItem();
+                pager.setCurrentItem(position + 1, true);
+                break;
+//
+//            case R.id.btn_my_habits_ist:
+//                Intent intent = new Intent(getContext(), MyHabitListActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.btn_today :   // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
+//
+//                if(day == 8)
+//                    day = 1;
+//
+//
+//                List<UserHabitDetail> userHabitDetailList = mUserHabitRespository.getAllUserHabitDetail();
+//                StringBuilder sb1 = new StringBuilder();
+//                sb1.append("\nD_seq | 날짜합 | 시간 |  습관코드 |  이름 | 목표 | 하루 목표 | 날짜합 | 전체 | 단위 \n");
+//
+//                for(int i = 0 ; i < userHabitDetailList.size(); i ++){
+//                    UserHabitDetail tmp = userHabitDetailList.get(i);
+//                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+//                    sb1.append( tmp.getHabitseq() +"  | "+  tmp.getDaysum() +"  | "+tmp.getTime() +"    |    "+tmp.getHabitcode() +"    | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+//                    sb1.append("\n");
+//                }
+//
+//                Log.d(TAG, "DB TEST SELECT USER HABIT Detail " + sb1.toString());
+//                Log.d(TAG,"finish");
+//
+//                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day);
+//                day ++;
+//                StringBuilder sb = new StringBuilder();
+//                sb.append("\n요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+//
+//                for(int i = 0 ; i < userHabitStatesList.size(); i ++){
+//                    UserHabitState tmp = userHabitStatesList.get(i);
+//                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+//                    sb.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+//                    sb.append("\n");
+//                }
+//
+//                Log.d(TAG, "DB TEST SELECT USER HABIT State " + sb.toString());
+//                Log.d(TAG,"finish");
+//
+//
+//                mUserHabitRespository.getNowHabit(time);
+//
+//                List<UserHabitState> userNowHabitStatesList = mUserHabitRespository.getDayHabit(day);
+//
+//                time ++;
+//                if(time==4)
+//                    time =0;
+//                StringBuilder sb3 = new StringBuilder();
+//                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+//
+//                for(int i = 0 ; i < userNowHabitStatesList.size(); i ++){
+//                    UserHabitState tmp = userNowHabitStatesList.get(i);
+//                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+//                    sb3.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+//                    sb3.append("\n");
+//                }
+//
+//                Log.d(TAG, "DB TEST SELECT Now USER HABIT State " + sb3.toString());
+//                Log.d(TAG,"finish");
+//
+//
+//                // TODO 오늘 놓친것
+//                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(time);
+//
+//                StringBuilder sb4 = new StringBuilder();
+//                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
+//
+//                for(int i = 0 ; i < userPassHabitStatesList.size(); i ++){
+//                    UserHabitState tmp = userPassHabitStatesList.get(i);
+//                    ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
+//                    sb4.append( tmp.getDayofweek()+"   | "+  tmp.getTime() +" |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq()  +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
+//                    sb4.append("\n");
+//                }
+//
+//                Log.d(TAG, "DB TEST SELECT Pass USER HABIT State " + sb4.toString());
+//                Log.d(TAG,"finish");
 
             default:
                 break;
         }
     }
 
-    private Drawable assignImage(View v, String imgUri){
-        InputStream inputStream = null;
-        Drawable img = null;
 
-        try{
-            inputStream = v.getContext().getResources().getAssets().open(imgUri);
-            img = Drawable.createFromStream(inputStream, null);
-            inputStream.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return img;
-    }
-    public void mOnClick(View v){
-        int position;
-
-        switch (v.getId()){
-            case R.id.prev_tv:
-                position = pager.getCurrentItem();
-                pager.setCurrentItem(position - 1, true);
-                break;
-            case R.id.next_tv:
-                position = pager.getCurrentItem();
-                pager.setCurrentItem(position + 1, true);
-                break;
-        }
-    }
 }

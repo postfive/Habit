@@ -4,61 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.myhabits.MyHabitsFragment"
-    android:theme="@style/AppTheme.Main">
-
+    >
+    <!--tools:context=".view.myhabits.MyHabitsFragment"-->
     <LinearLayout
-        android:id="@+id/myhabit_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
         android:background="#7A95AF">
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="77dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            >
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="40kg 만들어서\n비키니 입고 하와이 가자"
-                android:textColor="#de000000"
-                android:textSize="20sp"></TextView>
-
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="오늘부터 다이어트!!"
+                >
+            </TextView>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:orientation="horizontal">
-
+                android:orientation="horizontal"
+                >
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="2018.06.01"
-                    android:textColor="#de555555" />
-
+                    />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.3"
+                    android:gravity="center"
                     android:text="~"
-                    android:textColor="#de555555" />
-
+                    />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="2018.06.01"
-                    android:textColor="#de555555" />
+                    />
             </LinearLayout>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="15dp"
+                android:src="@drawable/ic_launcher_background"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,17 +74,17 @@
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
-        <TextView
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/prev_tv"
             android:clickable="true"
-            android:onClick="mOnClick"
-            android:text="가skekfk"
+            android:text="&lt;"
             >
-        </TextView>
+        </Button>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,17 +94,17 @@
             android:text="empty"
             >
         </TextView>
-        <TextView
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/next_tv"
             android:clickable="true"
-            android:text="나"
-            android:onClick="mOnClick"
+            android:text="&gt;"
             >
-        </TextView>
+        </Button>
     </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -104,15 +112,4 @@
         android:layout_height="0dp"
         android:layout_weight="1">
     </android.support.v4.view.ViewPager>
-
-    <Button
-        android:id="@+id/btn_my_habits_ist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/habit_list" />
-    <Button
-        android:id="@+id/btn_today"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="습관 가저오기"/>
 </LinearLayout>
