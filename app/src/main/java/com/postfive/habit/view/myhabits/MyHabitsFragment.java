@@ -103,8 +103,8 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 //        // TODO 오늘 놓친것
 //        List<UserHabitState> mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(8);
 
-        TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
-        setToday(date_tv);
+        final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
+        setDay(date_tv, 0);
 
         TextView prev_tv = (TextView) view.findViewById(R.id.prev_tv);
         TextView next_tv = (TextView) view.findViewById(R.id.next_tv);
@@ -126,13 +126,48 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
             }
         });*/
 
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        setDay(date_tv, 0);
+                        break;
+                    case 1:
+                        setDay(date_tv, -1);
+                        break;
+                    case 2:
+                        setDay(date_tv, 1);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         return view;
     }
 
-    public void setToday (TextView view){
-        Date today = Calendar.getInstance().getTime();//getting date
-        SimpleDateFormat formatter = new SimpleDateFormat("오늘 yyyy.MM.dd");
-        String date = formatter.format(today);
+    public void setDay (TextView view, int n){
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, n);
+        Date curDay = cal.getTime();//getting date
+        SimpleDateFormat formatter;
+        if(n == 0)
+            formatter = new SimpleDateFormat("오늘 yyyy.MM.dd");
+        else if(n == 1)
+            formatter = new SimpleDateFormat("내일 yyyy.MM.dd");
+        else // n == 2
+            formatter = new SimpleDateFormat("어제 yyyy.MM.dd");
+        String date = formatter.format(curDay);
         view.setText(date);
     }
     @Override

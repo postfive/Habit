@@ -33,8 +33,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".view.habit.HabitActivity"
             android:windowSoftInputMode="stateHidden|adjustPan">
-
-
         </activity>
         <activity android:name=".view.HabitList.HabitListActivity">
         </activity>
