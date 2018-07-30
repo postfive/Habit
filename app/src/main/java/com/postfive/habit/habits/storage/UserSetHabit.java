@@ -9,7 +9,6 @@ public class UserSetHabit extends Habit {
     public void prepare() {
         setHabitcode(0);
         setName("줄넘기하기");
-        setType("userset");
         setUnitcode(2);
         setTime(2);
         setFull(10);

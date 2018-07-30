@@ -15,19 +15,17 @@
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_habit_list"
+            android:id="@+id/toolbar_my_habit_list"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.Toolbar"
-            app:popupTheme="@style/AppTheme.Toolbar.PopupTheme">
+            android:theme="@style/AppTheme.Toolbar">
 
             <TextView
                 android:id="@+id/textview_habit_list_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/habit_list"
-                android:theme="@style/AppTheme.Toolbar.Title" />
+                style="@style/AppTheme.Toolbar.Title" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -44,25 +42,27 @@
                 android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
+
             <Button
                 android:id="@+id/btn_add_habit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_marginLeft="86dp"
+                android:layout_marginRight="86dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/add_habit"
+                style="@style/AppTheme.Button.Contained.02"/>
 
             <Button
-                android:id="@+id/btn_habit2"
+                android:id="@+id/btn_habit_init"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="getHabit"
-                android:text="유명인습관보기" />
+                android:layout_marginLeft="86dp"
+                android:layout_marginRight="86dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/init_habit"
+                style="@style/AppTheme.Button.Outlined"/>
 
-            <Button
-                android:id="@+id/btn_habit3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="getAllUserD"
-                android:text="유져습관 보기" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

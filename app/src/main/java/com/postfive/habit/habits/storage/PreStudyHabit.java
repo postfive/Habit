@@ -12,7 +12,6 @@ public class PreStudyHabit extends Habit {
     public void prepare() {
         setHabitcode(1);
         setName("예습하기");
-        setType("prestudy");
         setUnitcode(2);
         setTime(3);
         setFull(1);
