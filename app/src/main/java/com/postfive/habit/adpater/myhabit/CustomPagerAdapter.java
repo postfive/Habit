@@ -124,7 +124,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         if(status == 0)
             days.set(nDay, List);
         tmpList = List;
-
         //// view 에 데이터 붙이기
         for (UserHabitState U : tmpList) {
             addCell(status, nDay, U);
@@ -241,6 +240,19 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         habitImg.setImageDrawable(drawable);
         wDayV.setText("" + tmpDayofWeek);
+
+        int maxVal = userHabitState.getFull();
+        int conVal = (int) Math.ceil(100 / (float) maxVal);
+        int curVal2 = userHabitState.getDid();
+        int pVal;
+        if (curVal2 > maxVal)
+            curVal2 = maxVal;
+        pVal = curVal2 * conVal;
+        if (pVal > 100)
+            pVal = 100;
+
+        //tempPi = (SubmitProcessButton) pL.findViewById(cellCnt * 100 + 1);
+        progressIndi.setProgress(pVal);
 
         //Set onClickListener to each View
         if(nDay == 0) {

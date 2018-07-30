@@ -46,10 +46,18 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     private List<UserHabitState> mUserHabitStatesTomorrowList;
     private List<UserHabitState> mUserHabitStatesYesterdayList;
 
+    CustomPagerAdapter adapter;
     public MyHabitsFragment() {
         // Required empty public constructor
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Refresh your fragment here
+            pager.setAdapter(adapter);
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -76,7 +84,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         Log.e("Main","onCreated");
 //        setContentView(R.layout.myhabitviewpage);
         pager = (ViewPager) view.findViewById(R.id.pager);
-        CustomPagerAdapter adapter = new CustomPagerAdapter(getContext(), mUserHabitRespository );
+        adapter = new CustomPagerAdapter(getContext(), mUserHabitRespository );
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
         //pager.setCurrentItem(1);
