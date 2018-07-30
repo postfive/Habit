@@ -180,16 +180,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // 유명인 set
 
-        Habit drinkwater = new Habit(1, "물마시기", "drinkwater", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 2, 6, "blue","water.jpg",  R.drawable.ic_water);
-        Habit prestudy = new Habit(2, "예습하기", "prestudy", Unit.COUNT_UNIT, Habit.AFTERNOON_TIME, 10, 1, 12, "red", "study.jpg", R.drawable.ic_dry_fruits);
-        Habit skiprope = new Habit(3, "줄넘기 하기", "skiprope", Unit.COUNT_UNIT, Habit.NIGHT_TIME, 10, 1, 12, "black","rope.jpg",  R.drawable.ic_walking);
+        Habit bicycle = new Habit(1, Habit.HEALTH_CATEGORY, "자전거타기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_bicycle);
+        Habit run     = new Habit(2, Habit.HEALTH_CATEGORY, "달리기 하기", Unit.COUNT_UNIT, Habit.NIGHT_TIME, 1, 1, 6, "blue", R.drawable.ic_run);
+        Habit walk    = new Habit(3, Habit.HEALTH_CATEGORY, "만보 걷기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_walking);
+        Habit yoga    = new Habit(4, Habit.HEALTH_CATEGORY, "요가 하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_yoga);
+
+        Habit fruits     = new Habit(5, Habit.EAT_CATEGORY, "아침에 사과 먹기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_apple);
+        Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "물마시기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 5, 1, 6, "blue", R.drawable.ic_dry_fruits);
+        Habit drinkwater = new Habit(7, Habit.EAT_CATEGORY, "물마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 1, 6, "blue", R.drawable.ic_water);
 
         List<Habit> habitli = new ArrayList<>();
+        habitli.add(bicycle);
+        habitli.add(run);
+        habitli.add(walk);
+        habitli.add(yoga);
+        habitli.add(fruits);
+        habitli.add(dryfruits);
         habitli.add(drinkwater);
-        habitli.add(prestudy);
-        habitli.add(skiprope);
-        mHabitRespository.insertAllHabit(habitli);
 
+        mHabitRespository.insertAllHabit(habitli);
 
         CelebHabitMaster celebHabitmaster = new CelebHabitMaster("박보람",1,"박보람의 40kg \n다이어트 습관", "하루하루 0.5kg씩 줄이는 습관", "박보람 처럼 40kg 만들어서 하와이 가자!",  "img_parkboram_list.jpg");
         CelebHabitMaster celebHabitmaster2 = new CelebHabitMaster("호날두",2,"호날두 처럼 \n졸라 멋쟁이 되기", "호날두 같이 존멋 되기", "호날두 처럼 존멋되서 유벤 직관가자!",  "img_ronaldo_list.jpg");
@@ -204,13 +213,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", 128, 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
         CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", 64, 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
         CelebHabitDetail celebHabitd24 = new CelebHabitDetail(2, Habit.ALLDAY_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 하루종일 100번", 32, 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
-
-/*
-        CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", Utils.setDaySum(Calendar.FRIDAY,true) , 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
-        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", Utils.setDaySum(Calendar.FRIDAY,true) , 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
-        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
-        CelebHabitDetail celebHabitd24 = new CelebHabitDetail(2, Habit.ALLDAY_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 하루종일 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
-*/
 
 
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster);
@@ -227,7 +229,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Unit unitLiquid1 = new Unit(Unit.LIQUID_UNIT, "L");
         Unit unitLiquid2 = new Unit(Unit.LIQUID_UNIT, "mL");
-        Unit unitLiquid3 = new Unit(Unit.LIQUID_UNIT, "cc");
 
 
         Unit countUnit = new Unit(Unit.COUNT_UNIT, "회");
@@ -243,7 +244,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         List<Unit> unitList = new ArrayList<>();
         unitList.add(unitLiquid1);
         unitList.add(unitLiquid2);
-        unitList.add(unitLiquid3);
         unitList.add(countUnit);
         unitList.add(timeUnit1);
         unitList.add(timeUnit2);

@@ -7,110 +7,89 @@
     android:orientation="vertical"
     tools:context=".view.HabitList.HabitListActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_habit_list"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_habit_list"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/AppTheme.Toolbar">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.Toolbar"
+        app:elevation="0dp">
 
-        <TextView
-            android:id="@+id/textview_habit_list_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_habit"
-            android:theme="@style/AppTheme.Toolbar.Title" />
-
-    </android.support.v7.widget.Toolbar>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/layout_usercustom"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_habit_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            android:padding="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardview_usercustom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/image_usercustom_item_habit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.498"
-                        app:srcCompat="@drawable/ic_adjust_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/textview_usercustom_item_habit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/usercustom"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.052"
-                        app:layout_constraintLeft_toRightOf="@+id/image_my_habit_item"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_usercustom_item_habit"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_usercustom"
-            app:layout_constraintVertical_bias="0.050000012">
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.Toolbar">
 
             <TextView
-                android:id="@+id/textview_body"
-                android:layout_width="match_parent"
+                android:id="@+id/textview_habit_list_title"
+                style="@style/AppTheme.Toolbar.Title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/body"
-                android:textSize="20dp" />
+                android:text="@string/habit_list" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_habit_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/textview_body">
+        </android.support.v7.widget.Toolbar>
 
-            </android.support.v7.widget.RecyclerView>
+    </android.support.design.widget.AppBarLayout>
 
-        </RelativeLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+
+        <TextView
+            android:id="@+id/textview_health"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/health_habit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_health_habit_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textview_health"
+            app:layout_constraintTop_toBottomOf="@+id/textview_health">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <TextView
+            android:id="@+id/textview_eat_habit"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/eat_habit"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_health_habit_list"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerview_health_habit_list" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_eat_habit_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textview_eat_habit"
+            app:layout_constraintTop_toBottomOf="@+id/textview_eat_habit"
+            app:layout_constraintVertical_bias="0.0">
+
+        </android.support.v7.widget.RecyclerView>
+
 
     </android.support.constraint.ConstraintLayout>
 

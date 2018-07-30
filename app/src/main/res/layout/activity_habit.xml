@@ -18,8 +18,6 @@
             android:id="@+id/toolbar_habit"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:gravity="fill_vertical|center_horizontal"
             android:theme="@style/AppTheme.Toolbar">
 
             <TextView
@@ -27,8 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_habit"
-                android:layout_gravity="center_horizontal"
-                android:theme="@style/AppTheme.Toolbar.Title" />
+                style="@style/AppTheme.Toolbar.Title" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -46,6 +43,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -58,84 +58,156 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
                         android:text="@string/habit_name"
                         android:theme="@style/AppTheme.TextView" />
+                    <!--<android.support.design.widget.TextInputLayout
+                        android:id="@+id/goal_text_input"
 
-                    <EditText
-                        android:id="@+id/edittext_goal"
+                        style="@style/AppTheme.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="19dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="16dp"
-                        android:inputType="text"/>
-                    <!--<android.support.design.widget.TextInputLayout
+                        app:hintEnabled="false"
+                        android:layout_marginBottom="3dp">
+-->
+
+                    <FrameLayout
                         android:id="@+id/goal_text_input"
                         style="@style/AppTheme.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="19dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/drawable_edittext">
+                        android:layout_marginBottom="3dp">
+
+                        <EditText
+                            android:id="@+id/edittext_habit_name"
+                            style="@style/AppTheme.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/drawable_edittext"
+                            android:hint="@string/hint_habitname"
+                            android:inputType="text"
+                            android:maxLines="1" />
+
+                        <ImageButton
+                            android:id="@+id/btn_habit_name_clear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/ic_clear"
+                            android:visibility="invisible" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textview_habit_name_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/error_habit_name"
+                        style="@style/AppTheme.HabitActivity.HintTextView"
+                        android:visibility="invisible"/>
+                    <!--
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edittext_goal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:maxLines="1"
                             android:hint="@string/hint_habitname"/>
-                    </android.support.design.widget.TextInputLayout>-->
+-->
 
 
                 </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickHabitList"
+                    android:text="@string/habit_list"
+                    style="@style/AppTheme.Button.Contained.Gray"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textview_goal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="24dp"
                         android:text="@string/goal"
                         android:theme="@style/AppTheme.TextView" />
 
+
                     <LinearLayout
-                        android:id="@+id/layout_goal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingBottom="19dp"
                         android:paddingTop="16dp">
 
-                        <EditText
-                            android:id="@+id/edittext_daygoal"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_weight="1"
-                            android:inputType="number|numberDecimal" />
+                            android:orientation="vertical">
 
-                        <Spinner
-                            android:id="@+id/spinner_unit"
+                            <FrameLayout
+                                style="@style/AppTheme.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="3dp"
+                                android:layout_weight="1">
+
+                                <EditText
+                                    android:id="@+id/edittext_goal"
+                                    style="@style/AppTheme.EditText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number|numberDecimal"
+                                    android:maxLines="1" />
+
+                                <ImageButton
+                                    android:id="@+id/btn_clear_goal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical|right"
+                                    android:layout_marginRight="16dp"
+                                    android:background="@drawable/ic_clear"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+
+
+                            <TextView
+                                android:id="@+id/textview_goal_hint"
+                                style="@style/AppTheme.HabitActivity.HintTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:text="@string/error_habit_goal"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <FrameLayout
+                            style="@style/AppTheme.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="16dp"
-                            android:layout_weight="1">
+                            android:layout_gravity="top"
+                            android:layout_weight="1"
+                            android:background="@drawable/drawable_spinner">
 
-                        </Spinner>
+                            <Spinner
+                                android:id="@+id/spinner_unit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="18dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="18dp"></Spinner>
+                        </FrameLayout>
+
 
                     </LinearLayout>
 
@@ -164,7 +236,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_marginLeft="16dp"
                             android:text="@string/repetition"
                             android:theme="@style/AppTheme.TextView" />
 
@@ -197,26 +268,29 @@
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:padding="2dp"
                             android:textOff="@string/short_sunday"
-                            android:textOn="@string/short_sunday" />
+                            android:textOn="@string/short_sunday"
+                            android:textSize="16sp" />
 
                         <ToggleButton
                             android:id="@+id/togglebtn_monday"
+                            style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_monday"
                             android:textOn="@string/short_monday"
-                            style="?android:attr/borderlessButtonStyle"/>
+                            android:textSize="16sp"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_tuesday"
@@ -225,9 +299,11 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_tuesday"
                             android:textOn="@string/short_tuesday"
+                            android:textSize="16sp"
                             style="?android:attr/borderlessButtonStyle"/>
 
                         <ToggleButton
@@ -237,9 +313,11 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_wednesday"
                             android:textOn="@string/short_wednesday"
+                            android:textSize="16sp"
                             style="?android:attr/borderlessButtonStyle"/>
 
                         <ToggleButton
@@ -249,9 +327,11 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_thursday"
                             android:textOn="@string/short_thursday"
+                            android:textSize="16sp"
                             style="?android:attr/borderlessButtonStyle" />
 
                         <ToggleButton
@@ -261,22 +341,25 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_friday"
                             android:textOn="@string/short_friday"
+                            android:textSize="16sp"
                             style="?android:attr/borderlessButtonStyle" />
 
                         <ToggleButton
                             android:id="@+id/togglebtn_saturday"
+                            style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="16dp"
                             android:layout_weight="1"
                             android:background="@drawable/drawable_toggle"
+                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_saturday"
                             android:textOn="@string/short_saturday"
-                            style="?android:attr/borderlessButtonStyle" />
+                            android:textSize="16sp"/>
 
 
                     </LinearLayout>
@@ -301,7 +384,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_marginBottom="16dp"
-                            android:layout_marginLeft="16dp"
                             android:text="습관 시간"
                             android:theme="@style/AppTheme.TextView" />
 
@@ -312,13 +394,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:background="@drawable/drawable_toggle"
+                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="하루종일"
                         android:textOn="하루종일"
+                        android:textSize="16sp"
                         style="?android:attr/borderlessButtonStyle" />
 
                     <ToggleButton
@@ -326,13 +408,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+
                         android:background="@drawable/drawable_toggle"
+                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오전"
                         android:textOn="오전"
+                        android:textSize="16sp"
                         style="?android:attr/borderlessButtonStyle" />
 
                     <ToggleButton
@@ -340,13 +423,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:background="@drawable/drawable_toggle"
+                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오후"
                         android:textOn="오후"
+                        android:textSize="16sp"
                         style="?android:attr/borderlessButtonStyle" />
 
                     <ToggleButton
@@ -354,15 +437,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/drawable_toggle"
+
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="저녁"
                         android:textOn="저녁"
-                        style="?android:attr/borderlessButtonStyle"/>
-
+                        android:textSize="16sp"
+                        style="@style/AppTheme.Button.Toggle"
+                        />
+                    <!--style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/drawable_toggle"
+                        android:textColor="@drawable/drawable_toggle_text"
+                        -->
 
                 </LinearLayout>
 
@@ -372,11 +458,10 @@
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/drawable_button_contained"
                 android:onClick="onClickSaveHabit"
 
                 android:text="@string/save"
-                android:theme="@style/AppTheme.Button" />
+                style="@style/AppTheme.Button.Contained.01" />
         </LinearLayout>
     </ScrollView>
 

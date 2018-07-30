@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--클릭 했을때-->
-    <item android:state_focused="true"
-        android:drawable="@drawable/drawable_edittext_click"
+    <item android:state_pressed="true"
+        android:drawable="@drawable/drawable_spinner_click"
          />
     <!-- default -->
     <item android:state_focused="false"
-        android:drawable="@drawable/drawable_edittext_none"/>
+        android:drawable="@drawable/drawable_spinner_none"/>
 </selector>

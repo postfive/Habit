@@ -13,7 +13,6 @@ public class SkipRopeHabit extends Habit {
     public void prepare() {
         setHabitcode(3);
         setName("줄넘기하기");
-        setType("skiprope");
         setUnitcode(2);
         setTime(1);
         setFull(10);

@@ -13,7 +13,6 @@ public class DrinkWaterHabit extends Habit {
     public void prepare() {
         setHabitcode(1);
         setName("물마시기");
-        setType("drinkwater");
         setUnitcode(1);
         setTime(0);
         setFull(10);
