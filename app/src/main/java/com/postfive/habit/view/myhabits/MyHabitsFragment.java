@@ -121,20 +121,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    public void mPageOnClick(View v) {
-        int position;
-
-        switch (v.getId()) {
-            case R.id.prev_tv:
-                position = pager.getCurrentItem();
-                pager.setCurrentItem(position - 1, true);
-                break;
-            case R.id.next_tv:
-                position = pager.getCurrentItem();
-                pager.setCurrentItem(position + 1, true);
-                break;
-        }
-    }
     public void setToday (TextView view){
         Date today = Calendar.getInstance().getTime();//getting date
         SimpleDateFormat formatter = new SimpleDateFormat("오늘 yyyy.MM.dd");

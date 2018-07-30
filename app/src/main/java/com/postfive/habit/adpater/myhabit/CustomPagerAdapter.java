@@ -250,79 +250,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         }
     }
 
-//    public void createBtnOnClickListener(final ViewGroup layout){
-//        Button createBtn = (Button) layout.findViewById(R.id.aaa);
-//        createBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                LinearLayout pL = (LinearLayout) ((ViewGroup) layout.getParent()).getParent();
-//                pager = (ViewPager) pL.findViewById(R.id.pager);
-//                int pageNum = pager.getCurrentItem();
-//                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                // 껍데기
-//                FrameLayout route_info_tab = (FrameLayout) inflater.inflate(R.layout.bt, null);
-//                // 각 페이지
-//                LinearLayout inLayout = (LinearLayout) layout.findViewById(R.id.inLayout);
-//                inLayout.addView(route_info_tab);
-//
-//                //Set Id
-//                int temp_wrap_id = wrap_id.get(pageNum);
-//                ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
-//                //wrapView.setId(pageNum * 10000 + temp_wrap_id);
-//
-//
-//                SubmitProcessButton progressIndi = (SubmitProcessButton) wrapView.getChildAt(1);
-//                ViewGroup innerWrapView = (ViewGroup) wrapView.getChildAt(2);
-//
-//                progressIndi.setProgress(0);
-//
-//                View setupBtn = innerWrapView.getChildAt(0);
-//                View descLayout = innerWrapView.getChildAt(2);
-//                View minusBtn = innerWrapView.getChildAt(3);
-//                View curValue = innerWrapView.getChildAt(4);
-//                View valueUnit = innerWrapView.getChildAt(5);
-//                View plusBtn = innerWrapView.getChildAt(6);
-//                View modiBtn = innerWrapView.getChildAt(7);
-//
-//                //Hide childViews
-//                setupBtn.setVisibility(View.GONE);
-//                minusBtn.setVisibility(View.GONE);
-//                plusBtn.setVisibility(View.GONE);
-//                modiBtn.setVisibility(View.GONE);
-//
-//                //Init & Add curValue
-//                mValues.get(pageNum).add(0);
-//
-//                //Add ArrayList
-//                mViews.add(innerWrapView);
-//                mViews.add(setupBtn);
-//                mViews.add(minusBtn);
-//                mViews.add(plusBtn);
-//                mViews.add(modiBtn);
-//
-//                child_id = temp_wrap_id * 100;
-//
-//                //Set ID to each View
-//                innerWrapView.setId(child_id++); //0
-//                progressIndi.setId(child_id++); //1
-//                setupBtn.setId(child_id++); //2
-//                minusBtn.setId(child_id++); //3
-//                curValue.setId(child_id++); //4
-//                valueUnit.setId(child_id++); //5
-//                plusBtn.setId(child_id++); //6
-//                modiBtn.setId(child_id++); //7
-//                descLayout.setId(child_id++);//8
-//                temp_wrap_id++;
-//                wrap_id.set(pageNum, temp_wrap_id);
-//
-//                //Set onClickListener to each View
-//                for (View view : mViews) {
-//                    view.setOnClickListener(onClickListener);
-//                }
-//            }
-//        });
-//    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -397,6 +324,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                             parent.setVisibility(View.INVISIBLE);
                         }
                     }
+                    mUserHabitRepository.updateUserHabitState(tmpState);
+
                     break;
                 case 3: // -
                     //Decrease curValue

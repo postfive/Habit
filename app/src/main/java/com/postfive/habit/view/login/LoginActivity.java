@@ -200,10 +200,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         CelebHabitDetail celebHabitd2 = new CelebHabitDetail(1, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음날 예습하기", 28, 100, 5, "번", "img_parkboram_detail_2.png", "blue", R.drawable.ic_dry_fruits);
         CelebHabitDetail celebHabitd3 = new CelebHabitDetail(1, Habit.NIGHT_TIME, 2, 3, "줄넘기하기", "쌩쌩이 10번", 62, 10, 1, "번", "img_parkboram_detail_3.png", "blue", R.drawable.ic_walking);
 
+        CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", 256 , 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
+        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", 128, 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
+        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", 64, 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
+        CelebHabitDetail celebHabitd24 = new CelebHabitDetail(2, Habit.ALLDAY_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 하루종일 100번", 32, 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
+
+/*
         CelebHabitDetail celebHabitd21 = new CelebHabitDetail(2, Habit.MORNING_TIME, 1, 1, "물마시기", "하루에 10L 물마시기", Utils.setDaySum(Calendar.FRIDAY,true) , 10, 2, "L", "aaaa", "blue",  R.drawable.ic_water);
         CelebHabitDetail celebHabitd22 = new CelebHabitDetail(2, Habit.AFTERNOON_TIME, 1, 2, "예습하기", "다음 경기 분석하기", Utils.setDaySum(Calendar.FRIDAY,true) , 1, 1, "번", "aaaa", "blue", R.drawable.ic_dry_fruits);
         CelebHabitDetail celebHabitd23 = new CelebHabitDetail(2, Habit.NIGHT_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
         CelebHabitDetail celebHabitd24 = new CelebHabitDetail(2, Habit.ALLDAY_TIME, 1, 3, "줄넘기하기", "쌩쌩이 호날두 답게 하루종일 100번", Utils.setDaySum(Calendar.FRIDAY,true) , 100, 1, "번", "aaaa", "blue", R.drawable.ic_walking);
+*/
 
 
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster);
