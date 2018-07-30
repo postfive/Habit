@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
+import com.postfive.habit.Utils;
 import com.postfive.habit.adpater.celeblist.CelebRecyclerViewAdapter;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.CelebHabitViewModel;
@@ -51,15 +52,13 @@ public class CelebListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_celeb_list, container, false);
 
         NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview);
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
 
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
-            layoutParams.topMargin = result;
-            nestedscrollview.setLayoutParams(layoutParams);
-        }
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
+        layoutParams.topMargin = Utils.getStatusBarHeight(getContext());
+        nestedscrollview.setLayoutParams(layoutParams);
+
+
         int width = getResources().getDisplayMetrics().widthPixels;
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
 

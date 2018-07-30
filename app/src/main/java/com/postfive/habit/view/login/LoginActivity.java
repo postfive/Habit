@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
-import com.postfive.habit.Utils;
-import com.postfive.habit.db.AppDatabase;
 import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.Habit;
@@ -24,15 +22,13 @@ import com.postfive.habit.noti.HabitNoti;
 import com.postfive.habit.view.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private static final String PREFS_NAME = "Init";
 
-    private AppDatabase mAppDatabase;
     private UserHabitRespository mUserHabitRespository;
     private HabitRespository mHabitRespository;
 
@@ -49,10 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         mUserSettingValue = new UserSettingValue(this);
-        // 컴포넌트 초기화
-        initComponent();
-
-
 
         // 앱 최초 실행 여부 확인
         if(mUserSettingValue.init()) {
@@ -114,33 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
-
-
-
-
-    private void initComponent() {
-
-
-        mBtnLookAround = (Button)findViewById(R.id.btn_look_around);
-        mBtnLookAround.setOnClickListener(this);
-
-        mTextView = (TextView)findViewById(R.id.textview_state);
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch(v.getId()){
-            case R.id.btn_look_around :
-                Intent lookAround = new Intent(this, MainActivity.class);
-                startActivity(lookAround);
-                finish();
-            default :
-                break;
-        }
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

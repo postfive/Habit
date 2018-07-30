@@ -56,7 +56,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
 
     private void initComponent() {
         // Toolbar 설정
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_habit_list);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_my_habit_list);
         setSupportActionBar(myToolbar);
 
         // 액션바 뒤로가기 버튼

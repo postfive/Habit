@@ -32,7 +32,7 @@ public class HabitRespository {
         this.mUserHabitDao = db.userhabitModel();
         this.mCelebHabitDao = db.celebModel();
 
-//        this.mHabitList = this.mHabitDao.allHabitLive();
+        this.mHabitList = this.mHabitDao.allHabitLive();
         this.mCelebList = this.mCelebHabitDao.allHabitLive();
     }
 

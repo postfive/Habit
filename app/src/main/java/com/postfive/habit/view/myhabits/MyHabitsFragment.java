@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.postfive.habit.R;
+import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.adpater.myhabit.CustomPagerAdapter;
 import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
 import com.postfive.habit.db.UserHabitDetail;
@@ -97,6 +98,10 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         List<UserHabitState> mUserHabitStatesList = mUserHabitRespository.getNowHabit(1);
 
         adapter.setData(mUserHabitStatesList);
+
+        UserSettingValue.getResolutionValue();
+
+
 //        // TODO 오늘 완성
 //        List<UserHabitState> mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
 //

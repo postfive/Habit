@@ -44,5 +44,6 @@
         android:layout_height="wrap_content"
         android:text="전체 습관 보기"
         android:id="@+id/showAllBtn"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        style="@style/AppTheme.Button.Outlined"/>
 </LinearLayout>

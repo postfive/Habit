@@ -19,8 +19,8 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private List<Habit> mHabitList ;
 
-    public HabitRecyclerViewAdapter(List<Habit> habitList){
-        this.mHabitList = habitList;
+    public HabitRecyclerViewAdapter(){
+        this.mHabitList = new ArrayList<>();
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,8 +33,9 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         Log.d("HabitRecyclerView", "mWidth" + Integer.toString(width));
         Log.d("HabitRecyclerView", "mHeight" + Integer.toString(height));*/
 
+        Log.d("HabitRecyclerView", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_habit, parent, false);
-//        view.setLayoutParams(new LinearLayoutCompat.LayoutParams(width,height));
+////        view.setLayoutParams(new LinearLayoutCompat.LayoutParams(width,height));
         return new RowCell(view);
     }
 
@@ -73,6 +74,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public void setAllHabit(List<Habit> allHabit){
         mHabitList.clear();
         mHabitList = allHabit;
+
         notifyDataSetChanged();
     }
 }
