@@ -23,54 +23,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:textSize="15dp"
+                android:gravity="center_vertical"
                 android:id="@+id/goal_statement"
                 android:text="오늘부터 다이어트!!"
                 >
             </TextView>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
                 >
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:id="@+id/start_day"
                     android:text="2018.06.01"
                     />
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"
                     android:gravity="center"
                     android:text="~"
                     />
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:id="@+id/end_day"
                     android:text="2018.06.01"
                     />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            >
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:padding="15dp"
-                android:src="@drawable/ic_launcher_background"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:padding="15dp"-->
+                <!--android:src="@drawable/ic_launcher_background"/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

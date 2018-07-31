@@ -94,7 +94,9 @@ public class CelebActivity extends AppCompatActivity  {
 
     private void setComponent() {
 
-        imageViewTitle.setImageDrawable(assignImage(mCelebHabitMaster.getImg()));
+//        imageViewTitle.setImageDrawable(assignImage());
+        imageViewTitle.setImageResource(mCelebHabitMaster.getDrawable());
+
         String resoution = mCelebHabitMaster.getTitle();
 
         CharSequence charSequence = resoution;

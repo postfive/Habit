@@ -59,7 +59,7 @@ public class CelebListFragment extends Fragment {
         nestedscrollview.setLayoutParams(layoutParams);
 
         int width = getResources().getDisplayMetrics().widthPixels;
-        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
+        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);
