@@ -15,22 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.adpater.celebdetaillist.celeblist.CelebDetailRecyclerViewAdapter;
-import com.postfive.habit.adpater.celeblist.CelebRecyclerViewAdapter;
 import com.postfive.habit.db.CelebHabitDetail;
 import com.postfive.habit.db.CelebHabitMaster;
-import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
-import com.postfive.habit.view.main.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -157,7 +153,7 @@ public class CelebActivity extends AppCompatActivity  {
 
         editTextResolution = (EditText)findViewById(R.id.edittext_user_resolution);
 
-        editTextResolution.setHint(mCelebHabitMaster.getResolution());
+//        editTextResolution.setHint(mCelebHabitMaster.getResolution());
     }
 
     /* toolbar, action bar 버튼 클릭 이벤트 */

@@ -21,9 +21,7 @@
     </style>
 
     <style name="AppTheme.Main" parent="AppTheme">
-        <!--
-                <item name="android:windowTranslucentStatus">true</item>
-        -->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.Toolbar.PopupTheme" parent="ThemeOverlay.AppCompat.Light">
