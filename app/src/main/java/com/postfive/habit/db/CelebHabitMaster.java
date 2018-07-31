@@ -22,25 +22,34 @@ public class CelebHabitMaster {
 
     @NonNull
     @ColumnInfo(name ="subtitle")
-    public String subtitle; // 부제목
+    public String subtitle; // 부제목1
 
     @NonNull
-    @ColumnInfo(name ="resolution")
-    public String resolution; // 다짐
+    @ColumnInfo(name ="subtitle2")
+    public String subtitle2; // 부제목2
 
+
+    @NonNull
+    @ColumnInfo(name ="subtitle3")
+    public String subtitle3; // 부제목3
 
     @NonNull
     @ColumnInfo(name ="img")
     public String img; // 이미지
 
+    @NonNull
+    @ColumnInfo(name ="drawable")
+    public int drawable; // 이미지
 
-    public CelebHabitMaster(@NonNull String name, @NonNull int celebcode, @NonNull String title, @NonNull String subtitle, @NonNull String resolution, @NonNull String img ){
+    public CelebHabitMaster(@NonNull String name, @NonNull int celebcode, @NonNull String title, @NonNull String subtitle, @NonNull String subtitle2, @NonNull String subtitle3, @NonNull String img, @NonNull int drawable){
         this.name = name;
         this.celebcode = celebcode;
         this.title = title;
         this.subtitle = subtitle;
-        this.resolution = resolution;
         this.img = img;
+        this.drawable = drawable;
+        this.subtitle2 = subtitle2;
+        this.subtitle3 = subtitle3;
     }
 
     @NonNull
@@ -80,16 +89,6 @@ public class CelebHabitMaster {
     }
 
     @NonNull
-    public String getResolution() {
-        return resolution;
-    }
-
-    public void setResolution(@NonNull String resolution) {
-        this.resolution = resolution;
-    }
-
-
-    @NonNull
     public String getImg() {
         return img;
     }
@@ -97,4 +96,33 @@ public class CelebHabitMaster {
     public void setImg(@NonNull String img) {
         this.img = img;
     }
+
+    @NonNull
+    public int getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(@NonNull int drawable) {
+        this.drawable = drawable;
+    }
+
+
+    @NonNull
+    public String getSubtitle2() {
+        return subtitle2;
+    }
+
+    public void setSubtitle2(@NonNull String subtitle2) {
+        this.subtitle2 = subtitle2;
+    }
+
+    @NonNull
+    public String getSubtitle3() {
+        return subtitle3;
+    }
+
+    public void setSubtitle3(@NonNull String subtitle3) {
+        this.subtitle3 = subtitle3;
+    }
+
 }

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,23 +54,17 @@ public class CelebListFragment extends Fragment {
 
         NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview);
 
-
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
         layoutParams.topMargin = Utils.getStatusBarHeight(getContext());
         nestedscrollview.setLayoutParams(layoutParams);
 
-
         int width = getResources().getDisplayMetrics().widthPixels;
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
-
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
-
-
-
 
         // DB ViewModelProviders  설정
         CelebHabitViewModel celebHabitViewModel = ViewModelProviders.of(this).get(CelebHabitViewModel.class);
@@ -80,16 +75,17 @@ public class CelebListFragment extends Fragment {
             public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
 
                 mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
+
             }
         });
 
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
                 CelebHabitMaster habit = mCelebRecyclerViewAdapter.getHabit(position);
 
                 Intent intent = new Intent(getContext(), CelebActivity.class);
-                Toast.makeText(getContext(), "유명인 선택 "+habit.getName(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("celebcode", habit.getCelebcode());
                 startActivity(intent);
             }
@@ -99,6 +95,6 @@ public class CelebListFragment extends Fragment {
 
     public void onStop() {
         super.onStop();
-        mCelebRecyclerViewAdapter = null;
+//        mCelebRecyclerViewAdapter = null;
     }
 }

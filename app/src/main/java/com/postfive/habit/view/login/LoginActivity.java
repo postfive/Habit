@@ -165,9 +165,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mHabitRespository.insertAllHabit(habitli);
 
-        CelebHabitMaster celebHabitmaster = new CelebHabitMaster("박보람",1,"박보람의 40kg \n다이어트 습관", "하루하루 0.5kg씩 줄이는 습관", "박보람 처럼 40kg 만들어서 하와이 가자!",  "img_parkboram_list.jpg");
-        CelebHabitMaster celebHabitmaster2 = new CelebHabitMaster("호날두",2,"호날두 처럼 \n졸라 멋쟁이 되기", "호날두 같이 존멋 되기", "호날두 처럼 존멋되서 유벤 직관가자!",  "img_ronaldo_list.jpg");
-        CelebHabitMaster celebHabitmaster3 = new CelebHabitMaster("안영이",3,"모든 팀에서 탐내\n는 슈퍼 신입 되기", "밟아보세요 선배님. 그래봤자 발만 아프실거에요", "슈퍼 신입! 슈퍼 직장인!",  "img_ahnyoungi.jpg");
+        CelebHabitMaster celebHabitmaster = new CelebHabitMaster("박보람",1,"박보람의 40kg \n다이어트 습관", "75kg에서 40kg로 만드는 방법","박보람의 40kg 만드는\n다이어트 라이프스타일", "박보람이 알려주는 라이프스타일 팁으로\n다이어트의 기초를 탄탄히 다져보세요!","img_parkboram_list.jpg", R.drawable.img_parkboram_title);
+        CelebHabitMaster celebHabitmaster2 = new CelebHabitMaster("김종국",2,"김종국의 군살없는\n라이프스타일", "최강의 트레이닝", "...",  "...","img_kimjongkuk_list.jpg", R.drawable.img_kimjongkuk_title);
+        CelebHabitMaster celebHabitmaster3 = new CelebHabitMaster("안영이",3,"미생 안영이처럼\n똑똑하게 회사생활하기", "처음 회사생활 시작하는 신입사원 추천", "...",  "...", "img_ahnyoungi.jpg", R.drawable.img_ahnyoungi_title);
+        CelebHabitMaster celebHabitmaster4 = new CelebHabitMaster("안영이",4,"미생 안영이처럼\n똑똑하게 회사생활하기", "처음 회사생활 시작하는 신입사원 추천", "...",  "...","img_ahnyoungi.jpg", R.drawable.famous_list);
 
 
         CelebHabitDetail celebHabitd1 = new CelebHabitDetail(1, Habit.ALLDAY_TIME, 1, 1, "물마시기", "하루에 6L 물마시기", 30, 6, 2, "L", "img_parkboram_detail_1.png", "blue", R.drawable.ic_water);
@@ -183,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster);
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster2);
         mHabitRespository.insertCelebHabitMaster(celebHabitmaster3);
+        mHabitRespository.insertCelebHabitMaster(celebHabitmaster4);
 
         mHabitRespository.insertCelebHabitDetail(celebHabitd1);
         mHabitRespository.insertCelebHabitDetail(celebHabitd2);

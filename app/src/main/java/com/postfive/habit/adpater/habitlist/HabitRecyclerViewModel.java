@@ -9,4 +9,5 @@ public interface HabitRecyclerViewModel {
     public Habit getHabit(int position);
 
     public void setAllHabit(List<Habit> allHabit);
+
 }
