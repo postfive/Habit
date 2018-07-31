@@ -69,11 +69,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         adapter = new CustomPagerAdapter(getContext(), mUserHabitRepository );
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
-        //pager.setCurrentItem(1);
-
-//
-//        mUserHabitRepository = new UserHabitRespository(getActivity().getApplication(), );
-
+        pager.setCurrentItem(1);
 
         // TODO 현재 지금
         List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(1);
@@ -101,10 +97,10 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                        setDay(date_tv, 0);
+                        setDay(date_tv, -1);
                         break;
                     case 1:
-                        setDay(date_tv, -1);
+                        setDay(date_tv, 0);
                         break;
                     case 2:
                         setDay(date_tv, 1);
@@ -129,7 +125,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
             formatter = new SimpleDateFormat("오늘 yyyy.MM.dd");
         else if(n == 1)
             formatter = new SimpleDateFormat("내일 yyyy.MM.dd");
-        else // n == 2
+        else // n == -1
             formatter = new SimpleDateFormat("어제 yyyy.MM.dd");
         String date = formatter.format(curDay);
         view.setText(date);
