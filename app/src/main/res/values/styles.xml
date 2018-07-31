@@ -87,20 +87,13 @@
         <item name ="android:background">@drawable/drawable_button_outlined_face</item>
     </style>
 
-    <!--    <style name="AppTheme.Button" parent="AppTheme.Button">
-
-        </style>@android:style/Widget.Button.Toggle">
-        -->
     <style name="AppTheme.Button.Toggle" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name ="android:textSize">@dimen/text_size</item>
         <item name ="android:textColor">@drawable/drawable_toggle_text</item>
         <item name ="android:background">@drawable/drawable_toggle</item>
     </style>
+
     <style name="AppTheme.TextInputLayout" parent="Widget.Design.TextInputLayout">
-        <!--<item name="hintTextAppearance">@style/TextAppearance.Shrine.TextInputLayout.HintText</item>-->
-
-        <!--<item name="android:paddingBottom">8dp</item>-->
-
         <item name="android:background">@drawable/drawable_edittext</item>
     </style>
 

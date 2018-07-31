@@ -54,16 +54,12 @@ public class CelebListFragment extends Fragment {
 
         NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview);
 
-        int statusBarHeight = Utils.setStatusBarHeight(getContext());
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
+        layoutParams.topMargin = Utils.getStatusBarHeight(getContext());
+        nestedscrollview.setLayoutParams(layoutParams);
 
-        if (statusBarHeight > 0) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
-            layoutParams.topMargin = statusBarHeight;
-            nestedscrollview.setLayoutParams(layoutParams);
-        }
-
-        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null);
-
+        int width = getResources().getDisplayMetrics().widthPixels;
+        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);

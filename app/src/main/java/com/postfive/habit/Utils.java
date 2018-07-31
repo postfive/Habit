@@ -21,14 +21,16 @@ public class Utils {
         return daysum;
     }
 
-    public static int setStatusBarHeight(Context context){
-    int result = 0;
-    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        result = context.getResources().getDimensionPixelSize(resourceId);
+    public static int getStatusBarHeight(Context context){
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
 
         return result;
     }
-
+    
     public static Drawable assignImage(View v, String imgUri){
         InputStream inputStream = null;
         Drawable img = null;

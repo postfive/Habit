@@ -133,7 +133,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     }
 
     public void addCell(int status, int nDay, UserHabitState userHabitState) {
-        LinearLayout pL = (LinearLayout) ((ViewGroup) layout.getParent()).getParent();
+        LinearLayout pL = (LinearLayout) (layout.getParent()).getParent();
         pager = (ViewPager) pL.findViewById(R.id.pager);
         // int pageNum = pager.getCurrentItem();
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -188,10 +188,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         plusBtn.setVisibility(View.GONE); // 증가
         modiBtn.setVisibility(View.GONE); // 수정
 
-
-        //Init & Add curValue
-//        mValues.get(nDay).add(0);
-
         //Add ArrayList
         if (status == 0) {
             mViews.add(innerWrapView);
@@ -225,7 +221,6 @@ public class CustomPagerAdapter extends PagerAdapter {
 
 
         curValue.setText("" + userHabitState.getDid());
-        //userHabitState.getGoal();
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
         maxValue.setText("" + userHabitState.getFull());
@@ -251,7 +246,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         if (pVal > 100)
             pVal = 100;
 
-        //tempPi = (SubmitProcessButton) pL.findViewById(cellCnt * 100 + 1);
         progressIndi.setProgress(pVal);
 
         //Set onClickListener to each View
@@ -279,18 +273,14 @@ public class CustomPagerAdapter extends PagerAdapter {
             if (id >= 100) {
                 index = (id - (id % 100)) / 100;
             }
-            // 어제 오늘
-//            int pageNum = pager.getCurrentItem();
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "" + pageNum);
 
             UserHabitState tmpState = days.get(pageNum).get(index);
-            // 오늘////////////////////////////////
             if (pageNum == 1) {
 //                tmpState = todayList.get(index);
             }
-            // 어제 내일
-            //////////////////////////////////////////
+
             int maxVal = tmpState.getFull();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
             int curVal2 = tmpState.getDid();
@@ -299,7 +289,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Get curVal", "Position: " + pageNum + ", Index: " + index + ", CurVal: " + curVal2 + "/" + conVal);
             Log.e("Btn", "Clicked: " + id);
 
-            ViewGroup pL = (ViewGroup) ((ViewGroup) v.getParent()).getParent();
+            ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
             switch (id % 100) {
                 case 0: // 수정모드 버튼 변경
                     //Set Visibility to Visible
@@ -361,15 +351,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                     tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
                     tempPi.setProgress(pVal);
 
-//                    if (curVal > 0) {
-//                        curVal--;
-//                        tempTv = (TextView) pL.findViewById(id + 1);
-//                        tempTv.setText("" + curVal);
-//                        tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
-//                        tempPi.setProgress(curVal);
-//                        mValues.get(pageNum).set(index, curVal);
-//                        Log.e("MinusBtn", index + "/" + curVal);
-//                    }
                     break;
                 case 6: //+
                     //Cap to max value

@@ -66,14 +66,14 @@ public class HabitListActivity extends AppCompatActivity {
 
 
         // 그리드 뷰로 만들것을 정의하는 부분
-        RecyclerView.LayoutManager layoutManagerHealth = new LinearLayoutManager(this);
-        RecyclerView.LayoutManager layoutManagerEat = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManagerHealth = new LinearLayoutManager(getApplication());
+        RecyclerView.LayoutManager layoutManagerEat = new LinearLayoutManager(getApplication());
         mHealthHabitRecyclerView.setLayoutManager(layoutManagerHealth);
         mEatHabitRecyclerView.setLayoutManager(layoutManagerEat);
 
         // 어댑터를 연결 시켜 주는 부분
-        final HabitRecyclerViewAdapter myHealthRecyclerViewAdapter = new HabitRecyclerViewAdapter(mHealthHabitList);
-        final HabitRecyclerViewAdapter myRecyclerViewAdapter = new HabitRecyclerViewAdapter(mEatHabitList);
+        final HabitRecyclerViewAdapter myHealthRecyclerViewAdapter = new HabitRecyclerViewAdapter();
+        final HabitRecyclerViewAdapter myRecyclerViewAdapter = new HabitRecyclerViewAdapter();
         mHealthHabitRecyclerView.setAdapter(myHealthRecyclerViewAdapter);
         mEatHabitRecyclerView.setAdapter(myRecyclerViewAdapter);
 
@@ -99,6 +99,7 @@ public class HabitListActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(@Nullable List<Habit> habits) {
 
+                        Log.d(TAG, "Habit "+habits.size());
 
                         for(Habit tmp : habits){
                             Log.d(TAG, "Habit "+tmp.getName());
