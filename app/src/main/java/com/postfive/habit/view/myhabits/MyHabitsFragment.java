@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.postfive.habit.R;
@@ -76,8 +77,16 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         adapter.setData(mUserHabitStatesList);
 
-        UserSettingValue.getResolutionValue();
+        TextView goal_tv = (TextView) view.findViewById(R.id.goal_statement);
+        goal_tv.setText(UserSettingValue.getResolutionValue());
 
+        TextView start_day_tv = (TextView) view.findViewById(R.id.start_day);
+        start_day_tv.setText("UserSettingValue.get");
+        TextView end_day_tv = (TextView) view.findViewById(R.id.end_day);
+        end_day_tv.setText("UserSettingValue.get");
+
+        LinearLayout upperLayout = (LinearLayout) view.findViewById(R.id.upperLayout);
+//        upperLayout.setBackgroundResource(...);
         final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setDay(date_tv, 0);
 

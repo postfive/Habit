@@ -31,23 +31,25 @@ import java.util.List;
 public class CustomPagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    ViewPager pager;
-    ArrayList<Integer> wrap_id = new ArrayList<>();
-    ArrayList<Integer> wrap_id1 = new ArrayList<>();
-    ArrayList<Integer> wrap_id2 = new ArrayList<>();
-    ArrayList<Integer> btn_id = new ArrayList<>();
-    ArrayList<View> mViews = new ArrayList<>();
-    List<List<UserHabitState>> days = new ArrayList<>();
-    ArrayList<UserHabitState> day = null;
-    UserHabitRespository mUserHabitRepository;
+    private ViewPager pager;
+    private ArrayList<Integer> wrap_id = new ArrayList<>();
+    private ArrayList<Integer> wrap_id1 = new ArrayList<>();
+    private ArrayList<Integer> wrap_id2 = new ArrayList<>();
+    private ArrayList<Integer> btn_id = new ArrayList<>();
+    private ArrayList<View> mViews = new ArrayList<>();
+    private List<List<UserHabitState>> days = new ArrayList<>();
+    private List<List<UserHabitState>> days1 = new ArrayList<>();
+    private List<List<UserHabitState>> days2 = new ArrayList<>();
+    private ArrayList<UserHabitState> day = null;
+    private UserHabitRespository mUserHabitRepository;
     private String[] strArrayDayOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
 
-    View tempV;
-    TextView tempTv;
-    SubmitProcessButton tempPi; // Progress Indicator
-    int child_id = 0;
-    ViewGroup layout;
-    int initFirstFlag = 0;
+    private View tempV;
+    private TextView tempTv;
+    private SubmitProcessButton tempPi; // Progress Indicator
+    private int child_id = 0;
+    private ViewGroup layout;
+    private int initFirstFlag = 0;
 
     public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
@@ -68,6 +70,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                 initFirstFlag = 1;
                 wrap_id.add(0);
             }
+            days1.add(day);
+            days2.add(day);
         }
         collection.addView(layout);
 
@@ -120,10 +124,14 @@ public class CustomPagerAdapter extends PagerAdapter {
     }
 
     // 맨처음 db에서 값 가져올때
-    public void createSet(int status, int position, List<UserHabitState> List) {
-        List<UserHabitState> tmpList = null;
+    private void createSet(int status, int position, List<UserHabitState> List) {
+        List<UserHabitState> tmpList;
         if (status == 0)
             days.set(position, List);
+        else if (status == 1)
+            days1.set(0, List); // first arg. is not relate to position... it could be confuse..
+        else if (status == 2)
+            days2.set(0, List); // first arg. is not relate to position... it could be confuse..
         tmpList = List;
         //// view 에 데이터 붙이기
         for (UserHabitState U : tmpList) {
@@ -131,7 +139,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         }
     }
 
-    public void addCell(int status, int position, UserHabitState userHabitState) {
+    private void addCell(int status, int position, UserHabitState userHabitState) {
         LinearLayout pL = (LinearLayout) (layout.getParent()).getParent();
         pager = (ViewPager) pL.findViewById(R.id.pager);
         // int pageNum = pager.getCurrentItem();
@@ -223,17 +231,17 @@ public class CustomPagerAdapter extends PagerAdapter {
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
         maxValue.setText("" + userHabitState.getFull());
-        String tmpDayofWeek = "";
-        int intDayofWeek = userHabitState.getDaysum();
+        String tmpDayOfWeek = "";
+        int intDayOfWeek = userHabitState.getDaysum();
         for (int i = 1; i < 8; i++) {
-            if ((intDayofWeek & (1 << i)) > 0) {
-                tmpDayofWeek += strArrayDayOfWeek[i - 1];
+            if ((intDayOfWeek & (1 << i)) > 0) {
+                tmpDayOfWeek += strArrayDayOfWeek[i - 1];
             }
         }
         Drawable drawable = mContext.getResources().getDrawable(userHabitState.getIcon());
 
         habitImg.setImageDrawable(drawable);
-        wDayV.setText("" + tmpDayofWeek);
+        wDayV.setText("" + tmpDayOfWeek);
 
         int maxVal = userHabitState.getFull();
         int conVal = (int) Math.ceil(100 / (float) maxVal);
@@ -267,7 +275,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                 mContext.startActivity(intent);
                 return;
             }
-
             int index = 0;
             if (id >= 100) {
                 index = (id - (id % 100)) / 100;
@@ -276,9 +283,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Test", "" + pageNum);
 
             UserHabitState tmpState = days.get(pageNum).get(index);
-            if (pageNum == 1) {
-//                tmpState = todayList.get(index);
-            }
 
             int maxVal = tmpState.getFull();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
@@ -330,16 +334,15 @@ public class CustomPagerAdapter extends PagerAdapter {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
                             completeV.addView(pL);
-                            parent.setVisibility(View.INVISIBLE);
+                            if(parent.getChildCount() == 0)
+                                parent.setVisibility(View.GONE);
                         }
                     }
                     mUserHabitRepository.updateUserHabitState(tmpState);
-
                     break;
                 case 3: // -
                     //Decrease curValue
                     curVal2--;
-
                     tmpState.setDid(curVal2);
                     tempTv = (TextView) pL.findViewById(id + 1);
                     if (curVal2 < 0)
@@ -349,7 +352,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                     tempTv.setText("" + curVal2);
                     tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
                     tempPi.setProgress(pVal);
-
                     break;
                 case 6: //+
                     //Cap to max value
@@ -365,7 +367,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                     tempTv.setText("" + curVal2);
                     tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
                     tempPi.setProgress(pVal);
-
                     break;
                 case 7:
                     //Go modiActivity
