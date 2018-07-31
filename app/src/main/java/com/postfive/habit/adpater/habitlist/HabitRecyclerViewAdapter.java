@@ -25,13 +25,6 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // XML, 디자인 한 부분 적용
-/*        int width =parent.getResources().getDisplayMetrics().widthPixels / 2 - 8;
-        int height =parent.getResources().getDisplayMetrics().widthPixels / 5 ;
-
-//        int width = parent.getWidth()/2;
-//        int height = parent.getHeight()/5 ;
-        Log.d("HabitRecyclerView", "mWidth" + Integer.toString(width));
-        Log.d("HabitRecyclerView", "mHeight" + Integer.toString(height));*/
 
         Log.d("HabitRecyclerView", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_habit, parent, false);
@@ -58,7 +51,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         public TextView textView;
         public RowCell(View view) {
             super(view);
-            imageView = (ImageView)view.findViewById(R.id.image_habit_item);
+            imageView = (ImageView)view.findViewById(R.id.image_celeb_list_item);
             textView = (TextView) view.findViewById(R.id.textview_habit_item);
         }
     }

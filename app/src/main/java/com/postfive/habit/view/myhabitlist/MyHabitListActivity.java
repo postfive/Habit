@@ -22,8 +22,6 @@ import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
-import com.postfive.habit.habits.HabitMaker;
-import com.postfive.habit.habits.factory.HabitFactory;
 import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.habit.HabitActivity;
 
@@ -178,107 +176,4 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         mUserHabitRespository.destroyInstance();
 
     }
-
-    /* 확 인용 ~~~ */
-    public void getAllUserD(View v)
-    {
-        connectDB();
-        List<UserHabitDetail> detailList = mUserHabitRespository.getAllUserHabitDetail();
-        Log.d(TAG,"go");
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n순서 | 습관코드 |  시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-        for(int i = 0 ; i < detailList.size(); i ++){
-            UserHabitDetail tmp = detailList.get(i);
-            ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-//            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |    "+ tmp.getPriority() +"    |    "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
-            sb.append(tmp.getHabitseq() + "    |     "+tmp.getHabitcode() +"    |     "+ tmp.getTime() +"    |    "+ tmp.getName() +"    |    "+ tmp.getGoal() +"    |    "+ tmp.getDaysum() +"    |    "+ tmp.getFull() +"    |    "+ tmp.getUnit());
-            sb.append("\n");
-        }
-
-        Log.d(TAG, "DB TEST SELECT USER HABIT DETAIL " + sb.toString());
-        //mRecyclerViewAdapter.addHabit(detailList.get(0));
-        getAllUserS();
-    }
-
-    void getAllUserS()
-    {
-        List<UserHabitState> detailList = mUserHabitRespository.getAllUserHabitState();
-        Log.d(TAG,"go");
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n요일 |  순서  | 습관코드 | d_seq | 시간 | 이름 | 목표 | 날짜합 | 전체 | 단위 \n");
-
-        for(int i = 0 ; i < detailList.size(); i ++){
-            UserHabitState tmp = detailList.get(i);
-            ///Log.d(TAG, tmp.getHabitcode() +"/"+ tmp.getPriority() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+ tmp.getGoal() +"/"+ tmp.getDaysum() +"/"+ tmp.getFull() +"/"+ tmp.getUnit() );
-            sb.append(tmp.getDayofweek() +"    |     "+tmp.getHabitstateseq() + " |    "+tmp.getHabitcode() +"   |   "+ tmp.getMasterseq() +"  | "+  tmp.getTime() +"  | "+ tmp.getName() +"|"+ tmp.getGoal() +"|  "+ tmp.getDaysum() +"  |  "+ tmp.getFull() +"   |  "+ tmp.getUnit());
-            sb.append("\n");
-        }
-
-        Log.d(TAG, "DB TEST SELECT USER HABIT STATE " + sb.toString());
-        Log.d(TAG,"finish");
-        disconnectDB();
-    }
-
-
-
-    public void getHabit(View v)
-    {
-        List<Habit> detailList = mabitRespository.getAllHabit();
-        Log.d(TAG,"go");
-
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0 ; i < detailList.size(); i ++){
-            Habit tmp = detailList.get(i);
-            sb.append(" / "+tmp.getHabitcode() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+  tmp.getDaysum() +"/"+ tmp.getFull());
-            sb.append("\n");
-        }
-
-        Log.d(TAG, "DB TEST SELECT HABIT " + sb.toString());
-        Log.d(TAG,"finish");
-        getCelebDetail();
-    }
-    void getCelebDetail()
-    {
-        List<CelebHabitDetail> detailList = mabitRespository.getAllCelebHabitDetail();
-        Log.d(TAG,"go");
-
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0 ; i < detailList.size(); i ++){
-            CelebHabitDetail tmp = detailList.get(i);
-            sb.append(tmp.getCelebcode()+"/"+tmp.getName()+"/"+tmp.getHabitcode() +"/"+ tmp.getTime() +"/"+ tmp.getName() +"/"+  tmp.getDaysum() +"/"+ tmp.getFull());
-            sb.append("\n");
-        }
-
-        Log.d(TAG, "DB TEST SELECT Celeb HABIT Detail " + sb.toString());
-        Log.d(TAG,"finish");
-        getCelebMaster();
-    }
-    void getCelebMaster()
-    {
-        List<CelebHabitMaster> detailList = mabitRespository.getAllCelebHabitMater();
-        Log.d(TAG,"go");
-
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0 ; i < detailList.size(); i ++){
-            CelebHabitMaster tmp = detailList.get(i);
-            sb.append(tmp.getCelebcode()+"/"+tmp.getName()+"/"+tmp.getName() +"/"+ tmp.getResolution() +"/"+ tmp.getTitle());
-            sb.append("\n");
-        }
-
-        Log.d(TAG, "DB TEST SELECT Celeb HABIT Master " + sb.toString());
-        Log.d(TAG,"finish");
-        //
-        // disconnectDB();
-    }
-
-/*
-    //TODO recyclerviewadapter 에 추가
-                        mRecyclerViewAdapter.addHabit(habit);
-    //TODO recyclerviewadapter 에서 변경
-    // mRecyclerViewAdapter.changeHabit(habit);
-    //TODO recyclerviewadapter 에서 제거
-    // mRecyclerViewAdapter.removeHabit(habit);*/
 }

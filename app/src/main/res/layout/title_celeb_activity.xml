@@ -4,57 +4,49 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="16dp"
+    tools:showIn="@layout/activity_celeb">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        card_view:cardCornerRadius="10dp">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/image_celeb_list_item"
+                android:id="@+id/image_celeb_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:id="@+id/layout_gradation_celeb_list_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="left|bottom">
+                android:layout_gravity="left|bottom"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <ImageView
-                    android:id="@+id/image_gradation_celeb_list_item"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="fill_horizontal|bottom"
-                    android:background="@drawable/drawable_gradation_celeb_list_item"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_gradation_celeb_list_item" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
-                android:layout_marginBottom="17dp"
-                android:layout_marginLeft="17dp"
+                android:layout_marginBottom="36dp"
+                android:layout_marginLeft="32dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textview_title_celeb_list_item"
+                    android:id="@+id/textview_title_celeb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
@@ -62,7 +54,7 @@
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/textview_subtitle_celeb_list_item"
+                    android:id="@+id/textview_subtitle_celeb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="75Kg에서 40kg로 만드는 방법"
@@ -70,5 +62,4 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </FrameLayout>
-    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
