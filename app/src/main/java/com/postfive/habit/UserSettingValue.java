@@ -9,37 +9,42 @@ public class UserSettingValue {
     private static final String PREFS_NAME = "setValue";
     private Context mContext;
 
-    public static String MORNING_PUSH   = "morningPush"  ;
-    public static String AFTERNOON_PUSH = "afternoonPush";
-    public static String NIGHT_PUSH     = "nightPush"    ;
-    public static String GOODNIGHT_PUSH = "goodNightPush";
-    public static String MORNING_FROM   = "morningFrom"  ;
-//    public static String MORNING_TO     = "morningTo"    ;
-    public static String AFTERNOON_FROM = "afternoonFrom";
-//    public static String AFTERNOON_TO   = "afternoonTo"  ;
-    public static String NIGHT_FROM     = "nightFrom"    ;
-    public static String RESOLUTION     = "resolution"      ;
+    private static String MORNING_PUSH   = "morningPush"  ;
+    private static String AFTERNOON_PUSH = "afternoonPush";
+    private static String NIGHT_PUSH     = "nightPush"    ;
+    private static String GOODNIGHT_PUSH = "goodNightPush";
+    private static String MORNING_FROM   = "morningFrom"  ;
+    private static String AFTERNOON_FROM = "afternoonFrom";
+    private static String NIGHT_FROM     = "nightFrom"    ;
+    private static String RESOLUTION     = "resolution"      ;
 
-    private static int MORNING_PUSH_HOUR      = -1;
-    private static int MORNING_PUSH_MINUTE    = -1;
-    private static int AFTERNOON_PUSH_HOUR    = -1;
-    private static int AFTERNOON_PUSH_MINUTE  = -1;
-    private static int NIGHT_PUSH_HOUR        = -1;
-    private static int NIGHT_PUSH_MINUTE      = -1;
-    private static int GOODNIGHT_PUSH_HOUR    = -1;
-    private static int GOODNIGHT_PUSH_MINUTE  = -1;
-    private static int MORNING_FROM_HOUR      = -1;
-    private static int MORNING_FROM_MINUTE    = -1;
-//    private static int MORNING_TO_HOUR        = -1;
-//    private static int MORNING_TO_MINUTE      = -1;
-    private static int AFTERNOON_FROM_HOUR    = -1;
-    private static int AFTERNOON_FROM_MINUTE  = -1;
-//    private static int AFTERNOON_TO_HOUR      = -1;
-//    private static int AFTERNOON_TO_MINUTE    = -1;
-    private static int NIGHT_FROM_HOUR        = -1;
-    private static int NIGHT_FROM_MINUTE      = -1;
-    private static String RESOLUTION_VALUE     = ""      ;
 
+    private static String START_DATE     = "startDate"    ;
+    private static String END_DATE       = "endDate"      ;
+    private static String MAIN_IMG_RESOURCE = "MAIN_IMG_RESOURCE"      ;
+
+    private static int morningPushHour = -1;
+    private static int morningPushMinute = -1;
+    private static int afternoonPushHour = -1;
+    private static int afternoonPushMinute = -1;
+    private static int nightPushHour = -1;
+    private static int nightPushMinute = -1;
+    private static int goodnightPushHour = -1;
+    private static int goodnightPushMinute = -1;
+    private static int morningFromHour = -1;
+    private static int morningFromMinute = -1;
+    private static int afternoonFromHour = -1;
+    private static int afternoonFromMinute = -1;
+    private static int nightFromHour = -1;
+    private static int nightFromMinute = -1;
+    private static String resolutionValue = ""      ;
+
+
+    private static String startDate ="";
+    private static String endDate ="";
+
+
+    private static int mainImgResource = -1;
 
     private UserSettingValue(){
 
@@ -54,145 +59,115 @@ public class UserSettingValue {
     }
 
 
-    public static boolean setMorningPush(String strTime) {
+    private boolean setInnerMorningPush(String strTime) {
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        MORNING_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        MORNING_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
+        morningPushHour = Integer.parseInt(strTime.substring(0, idx));
+        morningPushMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-//        return editor.commit();
         return true;
     }
-    public static boolean setAfternoonPush(String strTime) {
+    private boolean setInnerAfternoonPush(String strTime) {
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        AFTERNOON_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        AFTERNOON_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        afternoonPushHour = Integer.parseInt(strTime.substring(0, idx));
+        afternoonPushMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
-    public static boolean setNightPush(String strTime) {
+    private boolean setInnerNightPush(String strTime) {
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        NIGHT_PUSH_HOUR   = Integer.parseInt(strTime.substring(0, idx));
-        NIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        nightPushHour = Integer.parseInt(strTime.substring(0, idx));
+        nightPushMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
-    public static boolean setGoodnightPush(String strTime) {
+    private boolean setInnerGoodnightPush(String strTime) {
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        GOODNIGHT_PUSH_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        GOODNIGHT_PUSH_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        goodnightPushHour = Integer.parseInt(strTime.substring(0, idx));
+        goodnightPushMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
-    public static boolean setMorningFrom(String strTime) {
+    private boolean setInnerMorningFrom(String strTime) {
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        MORNING_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        MORNING_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        morningFromHour = Integer.parseInt(strTime.substring(0, idx));
+        morningFromMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
 
-    public static boolean setAfternoonFrom(String strTime) {
+    private boolean setInnerAfternoonFrom(String strTime) {
 
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        AFTERNOON_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        AFTERNOON_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        afternoonFromHour = Integer.parseInt(strTime.substring(0, idx));
+        afternoonFromMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
 
-    public static boolean setNightFrom(String strTime) {
+    private boolean setInnerNightFrom(String strTime) {
 
         int idx = strTime.indexOf(":");
 
         if(idx < 0)
             return false;
 
-        NIGHT_FROM_HOUR = Integer.parseInt(strTime.substring(0, idx));
-        NIGHT_FROM_MINUTE = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
+        nightFromHour = Integer.parseInt(strTime.substring(0, idx));
+        nightFromMinute = Integer.parseInt(strTime.substring(idx+1, strTime.length()));
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
 
     }
 
 
 
-    public static boolean setResolutionValue(String resolutionValue) {
+    private boolean setInnerResolutionValue(String resolutionValue) {
         if(resolutionValue.length() < 1)
             return false;
 
-        RESOLUTION_VALUE = resolutionValue;
+        UserSettingValue.resolutionValue = resolutionValue;
 
-/*
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MORNING_PUSH, strTime);*/
-
-//        return editor.commit();
         return true;
     }
 
+    private void setInnerStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
+    private void setInneMainImgResource(int mainImgResource) {
+        this.mainImgResource = mainImgResource;
+    }
+    private void setInnerEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     /**
      *  resetValue()
@@ -206,16 +181,10 @@ public class UserSettingValue {
         editor.clear();
 
         editor.putBoolean("isAppinit", true);
-/*
         editor.putString("morningPush", "08:00");
         editor.putString("afternoonPush", "11:30");
         editor.putString("nightPush", "16:30");
         editor.putString("goodNightPush", "22:00");
-*/
-        editor.putString("morningPush",   "16:10");
-        editor.putString("afternoonPush", "16:15");
-        editor.putString("nightPush",     "16:30");
-        editor.putString("goodNightPush", "16:45");
 
         editor.putString("morningFrom", "04:00");
         editor.putString("morningTo", "11:30");
@@ -231,20 +200,16 @@ public class UserSettingValue {
         // SharedPreference 데이터 넣기 종료
 
         // 설정값 변수 설정 시작
-        /*setMorningPush("08:00");
-        setAfternoonPush("11:30");
-        setNightPush("16:30");
-        setGoodnightPush("22:00");*/
-        setMorningPush(  "16:10");
-        setAfternoonPush("16:15");
-        setNightPush(    "16:30");
-        setGoodnightPush("16:45");
+        setInnerMorningPush("08:00");
+        setInnerAfternoonPush("11:30");
+        setInnerNightPush("16:30");
+        setInnerGoodnightPush("22:00");
 
-        setMorningFrom("04:00");
-        setAfternoonFrom("11:30");
-        setNightFrom("18:00");
+        setInnerMorningFrom("04:00");
+        setInnerAfternoonFrom("11:30");
+        setInnerNightFrom("18:00");
 
-        setResolutionValue("안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!");
+        setInnerResolutionValue("안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!");
 
         // 설정값 변수 설정 종료
 
@@ -275,36 +240,36 @@ public class UserSettingValue {
             if(idx < 0)
                 return false;
 
-            MORNING_PUSH_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            MORNING_PUSH_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            morningPushHour = Integer.parseInt(strValue.substring(0, idx));
+            morningPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         else if(strKey.equals(AFTERNOON_PUSH)){
             if(idx < 0)
                 return false;
 
-            AFTERNOON_PUSH_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            AFTERNOON_PUSH_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            afternoonPushHour = Integer.parseInt(strValue.substring(0, idx));
+            afternoonPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         else if(strKey.equals(NIGHT_PUSH)){
             if(idx < 0)
                 return false;
 
-            NIGHT_PUSH_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            NIGHT_PUSH_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            nightPushHour = Integer.parseInt(strValue.substring(0, idx));
+            nightPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         else if(strKey.equals(GOODNIGHT_PUSH)){
             if(idx < 0)
                 return false;
 
-            GOODNIGHT_PUSH_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            GOODNIGHT_PUSH_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            goodnightPushHour = Integer.parseInt(strValue.substring(0, idx));
+            goodnightPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         else if(strKey.equals(MORNING_FROM)){
             if(idx < 0)
                 return false;
 
-            MORNING_FROM_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            MORNING_FROM_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            morningFromHour = Integer.parseInt(strValue.substring(0, idx));
+            morningFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         /*else if(strKey.equals(MORNING_TO)){
             if(idx < 0)
@@ -317,8 +282,8 @@ public class UserSettingValue {
             if(idx < 0)
                 return false;
 
-            AFTERNOON_FROM_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            AFTERNOON_FROM_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            afternoonFromHour = Integer.parseInt(strValue.substring(0, idx));
+            afternoonFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         /*else if(strKey.equals(AFTERNOON_TO)){
             if(idx < 0)
@@ -331,11 +296,11 @@ public class UserSettingValue {
             if(idx < 0)
                 return false;
 
-            NIGHT_FROM_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            NIGHT_FROM_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
+            nightFromHour = Integer.parseInt(strValue.substring(0, idx));
+            nightFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
         else if(strKey.equals(RESOLUTION)){
-            RESOLUTION_VALUE = strValue;
+            resolutionValue = strValue;
         }
         else{
             return false;
@@ -356,14 +321,10 @@ public class UserSettingValue {
     public boolean init() {
         boolean getBoolean = settings.getBoolean("isAppinit", false);
 
-        //Toast.makeText(mContext, "SharedPreference read", //Toast.LENGTH_LONG).show();
-
         if (getBoolean) {
-            //Toast.makeText(mContext, "최초 실행 아님", //Toast.LENGTH_LONG).show();
             readValue();
             return false;
         } else{
-            //Toast.makeText(mContext, "최초 실행", //Toast.LENGTH_LONG).show();
             resetValue();
             return true;
         }
@@ -372,65 +333,149 @@ public class UserSettingValue {
 
     private void readValue(){
 
-        setMorningPush(settings.getString("morningPush", "08:00"));
-        setAfternoonPush(settings.getString("afternoonPush", "11:30"));
-        setNightPush(settings.getString("nightPush", "16:30"));
-        setGoodnightPush(settings.getString("goodNightPush", "22:00"));
-        setMorningFrom(settings.getString("morningFrom", "04:00"));
-        setAfternoonFrom(settings.getString("afternoonFrom", "11:30"));
-        setNightFrom(settings.getString("nightFrom", "18:00"));
+        setInnerMorningPush(settings.getString(MORNING_PUSH, "08:00"));
+        setInnerAfternoonPush(settings.getString(AFTERNOON_PUSH, "11:30"));
+        setInnerNightPush(settings.getString(NIGHT_PUSH, "16:30"));
+        setInnerGoodnightPush(settings.getString(GOODNIGHT_PUSH, "22:00"));
+        setInnerMorningFrom(settings.getString(MORNING_FROM, "04:00"));
+        setInnerAfternoonFrom(settings.getString(AFTERNOON_FROM, "11:30"));
+        setInnerNightFrom(settings.getString(NIGHT_FROM, "18:00"));
 
-        setResolutionValue(settings.getString("resolution", "안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!"));
+        setInnerResolutionValue(settings.getString(RESOLUTION, "안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!"));
 
-        //Toast.makeText(mContext, "설정값 읽어오기 ", //Toast.LENGTH_LONG).show();
+        setInnerEndDate(settings.getString(END_DATE, ""));
+        setInnerStartDate(settings.getString(START_DATE, ""));
+        setInneMainImgResource(settings.getInt(MAIN_IMG_RESOURCE, 0));
 
     }
     public static int getMorningPushHour() {
-        return MORNING_PUSH_HOUR;
+        return morningPushHour;
     }
 
     public static int getMorningPushMinute() {
-        return MORNING_PUSH_MINUTE;
+        return morningPushMinute;
     }
 
     public static int getAfternoonPushHour() {
-        return AFTERNOON_PUSH_HOUR;
+        return afternoonPushHour;
     }
 
     public static int getAfternoonPushMinute() {
-        return AFTERNOON_PUSH_MINUTE;
+        return afternoonPushMinute;
     }
 
     public static int getNightPushHour() {
-        return NIGHT_PUSH_HOUR;
+        return nightPushHour;
     }
 
     public static int getNightPushMinute() {
-        return NIGHT_PUSH_MINUTE;
+        return nightPushMinute;
     }
 
     public static int getGoodnightPushHour() {
-        return GOODNIGHT_PUSH_HOUR;
+        return goodnightPushHour;
     }
 
     public static int getGoodnightPushMinute() {
-        return GOODNIGHT_PUSH_MINUTE;
+        return goodnightPushMinute;
     }
 
     public static int getMorning() {
-        return MORNING_FROM_HOUR *100 + MORNING_FROM_MINUTE;
+        return morningFromHour *100 + morningFromMinute;
     }
 
     public static int getAfternoon() {
-        return AFTERNOON_FROM_HOUR*100 + AFTERNOON_FROM_MINUTE;
+        return afternoonFromHour *100 + afternoonFromMinute;
     }
 
     public static int getNight() {
-        return NIGHT_FROM_HOUR*100 + NIGHT_FROM_MINUTE;
+        return nightFromHour *100 + nightFromMinute;
     }
 
     public static String getResolutionValue() {
-        return RESOLUTION_VALUE;
+        return resolutionValue;
     }
+
+
+
+    public static String getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * setStartDate
+     * 시작일 설정
+     *
+     * @param startDate 시작일
+     * @return 실패 : false
+     *          성공 : true
+     */
+    public static Boolean setStartDate(String startDate) {
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(START_DATE, startDate);
+
+        if(editor.commit()){
+            UserSettingValue.startDate = startDate;
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+
+
+    public static String getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * setEndDate
+     * 종료일 설정
+     *
+     * @param endDate :  종료일
+     * @return 실패 : false
+     *          성공 : true
+     */
+    public static boolean setEndDate(String endDate) {
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(END_DATE, endDate);
+
+        if(editor.commit()){
+            UserSettingValue.endDate = endDate;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static int getMainImgResource() {
+        return mainImgResource;
+    }
+
+    /**
+     * setMainImgResource
+     * 시작일 설정
+     *
+     * @param mainImgResource :  dwrable
+     * @return 실패 : false
+     *          성공 : true
+     */
+
+    public static boolean setMainImgResource(int mainImgResource) {
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.putInt(MAIN_IMG_RESOURCE, mainImgResource);
+
+        if(editor.commit()){
+            UserSettingValue.mainImgResource = mainImgResource;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }
