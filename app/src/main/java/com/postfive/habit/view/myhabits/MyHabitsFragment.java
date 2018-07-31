@@ -31,21 +31,9 @@ import java.util.List;
 public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "MyHabitsFragment";
-    private Button btnHabitsList;
-    private Button btnTodayHabits; // 오늘 습관 보기 테스트 용 버튼 나중에 삭제할 것
-    private int day = 0; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
-    private int time = 0; // 습관 보기 테스트 용 버튼 나중에 삭제할 것
-    private UserHabitRespository mUserHabitRespository;
+    private UserHabitRespository mUserHabitRepository;
 
     ViewPager pager;
-
-    private MyHabitRecyclerViewAdapter mMyHabitRecyclerViewAdapter;
-
-    private List<UserHabitState> mUserHabitStatesList;
-    private List<UserHabitState> mTodayCompliteHabitStatesList;
-    private List<UserHabitState> mTodayPassCompliteHabitStatesList;
-    private List<UserHabitState> mUserHabitStatesTomorrowList;
-    private List<UserHabitState> mUserHabitStatesYesterdayList;
 
     CustomPagerAdapter adapter;
     public MyHabitsFragment() {
@@ -55,58 +43,44 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            // Refresh your fragment here
+            // Refresh fragment
             pager.setAdapter(adapter);
         }
     }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        Toast.makeText(context, "onAttach", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Toast.makeText(getContext(), "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        Toast.makeText(getContext(), "onCreateView", Toast.LENGTH_SHORT).show();
-
-        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication());
+        mUserHabitRepository = new UserHabitRespository(getActivity().getApplication());
         View view = inflater.inflate(R.layout.myhabitviewpage, container, false);
 
-//        super.onCreate(savedInstanceState);
         Log.e("Main","onCreated");
-//        setContentView(R.layout.myhabitviewpage);
         pager = (ViewPager) view.findViewById(R.id.pager);
-        adapter = new CustomPagerAdapter(getContext(), mUserHabitRespository );
+        adapter = new CustomPagerAdapter(getContext(), mUserHabitRepository );
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
         //pager.setCurrentItem(1);
 
 //
-//        mUserHabitRespository = new UserHabitRespository(getActivity().getApplication(), );
+//        mUserHabitRepository = new UserHabitRespository(getActivity().getApplication(), );
 
 
         // TODO 현재 지금
-        List<UserHabitState> mUserHabitStatesList = mUserHabitRespository.getNowHabit(1);
+        List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(1);
 
         adapter.setData(mUserHabitStatesList);
 
         UserSettingValue.getResolutionValue();
-
-
-//        // TODO 오늘 완성
-//        List<UserHabitState> mTodayCompliteHabitStatesList = mUserHabitRespository.getComplite();
-//
-//        // TODO 오늘 놓친것
-//        List<UserHabitState> mTodayPassCompliteHabitStatesList = mUserHabitRespository.getPassHabit(8);
 
         final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setDay(date_tv, 0);
@@ -116,20 +90,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         prev_tv.setOnClickListener(this);
         next_tv.setOnClickListener(this);
-
-/*        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // TODO 리스트 클릭시  수행
-
-                UserHabitState tmp = mMyHabitRecyclerViewAdapter.getHabit(position);
-
-                tmp.setDid(tmp.getDid()+tmp.getOnce());
-                mMyHabitRecyclerViewAdapter.changeHabit(position, tmp);
-                // update
-                mUserHabitRespository.updateUserHabitState(tmp);
-            }
-        });*/
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -157,7 +117,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
             }
         });
-
         return view;
     }
 
@@ -179,7 +138,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //UI 변경 작업 가능
-//        Toast.makeText(getContext(), "onActivityCreated", Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onStart() {
@@ -189,17 +147,17 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         // 오늘 요일
         int today = day.get(Calendar.DAY_OF_WEEK);
         // TODO 오늘 습관 가져오기
-        mUserHabitStatesList = mUserHabitRespository.getDayHabit(today);
+        mUserHabitStatesList = mUserHabitRepository.getDayHabit(today);
         // TODO 내일 습관
         int tomorrow = today + 1;
         if (tomorrow > 7)
             tomorrow = 1;
-        mUserHabitStatesTomorrowList = mUserHabitRespository.getDayHabit(tomorrow);
+        mUserHabitStatesTomorrowList = mUserHabitRepository.getDayHabit(tomorrow);
         // TODO 어제 습관
         int yesterday = today - 1;
         if (yesterday < 1)
             yesterday = 7;
-        mUserHabitStatesYesterdayList = mUserHabitRespository.getDayHabit(yesterday);
+        mUserHabitStatesYesterdayList = mUserHabitRepository.getDayHabit(yesterday);
         // 습관 가져오기 종료 ///////////////////////////////////////////////////////////////////////////
 
 
@@ -222,7 +180,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         // 사용자와 상호작용 중지
         /// 리소스 해제
 //        Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
-        mUserHabitRespository.destroyInstance();
+        mUserHabitRepository.destroyInstance();
     }
 
 
@@ -278,7 +236,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 //                    day = 1;
 //
 //
-//                List<UserHabitDetail> userHabitDetailList = mUserHabitRespository.getAllUserHabitDetail();
+//                List<UserHabitDetail> userHabitDetailList = mUserHabitRepository.getAllUserHabitDetail();
 //                StringBuilder sb1 = new StringBuilder();
 //                sb1.append("\nD_seq | 날짜합 | 시간 |  습관코드 |  이름 | 목표 | 하루 목표 | 날짜합 | 전체 | 단위 \n");
 //
@@ -292,7 +250,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 //                Log.d(TAG, "DB TEST SELECT USER HABIT Detail " + sb1.toString());
 //                Log.d(TAG,"finish");
 //
-//                List<UserHabitState> userHabitStatesList = mUserHabitRespository.getDayHabit(day);
+//                List<UserHabitState> userHabitStatesList = mUserHabitRepository.getDayHabit(day);
 //                day ++;
 //                StringBuilder sb = new StringBuilder();
 //                sb.append("\n요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
@@ -308,9 +266,9 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 //                Log.d(TAG,"finish");
 //
 //
-//                mUserHabitRespository.getNowHabit(time);
+//                mUserHabitRepository.getNowHabit(time);
 //
-//                List<UserHabitState> userNowHabitStatesList = mUserHabitRespository.getDayHabit(day);
+//                List<UserHabitState> userNowHabitStatesList = mUserHabitRepository.getDayHabit(day);
 //
 //                time ++;
 //                if(time==4)
@@ -330,7 +288,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 //
 //
 //                // TODO 오늘 놓친것
-//                List<UserHabitState> userPassHabitStatesList = mUserHabitRespository.getPassHabit(time);
+//                List<UserHabitState> userPassHabitStatesList = mUserHabitRepository.getPassHabit(time);
 //
 //                StringBuilder sb4 = new StringBuilder();
 //                sb.append("\n"+Integer.toString(time)+"시간 :: 요일 | 시간 |  습관코드 | D_seq |  이름 | 목표 | 날짜합 | 전체 | 단위 \n");
