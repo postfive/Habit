@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 import com.postfive.habit.view.habit.HabitActivity;
+import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +71,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         // 습관 가져오기 시작 ///////////////////////////////////////////////////////////////////////////
         // 오늘 습관 가져오기
-//        List<UserHabitState> userHabitStatesList =
+
         // 오늘 요일
         int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         int nowTime = Habit.NIGHT_TIME;
@@ -121,7 +123,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     // 맨처음 db에서 값 가져올때
     public void createSet(int status, int nDay, List<UserHabitState> List) {
         List<UserHabitState> tmpList = null;
-        if(status == 0)
+        if (status == 0)
             days.set(nDay, List);
         tmpList = List;
         //// view 에 데이터 붙이기
@@ -133,21 +135,19 @@ public class CustomPagerAdapter extends PagerAdapter {
     public void addCell(int status, int nDay, UserHabitState userHabitState) {
         LinearLayout pL = (LinearLayout) ((ViewGroup) layout.getParent()).getParent();
         pager = (ViewPager) pL.findViewById(R.id.pager);
-       // int pageNum = pager.getCurrentItem();
+        // int pageNum = pager.getCurrentItem();
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // 껍데기
         FrameLayout route_info_tab = (FrameLayout) inflater.inflate(R.layout.bt, null);
         LinearLayout inLayout;
         // 각 페이지
-        if(status == 1) {
+        if (status == 1) {
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout1);
             inLayout.setVisibility(View.VISIBLE);
-        }
-        else if(status == 2) {
+        } else if (status == 2) {
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout2);
             inLayout.setVisibility(View.VISIBLE);
-        }
-        else {// status == 0
+        } else {// status == 0
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout);
         }
         inLayout.addView(route_info_tab);
@@ -155,9 +155,9 @@ public class CustomPagerAdapter extends PagerAdapter {
         //Set Id
         int temp_wrap_id;
 
-        if(status == 1)
+        if (status == 1)
             temp_wrap_id = wrap_id1.get(nDay);
-        else if(status == 2)
+        else if (status == 2)
             temp_wrap_id = wrap_id2.get(nDay);
         else
             temp_wrap_id = wrap_id.get(nDay);
@@ -193,7 +193,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 //        mValues.get(nDay).add(0);
 
         //Add ArrayList
-        if(status == 0) {
+        if (status == 0) {
             mViews.add(innerWrapView);
             mViews.add(setupBtn);
             mViews.add(minusBtn);
@@ -216,9 +216,9 @@ public class CustomPagerAdapter extends PagerAdapter {
         wDayV.setId(child_id++);//9
 
         temp_wrap_id++;
-        if(status == 1)
+        if (status == 1)
             wrap_id1.set(nDay, temp_wrap_id);
-        else if(status == 2)
+        else if (status == 2)
             wrap_id2.set(nDay, temp_wrap_id);
         else
             wrap_id.set(nDay, temp_wrap_id);
@@ -255,10 +255,12 @@ public class CustomPagerAdapter extends PagerAdapter {
         progressIndi.setProgress(pVal);
 
         //Set onClickListener to each View
-        if(nDay == 0) {
+        if (nDay == 0) {
             for (View view : mViews) {
                 view.setOnClickListener(onClickListener);
             }
+            Button showAllBtn = (Button) layout.findViewById(R.id.showAllBtn);
+            showAllBtn.setOnClickListener(onClickListener);
         }
     }
 
@@ -266,6 +268,13 @@ public class CustomPagerAdapter extends PagerAdapter {
         @Override
         public void onClick(View v) {
             int id = v.getId();
+            if (id == R.id.showAllBtn) {
+                Intent intent = new Intent(mContext, MyHabitListActivity.class);
+                //intent.putExtra("object", habit);
+                mContext.startActivity(intent);
+                return;
+            }
+
             int index = 0;
             if (id >= 100) {
                 index = (id - (id % 100)) / 100;
@@ -316,22 +325,21 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    if(curVal2 == maxVal){
-                        ViewGroup parent = (ViewGroup)pL.getParent();
+                    if (curVal2 == maxVal) {
+                        ViewGroup parent = (ViewGroup) pL.getParent();
                         parent.removeView(pL);
-                        ViewGroup gparent = (ViewGroup)parent.getParent();
-                        ViewGroup completeV = (ViewGroup)gparent.getChildAt(1);
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
+                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
                         completeV.addView(pL);
                         completeV.setVisibility(View.VISIBLE);
-                    }
-                    else if(curVal2 < maxVal){
+                    } else if (curVal2 < maxVal) {
 
-                        ViewGroup parent = (ViewGroup)pL.getParent();
-                        ViewGroup gparent = (ViewGroup)parent.getParent();
+                        ViewGroup parent = (ViewGroup) pL.getParent();
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
 
-                        if(gparent.getChildAt(1) == parent){
+                        if (gparent.getChildAt(1) == parent) {
                             parent.removeView(pL);
-                            ViewGroup completeV = (ViewGroup)gparent.getChildAt(0);
+                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
                             completeV.addView(pL);
                             parent.setVisibility(View.INVISIBLE);
                         }
