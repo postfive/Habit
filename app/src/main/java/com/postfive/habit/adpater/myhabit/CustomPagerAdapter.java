@@ -50,7 +50,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     private int child_id = 0;
     private ViewGroup layout;
     private int initFirstFlag = 0;
-
+    private List<List<UserHabitState>> tempDay = new ArrayList<>();
     public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
         this.mUserHabitRepository = mUserHabitRepository;
@@ -142,7 +142,6 @@ public class CustomPagerAdapter extends PagerAdapter {
     private void addCell(int status, int position, UserHabitState userHabitState) {
         LinearLayout pL = (LinearLayout) (layout.getParent()).getParent();
         pager = (ViewPager) pL.findViewById(R.id.pager);
-        // int pageNum = pager.getCurrentItem();
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // 껍데기
         FrameLayout route_info_tab = (FrameLayout) inflater.inflate(R.layout.bt, null);
@@ -226,7 +225,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         else
             wrap_id.set(position, temp_wrap_id);
 
-
         curValue.setText("" + userHabitState.getDid());
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
@@ -282,7 +280,8 @@ public class CustomPagerAdapter extends PagerAdapter {
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "" + pageNum);
 
-            UserHabitState tmpState = days.get(pageNum).get(index);
+            //UserHabitState tmpState = days.get(pageNum).get(index);
+            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getFull();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
@@ -326,7 +325,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                         completeV.addView(pL);
                         completeV.setVisibility(View.VISIBLE);
                     } else if (curVal2 < maxVal) {
-
                         ViewGroup parent = (ViewGroup) pL.getParent();
                         ViewGroup gparent = (ViewGroup) parent.getParent();
 
