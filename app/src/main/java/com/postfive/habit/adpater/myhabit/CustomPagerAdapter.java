@@ -280,6 +280,12 @@ public class CustomPagerAdapter extends PagerAdapter {
             Button showAllBtn = (Button) layout.findViewById(R.id.showAllBtn);
             showAllBtn.setOnClickListener(onClickListener);
         }
+        else{
+            for (View view : tempMViews) {
+                view.setOnClickListener(onClickListener);
+            }
+        }
+
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
