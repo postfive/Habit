@@ -171,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
         Habit yoga    = new Habit(4, Habit.HEALTH_CATEGORY, "요가 하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_yoga);
 
         Habit fruits     = new Habit(5, Habit.EAT_CATEGORY, "아침에 사과 먹기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_apple);
-        Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "물마시기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 5, 1, 6, "blue", R.drawable.ic_dry_fruits);
+        Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "견과류먹기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 5, 1, 6, "blue", R.drawable.ic_dry_fruits);
         Habit drinkwater = new Habit(7, Habit.EAT_CATEGORY, "물마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 1, 6, "blue", R.drawable.ic_water);
 
         List<Habit> habitli = new ArrayList<>();
@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
                 "모두 갖고 있기 때문에 \n" +
                 "신체 기능 향상과 체력 유지에 효과적입니다.", "15:00",84, 20, 1, Unit.WALK_UNIT,"층", "img_parkboram_detail_2.png", "blue", R.drawable.ic_dry_fruits, R.drawable.img_parkboram_detail_3);
 
-        CelebHabitDetail celebHabitd4 = new CelebHabitDetail(1, 4,Habit.NIGHT_TIME, 3, "박보람습관", "근력운동 하기", "", "런지 30회 3세트\n" +
+        CelebHabitDetail celebHabitd4 = new CelebHabitDetail(1, 4, Habit.NIGHT_TIME, 3, "박보람습관", "근력운동 하기", "", "런지 30회 3세트\n" +
                 "1. 두 다리는 골반너비로 벌리고 \n" +
                 "손은 허리에 두고 섭니다.\n" +
                 "2. 오른쪽 발을 앞으로 어깨너비 두배 정도로 벌리고\n" +

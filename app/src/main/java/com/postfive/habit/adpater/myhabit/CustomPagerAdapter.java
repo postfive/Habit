@@ -223,7 +223,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         curValue.setText("" + userHabitState.getDid());
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
-        maxValue.setText("" + userHabitState.getFull());
+        maxValue.setText("" + userHabitState.getGoal());
         String tmpDayofWeek = "";
         int intDayofWeek = userHabitState.getDaysum();
         for (int i = 1; i < 8; i++) {
@@ -236,7 +236,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         habitImg.setImageDrawable(drawable);
         wDayV.setText("" + tmpDayofWeek);
 
-        int maxVal = userHabitState.getFull();
+        int maxVal = userHabitState.getGoal();
         int conVal = (int) Math.ceil(100 / (float) maxVal);
         int curVal2 = userHabitState.getDid();
         int pVal;
@@ -281,7 +281,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 //                tmpState = todayList.get(index);
             }
 
-            int maxVal = tmpState.getFull();
+            int maxVal = tmpState.getGoal();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
             int curVal2 = tmpState.getDid();
             int pVal;

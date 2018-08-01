@@ -17,12 +17,6 @@ public class UserHabitState {
     @ColumnInfo(name ="dayofweek")
     private int dayofweek;
 
-
-/*    @NonNull
-    @ColumnInfo(name ="priority")
-    private int priority;*/
-
-
     @NonNull
     @ColumnInfo(name ="habitcode") //
     private int habitcode;
@@ -45,8 +39,8 @@ public class UserHabitState {
     private String name; // 이름 ex 물마시기
 
     @NonNull
-    @ColumnInfo(name ="goal")
-    private String goal; // 이름 보여주는 이름  물마시기
+    @ColumnInfo(name ="customname")
+    private String customname; // 이름 보여주는 이름  물마시기
 
     @NonNull
     @ColumnInfo(name ="did")
@@ -57,8 +51,8 @@ public class UserHabitState {
     private int once; // 한번 수행할때 양
 
     @NonNull
-    @ColumnInfo(name ="full")
-    private int full; // 하루 정한양
+    @ColumnInfo(name ="goal")
+    private int goal; // 하루 정한양
 
     @NonNull
     @ColumnInfo(name ="unit")
@@ -72,21 +66,21 @@ public class UserHabitState {
     @ColumnInfo(name ="color")
     private String color; // 단위
 
-    public UserHabitState(@NonNull int habitstateseq, @NonNull int habitcode, @NonNull int masterseq, @NonNull int dayofweek, @NonNull int daysum, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int did, @NonNull int once, @NonNull int full, @NonNull String unit, @NonNull String color, @NonNull int icon) {
+    public UserHabitState(@NonNull int habitstateseq, @NonNull int dayofweek, @NonNull int habitcode, @NonNull int masterseq, @NonNull int daysum, @NonNull int time, @NonNull String name, @NonNull String customname, @NonNull int did, @NonNull int once, @NonNull int goal, @NonNull String unit, @NonNull int icon, @NonNull String color) {
         this.habitstateseq = habitstateseq;
-        this.habitcode     = habitcode;
-        this.masterseq     = masterseq;
-        this.dayofweek     = dayofweek;
-        this.daysum        = daysum;
-        this.time          = time;
-        this.name          = name;
-        this.goal          = goal;
-        this.did           = did;
-        this.once          = once;
-        this.full          = full;
-        this.unit          = unit;
-        this.icon          = icon;
-        this.color         = color;
+        this.dayofweek = dayofweek;
+        this.habitcode = habitcode;
+        this.masterseq = masterseq;
+        this.daysum = daysum;
+        this.time = time;
+        this.name = name;
+        this.customname = customname;
+        this.did = did;
+        this.once = once;
+        this.goal = goal;
+        this.unit = unit;
+        this.icon = icon;
+        this.color = color;
     }
 
     /**
@@ -103,15 +97,14 @@ public class UserHabitState {
         this.daysum        = habitDetail.getDaysum();
         this.time          = habitDetail.getTime();
         this.name          = habitDetail.getName();
-        this.goal          = habitDetail. getGoal();
+        this.customname    = habitDetail.getCustomname();
+        this.goal          = habitDetail.getGoal();
         this.did           = 0;
         this.once          = habitDetail.getOnce();
-        this.full          = habitDetail.getFull();
         this.unit          = habitDetail.getUnit();
         this.icon          = habitDetail.getIcon();
         this.color         = habitDetail.getColor();
     }
-
 
     @NonNull
     public int getHabitstateseq() {
@@ -120,6 +113,15 @@ public class UserHabitState {
 
     public void setHabitstateseq(@NonNull int habitstateseq) {
         this.habitstateseq = habitstateseq;
+    }
+
+    @NonNull
+    public int getDayofweek() {
+        return dayofweek;
+    }
+
+    public void setDayofweek(@NonNull int dayofweek) {
+        this.dayofweek = dayofweek;
     }
 
     @NonNull
@@ -138,15 +140,6 @@ public class UserHabitState {
 
     public void setMasterseq(@NonNull int masterseq) {
         this.masterseq = masterseq;
-    }
-
-    @NonNull
-    public int getDayofweek() {
-        return dayofweek;
-    }
-
-    public void setDayofweek(@NonNull int dayofweek) {
-        this.dayofweek = dayofweek;
     }
 
     @NonNull
@@ -177,12 +170,12 @@ public class UserHabitState {
     }
 
     @NonNull
-    public String getGoal() {
-        return goal;
+    public String getCustomname() {
+        return customname;
     }
 
-    public void setGoal(@NonNull String goal) {
-        this.goal = goal;
+    public void setCustomname(@NonNull String customname) {
+        this.customname = customname;
     }
 
     @NonNull
@@ -190,9 +183,10 @@ public class UserHabitState {
         return did;
     }
 
+
     public void setDid(@NonNull int did) {
-        if(did > full){
-            did = full;
+        if(did > goal){
+            did = goal;
         }
         if(did < 0){
             did = 0;
@@ -211,12 +205,12 @@ public class UserHabitState {
     }
 
     @NonNull
-    public int getFull() {
-        return full;
+    public int getGoal() {
+        return goal;
     }
 
-    public void setFull(@NonNull int full) {
-        this.full = full;
+    public void setGoal(@NonNull int goal) {
+        this.goal = goal;
     }
 
     @NonNull
@@ -245,5 +239,7 @@ public class UserHabitState {
     public void setColor(@NonNull String color) {
         this.color = color;
     }
+
+
 
 }

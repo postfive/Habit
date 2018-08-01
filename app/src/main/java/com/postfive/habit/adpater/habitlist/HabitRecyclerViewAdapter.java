@@ -18,6 +18,7 @@ import java.util.List;
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements  HabitRecyclerViewModel{
 
     private List<Habit> mHabitList ;
+    private int selectedPostion = -1;
 
     public HabitRecyclerViewAdapter(){
         this.mHabitList = new ArrayList<>();
@@ -38,6 +39,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         Log.d("HabitRecyclerView", mHabitList.get(position).getName() +"/ "+ Integer.toString(position));
         ((RowCell)holder).textView.setText( mHabitList.get(position).getName());
         ((RowCell)holder).imageView.setImageResource(mHabitList.get(position).getIcon());
+
     }
 
     @Override
@@ -60,7 +62,9 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         if( mHabitList.size() < 1){
             return null;
         }
+//        selected(position);
 
+//        notifyItemChanged(position);
         return mHabitList.get(position);
     }
 
@@ -69,5 +73,8 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         mHabitList = allHabit;
 
         notifyDataSetChanged();
+    }
+
+    private void selected(int position){
     }
 }

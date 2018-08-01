@@ -25,6 +25,7 @@ import com.postfive.habit.R;
 import com.postfive.habit.adpater.habitlist.HabitRecyclerViewAdapter;
 import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.HabitViewModel;
+import com.postfive.habit.db.UserHabitDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class HabitListActivity extends AppCompatActivity {
 
     private HabitViewModel mHabitViewModel;
 
+    private Habit habit;
+    private View selectedView = null; // 선택된 item;
 
     List<Habit> mHealthHabitList = new ArrayList<>();
     List<Habit> mEatHabitList    = new ArrayList<>();
@@ -73,23 +76,31 @@ public class HabitListActivity extends AppCompatActivity {
 
         // 어댑터를 연결 시켜 주는 부분
         final HabitRecyclerViewAdapter myHealthRecyclerViewAdapter = new HabitRecyclerViewAdapter();
-        final HabitRecyclerViewAdapter myRecyclerViewAdapter = new HabitRecyclerViewAdapter();
+        final HabitRecyclerViewAdapter myEatRecyclerViewAdapter = new HabitRecyclerViewAdapter();
         mHealthHabitRecyclerView.setAdapter(myHealthRecyclerViewAdapter);
-        mEatHabitRecyclerView.setAdapter(myRecyclerViewAdapter);
+        mEatHabitRecyclerView.setAdapter(myEatRecyclerViewAdapter);
 
 
         ItemClickSupport healthClickSupport = ItemClickSupport.addTo(mHealthHabitRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Habit habit = myHealthRecyclerViewAdapter.getHabit(position);
-                Toast.makeText(getApplication(), "건강 클릭", Toast.LENGTH_SHORT).show();
+                habit = myHealthRecyclerViewAdapter.getHabit(position);
+                if(selectedView != null) {
+                    selectedView.setBackgroundColor(getResources().getColor(R.color.noneHabit));
+                }
+                v.setBackgroundColor(getResources().getColor(R.color.selectedHabit));
+                selectedView = v;
             }
         });
         ItemClickSupport eatClickSupport = ItemClickSupport.addTo(mEatHabitRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Habit habit = myHealthRecyclerViewAdapter.getHabit(position);
-                Toast.makeText(getApplication(), "먹는거 클릭", Toast.LENGTH_SHORT).show();
+                habit = myEatRecyclerViewAdapter.getHabit(position);
+                if(selectedView != null) {
+                    selectedView.setBackgroundColor(getResources().getColor(R.color.noneHabit));
+                }
+                v.setBackgroundColor(getResources().getColor(R.color.selectedHabit));
+                selectedView = v;
             }
         });
 
@@ -111,7 +122,7 @@ public class HabitListActivity extends AppCompatActivity {
                         }
 
                         myHealthRecyclerViewAdapter.setAllHabit(mHealthHabitList);
-                        myRecyclerViewAdapter.setAllHabit(mEatHabitList);
+                        myEatRecyclerViewAdapter.setAllHabit(mEatHabitList);
                     }
                 }
         );
@@ -143,7 +154,7 @@ public class HabitListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplication(),"선택완료", Toast.LENGTH_SHORT).show();
-
+                onClickSelect();
             }
         });
 
@@ -158,9 +169,6 @@ public class HabitListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onClickClose();
-                return true;
-            case R.id.action_select:
-//                onClickSelect();
                 return true;
             default :
                 return super.onOptionsItemSelected(item);
@@ -179,6 +187,9 @@ public class HabitListActivity extends AppCompatActivity {
     private void onClickSelect(){
         Intent result = new Intent();
 
+        UserHabitDetail userHabitDetail = new UserHabitDetail(habit);
+
+        result.putExtra("object", userHabitDetail);
         setResult(RESULT_OK, result);
         finish();
     }

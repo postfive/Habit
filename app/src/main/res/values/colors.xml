@@ -41,6 +41,8 @@
     <color name="hintTextColor">#de999999</color>
     <color name="errorrColor">#b00020</color>
 
+    <color name="selectedHabit">#eeeeee</color>
+    <color name="noneHabit">@android:color/transparent</color>
 
 
 </resources>

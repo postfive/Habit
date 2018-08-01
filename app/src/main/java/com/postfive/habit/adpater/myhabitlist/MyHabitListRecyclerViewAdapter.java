@@ -37,8 +37,8 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // XML 디자인한 부분 안에 내용 변경
 //        ((RowCell)holder).imageView.setImageDrawable();
-        ((RowCell)holder).goalText.setText( mMyHabitList.get(position).getGoal());
-        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getFull()+""+mMyHabitList.get(position).getUnit());
+        ((RowCell)holder).customnameText.setText( mMyHabitList.get(position).getCustomname());
+        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getGoal()+""+mMyHabitList.get(position).getUnit());
         //((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDidDay()+""+mMyHabitList.get(position).getUnit());
 
 
@@ -63,7 +63,7 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     private class RowCell extends RecyclerView.ViewHolder {
 
         public ImageView imageView;
-        public TextView goalText;
+        public TextView customnameText;
         public TextView dayofweekText;
         public TextView dayFullText;
         public TextView didDayText;
@@ -71,7 +71,7 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         public RowCell(View view) {
             super(view);
             imageView = (ImageView)view.findViewById(R.id.image_my_habit_item);
-            goalText = (TextView)view.findViewById(R.id.textview_goal_my_habit_item);
+            customnameText = (TextView)view.findViewById(R.id.textview_customname_my_habit_item);
             dayofweekText = (TextView)view.findViewById(R.id.textview_dayofweek_my_habit_item);
             dayFullText = (TextView)view.findViewById(R.id.textview_dayFull_my_habit_item);
             didDayText = (TextView)view.findViewById(R.id.textview_didday_my_habit_item);

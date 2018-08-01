@@ -1,27 +1,27 @@
 package com.postfive.habit.view.habit;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.postfive.habit.R;
-import com.postfive.habit.adpater.habittime.HabitTimeRecyclerViewAdapter;
 import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
@@ -31,6 +31,8 @@ import com.postfive.habit.habits.factory.HabitFactory;
 import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,7 +40,6 @@ import java.util.List;
 
 
 public class HabitActivity extends AppCompatActivity {
-
 
     private static final String TAG = "HabitActivity";
     private static final int GET_HABIT = 9000;
@@ -50,11 +51,14 @@ public class HabitActivity extends AppCompatActivity {
     private UserHabitDetail mHabit;
 
     /* 화면 component */
-    private EditText mNameEdtText;             //목표
-    private ImageButton mNameClearBtn;
-    private TextView mNameHintTextView;
+    private TextView mActivityTitleName;
+    private TextView mHabitName;
+    private Button mHabitListBtn;
+    private EditText mUserNameEdtText;        // 사용자 설정 이름
+    private ImageButton mUserNameClearBtn;
+    private TextView mUserNameHintTextView;
 
-    private EditText mGoalEdtText;           // 일목표
+    private EditText mGoalEdtText;
     private ImageButton mGoalClearBtn;
     private TextView mGoalHintTextView;
 
@@ -87,22 +91,16 @@ public class HabitActivity extends AppCompatActivity {
 
     private void processIntent() {
         Intent receivedIntent = getIntent();
-        int habitCode = receivedIntent.getIntExtra("habit", 0);
-        /// 테스트
-        habitCode = 1;
+
         mHabit = (UserHabitDetail) receivedIntent.getSerializableExtra("object");
 
-
-        if(mHabit == null) {
-
-            // 추가
-            Habit templeHabit = mHabitFactory.createHabit(habitCode);
-            templeHabit.prepare();
-            mHabit = new UserHabitDetail(templeHabit);
-
+        // 추가 인놈
+        if(mHabit == null){
+            mActivityTitleName.setText(getResources().getText(R.string.add_habit_name));
+            return;
         }
-
-
+        mActivityTitleName.setText(getResources().getText(R.string.edit_habit));
+        mHabitListBtn.setVisibility(View.GONE);
         Log.d(TAG, "seq " +mHabit.getName()+" / " +Integer.toString(mHabit.getTime()));
 
         setComponent(mHabit);
@@ -123,9 +121,6 @@ public class HabitActivity extends AppCompatActivity {
     }
     // 뒤로
     private void onClickHome(){
-//        Intent intent = new Intent(this, MainActivity.class);
-        //setResult(RESULT_CANCELED, intent);
-//        startActivity(intent);
         finish();
     }
     private void goMyHabitList(){
@@ -151,29 +146,52 @@ public class HabitActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        mNameHintTextView = (TextView)findViewById(R.id.textview_habit_name_hint);
-        mNameEdtText = (EditText)findViewById(R.id.edittext_habit_name);
-        mNameClearBtn = (ImageButton)findViewById(R.id.btn_habit_name_clear);
-        mNameClearBtn.setOnClickListener(new View.OnClickListener() {
+        mActivityTitleName = (TextView)findViewById(R.id.textview_habit_title);
+
+        mHabitName = (TextView)findViewById(R.id.textview_habit_name);
+        mUserNameHintTextView = (TextView)findViewById(R.id.textview_habit_username_hint);
+        mUserNameEdtText = (EditText)findViewById(R.id.edittext_habit_username);
+        mUserNameClearBtn = (ImageButton)findViewById(R.id.btn_habit_username_clear);
+        mUserNameClearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNameEdtText.setText("");
+                mUserNameEdtText.setText("");
             }
         });
-        mNameEdtText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mUserNameEdtText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 // 힌트 보이기 버튼 보이기
                 if(hasFocus) {
-                    mNameClearBtn.setVisibility(View.VISIBLE);
-                    mNameHintTextView.setVisibility(View.VISIBLE);
+                    mUserNameClearBtn.setVisibility(View.VISIBLE);
+                    mUserNameHintTextView.setVisibility(View.VISIBLE);
+                    setEditTextColor(mUserNameEdtText, mUserNameHintTextView, 10);
                 }else{
-                    mNameClearBtn.setVisibility(View.INVISIBLE);
-                    mNameHintTextView.setVisibility(View.INVISIBLE);
+                    mUserNameClearBtn.setVisibility(View.INVISIBLE);
+                    mUserNameHintTextView.setVisibility(View.INVISIBLE);
+                    mUserNameEdtText.setBackgroundResource(R.drawable.drawable_edittext);
+                    mUserNameHintTextView.setTextColor(getResources().getColor(R.color.hintTextColor));
                 }
             }
         });
+        mUserNameEdtText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setEditTextColor(mUserNameEdtText, mUserNameHintTextView, 10);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mHabitListBtn = (Button)findViewById(R.id.btn_habit_list);
         mGoalHintTextView = (TextView)findViewById(R.id.textview_goal_hint);
         mGoalEdtText = (EditText)findViewById(R.id.edittext_goal);
         mGoalClearBtn = (ImageButton)findViewById(R.id.btn_clear_goal);
@@ -183,6 +201,7 @@ public class HabitActivity extends AppCompatActivity {
                 mGoalEdtText.setText(null);
             }
         });
+
         mGoalEdtText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -193,10 +212,27 @@ public class HabitActivity extends AppCompatActivity {
                 }else{
                     mGoalClearBtn.setVisibility(View.INVISIBLE);
                     mGoalHintTextView.setVisibility(View.INVISIBLE);
+                    mUserNameEdtText.setBackgroundResource(R.drawable.drawable_edittext);
                 }
             }
         });
 
+        mGoalEdtText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //setEditTextColor(mGoalEdtText, mGoalHintTextView,2);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 //        mOnceEdtText = (EditText)findViewById(R.id.edittext_once);             // 일 회 수행 양(?)
         mSpinnerUnit = (Spinner)findViewById(R.id.spinner_unit);               // 단위
 //        mUnitTextview = (TextView)findViewById(R.id.textview_unit);
@@ -241,6 +277,16 @@ public class HabitActivity extends AppCompatActivity {
     }
 
 
+    private void setEditTextColor(EditText editText, TextView hint,int maxLength){
+        if(editText.getText().length() > maxLength-1){
+            editText.setBackgroundResource(R.drawable.drawable_edittext_error);
+            hint.setTextColor(getResources().getColor(R.color.errorrColor));
+        }else{
+
+            editText.setBackgroundResource(R.drawable.drawable_edittext);
+            hint.setTextColor(getResources().getColor(R.color.hintTextColor));
+        }
+    }
     /**
      *  취미 선택 시 컴포넌트 set
      * @param habit
@@ -249,26 +295,21 @@ public class HabitActivity extends AppCompatActivity {
         if(habit == null)
             return;
 
-//        mHabitType.setText(habit.getName());
-
-        // 목표 set
-//        mNameEdtText.setText(habit.getGoal());
+        //습관 이름
+        mHabitName.setText(habit.getName());
+        // 사용자 설정 습관 이름
+        mUserNameEdtText.setText(habit.getCustomname());
 
         // 1일 목표
-        mGoalEdtText.setText(Integer.toString(habit.getFull()));
-//        mOnceEdtText.setText(Integer.toString(habit.getOnce()));
-
-        //
-
+        mGoalEdtText.setText(Integer.toString(habit.getGoal()));
 
         connectDB();
         List<String> unitList =
                 mUserHabitRespository.getHabitUnit(habit.getHabitcode());
         disconnectDB();
         for(int i =  0 ; i < unitList.size() ; i++){
-            unitList.set(i, unitList.get(i)+"/일");
+            unitList.set(i, unitList.get(i)+" / 일");
         }
-        Log.d(TAG, "get UnitList ?? "+ Integer.toString(unitList.size()));
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner, unitList );
         arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -286,8 +327,6 @@ public class HabitActivity extends AppCompatActivity {
         });
         mSpinnerUnit.setId(0);
         mHabit.setUnit(unitList.get(0));
-//        mUnitTextview.setText(unitList.get(0));
-
 
         // 시간SET
         if(habit.getTime() == Habit.MORNING_TIME){
@@ -318,7 +357,7 @@ public class HabitActivity extends AppCompatActivity {
             mAllTimeToggleBtn.setChecked(false);
         }
 
-        Log.d(TAG, "what time??? "+ mHabit.getTime());
+//        Log.d(TAG, "what time??? "+ mHabit.getTime());
         setDayofWeekToggle(habit);
 
     }
@@ -341,15 +380,7 @@ public class HabitActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, "DayofWeek "+ Integer.toString(tmpDaySum));
-        // 메일
-        /*if(tmpDaySum== 254) {
-            mEveryDayToggleBtn.setChecked(true);
-            mEveryWeekToggleBtn.setChecked(false);
-        }
-        else {
-            mEveryDayToggleBtn.setChecked(false);
-            mEveryWeekToggleBtn.setChecked(true);
-        }*/
+
     }
 
     /**
@@ -441,18 +472,18 @@ public class HabitActivity extends AppCompatActivity {
         }
 
         // 타이틀 확인
-        if(mNameEdtText.getText().toString().length() < 1){
-            Toast.makeText(this, "목표가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
+        if(mUserNameEdtText.getText().toString().length() < 1){
+            Toast.makeText(this, "습관이름이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
-        mHabit.setGoal(mNameEdtText.getText().toString());
+        mHabit.setCustomname(mUserNameEdtText.getText().toString());
 
         // 하루목표 확인
         if(mGoalEdtText.getText().toString().length() < 1){
-            Toast.makeText(this, "일 목표가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "목표가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
-        mHabit.setFull(Integer.parseInt(mGoalEdtText.getText().toString()));
+        mHabit.setGoal(Integer.parseInt(mGoalEdtText.getText().toString()));
 
         // 요일 확인
         if(mHabit.getDaysum() < 1){
@@ -474,12 +505,12 @@ public class HabitActivity extends AppCompatActivity {
         connectDB();
 
         if(mHabit.getHabitseq() == 0 ) {
-            Log.d(TAG, "DB TEST 날짜 확인 :  " +mHabit.getDaysum() + " 시간 확인 : "+mHabit.getTime() +" 단위 확인 : "+mHabit.getUnit());
+//            Log.d(TAG, "DB TEST 날짜 확인 :  " +mHabit.getDaysum() + " 시간 확인 : "+mHabit.getTime() +" 단위 확인 : "+mHabit.getUnit());
             saveHait();
         }else{
             updateHait();
         }
-        disconnectDB();
+//        disconnectDB();
         finish();
     }
 
@@ -511,7 +542,7 @@ public class HabitActivity extends AppCompatActivity {
                 UserHabitState tmpState = new UserHabitState(userStateSeq, dayofweek, mHabit);
                 userHabitStateList.add(tmpState);
 //                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getPriority()+"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getGoal() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getFull() +"/"+ tmpState.getUnit() );
-                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getGoal() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getFull() +"/"+ tmpState.getUnit() );
+                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getCustomname() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getGoal() +"/"+ tmpState.getUnit() );
             }
 
         }
@@ -547,4 +578,16 @@ public class HabitActivity extends AppCompatActivity {
         startActivityForResult(intent, GET_HABIT);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "완료 되었네 ?");
+        if(requestCode == GET_HABIT && resultCode == RESULT_OK){
+            Log.d(TAG, "완료 되었네 ");
+            mHabit = (UserHabitDetail) data.getSerializableExtra("object");
+            setComponent(mHabit);
+        }
+
+    }
 }

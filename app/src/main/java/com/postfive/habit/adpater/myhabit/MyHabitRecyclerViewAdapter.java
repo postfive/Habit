@@ -2,7 +2,6 @@ package com.postfive.habit.adpater.myhabit;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.postfive.habit.R;
-import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitState;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         // XML 디자인한 부분 안에 내용 변경
 //        ((RowCell)holder).imageView.setImageDrawable();
         ((RowCell)holder).goalText.setText( mMyHabitList.get(position).getGoal());
-        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getFull()+""+mMyHabitList.get(position).getUnit());
+        ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getGoal()+""+mMyHabitList.get(position).getUnit());
         ((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDid()+""+mMyHabitList.get(position).getUnit());
         Drawable drawable = mContext.getResources().getDrawable(mMyHabitList.get(position).getIcon());
 
@@ -79,7 +77,7 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public RowCell(View view) {
             super(view);
             imageView = (ImageView)view.findViewById(R.id.image_my_habit_item);
-            goalText = (TextView)view.findViewById(R.id.textview_goal_my_habit_item);
+            goalText = (TextView)view.findViewById(R.id.textview_customname_my_habit_item);
             dayofweekText = (TextView)view.findViewById(R.id.textview_dayofweek_my_habit_item);
             dayFullText = (TextView)view.findViewById(R.id.textview_dayFull_my_habit_item);
             didDayText = (TextView)view.findViewById(R.id.textview_didday_my_habit_item);

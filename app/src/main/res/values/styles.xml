@@ -22,6 +22,7 @@
     <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- Toolbar Title Color-->
         <!-- Toolbar Up Button Colo  -->
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/mainTitle</item>
         <item name ="android:gravity">center</item>
     </style>
