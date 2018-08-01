@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 public class Unit {
 
 
+
     @NonNull
     @ColumnInfo(name = "unitcode")
     private int unitcode;
@@ -29,7 +30,6 @@ public class Unit {
     public static int SET_UNIT = 4; // 세트
     @Ignore
     public static int WALK_UNIT = 5; // 걸음
-
 
     public Unit(@NonNull int unitcode, @NonNull String unit) {
         this.unitcode = unitcode;

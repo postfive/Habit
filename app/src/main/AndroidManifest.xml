@@ -26,7 +26,8 @@
         <activity android:name=".view.myhabitlist.MyHabitListActivity" >
         </activity>
         <activity android:name=".view.celeb.CelebActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
         <activity android:name=".view.habit.HabitActivity"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>

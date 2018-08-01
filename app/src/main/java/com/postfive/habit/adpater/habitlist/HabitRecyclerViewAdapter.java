@@ -51,7 +51,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         public TextView textView;
         public RowCell(View view) {
             super(view);
-            imageView = (ImageView)view.findViewById(R.id.image_celeb_list_item);
+            imageView = (ImageView)view.findViewById(R.id.image_habit_item);
             textView = (TextView) view.findViewById(R.id.textview_habit_item);
         }
     }

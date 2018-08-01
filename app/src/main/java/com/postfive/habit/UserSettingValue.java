@@ -271,13 +271,6 @@ public class UserSettingValue {
             morningFromHour = Integer.parseInt(strValue.substring(0, idx));
             morningFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
-        /*else if(strKey.equals(MORNING_TO)){
-            if(idx < 0)
-                return false;
-
-            MORNING_TO_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            MORNING_TO_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }*/
         else if(strKey.equals(AFTERNOON_FROM)){
             if(idx < 0)
                 return false;
@@ -285,13 +278,6 @@ public class UserSettingValue {
             afternoonFromHour = Integer.parseInt(strValue.substring(0, idx));
             afternoonFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
         }
-        /*else if(strKey.equals(AFTERNOON_TO)){
-            if(idx < 0)
-                return false;
-
-            AFTERNOON_TO_HOUR   = Integer.parseInt(strValue.substring(0, idx));
-            AFTERNOON_TO_MINUTE = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }*/
         else if(strKey.equals(NIGHT_FROM)){
             if(idx < 0)
                 return false;

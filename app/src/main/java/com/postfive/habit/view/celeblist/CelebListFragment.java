@@ -2,22 +2,17 @@ package com.postfive.habit.view.celeblist;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
@@ -25,10 +20,7 @@ import com.postfive.habit.Utils;
 import com.postfive.habit.adpater.celeblist.CelebRecyclerViewAdapter;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.CelebHabitViewModel;
-import com.postfive.habit.db.Habit;
-import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.view.celeb.CelebActivity;
-import com.postfive.habit.view.habit.HabitActivity;
 
 import java.util.List;
 
@@ -59,7 +51,7 @@ public class CelebListFragment extends Fragment {
         nestedscrollview.setLayoutParams(layoutParams);
 
         int width = getResources().getDisplayMetrics().widthPixels;
-        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null, width);
+        mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_celeb_list);
         recyclerView.setAdapter(mCelebRecyclerViewAdapter);
@@ -75,7 +67,6 @@ public class CelebListFragment extends Fragment {
             public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
 
                 mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
-
             }
         });
 
@@ -90,6 +81,7 @@ public class CelebListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return view;
     }
 

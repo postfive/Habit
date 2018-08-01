@@ -34,8 +34,13 @@
     <color name="buttonContainedGrayText">#de000000</color>
     <color name="buttonContainedGray">#bdbdbd</color>
     <color name="buttonOutlinedText">#de000000</color>
+    <color name="buttonOutlinedTextPressed">#9e9e9e</color>
     <color name="buttonOutlined">@android:color/transparent</color>
     <color name="buttonOutlinedLine">#bdbdbd</color>
+
+    <color name="hintTextColor">#de999999</color>
+    <color name="errorrColor">#b00020</color>
+
 
 
 </resources>

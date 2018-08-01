@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-
-
         loadFragment(new MyHabitsFragment());
-
     }
 
     private boolean loadFragment(Fragment fragment){

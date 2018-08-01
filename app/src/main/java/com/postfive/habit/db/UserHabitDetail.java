@@ -86,16 +86,15 @@ public class UserHabitDetail implements Serializable {
     public UserHabitDetail(@NonNull int habitseq , @NonNull CelebHabitDetail celebHabit) {
         this.habitseq = habitseq;
         this.habitcode = celebHabit.getHabitcode();
-//        this.priority = celebHabit.getPriority();
-        this.time = celebHabit.getTime();
+        this.time = celebHabit.getTime();     //
         this.name = celebHabit.getName();
-        this.goal = celebHabit.getGoal();
-        this.daysum = celebHabit.getDaysum();
-        this.full = celebHabit.getFull();
-        this.once = celebHabit.getOnce();
-        this.unit = celebHabit.getUnit();
-        this.color = celebHabit.getColor();
-        this.icon = celebHabit.getIcon();
+        this.goal = celebHabit.getGoal();     //
+        this.daysum = celebHabit.getDaysum(); //
+        this.full = celebHabit.getFull();     //
+        this.once = celebHabit.getOnce();     //
+        this.unit = celebHabit.getUnit();     //
+        this.color = celebHabit.getColor();   //
+        this.icon = celebHabit.getIcon();     //
     }
 
     public UserHabitDetail(@NonNull int habitseq , @NonNull UserHabitState userHabitState) {

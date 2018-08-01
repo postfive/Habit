@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
 
 @Entity(tableName ="celeb_habit_d",
-        primaryKeys = { "celebcode", "time","priority"})
+        primaryKeys = { "celebcode", "time","seq"})
 public class CelebHabitDetail {
     @NonNull
     @ColumnInfo(name ="celebcode")
@@ -16,12 +16,12 @@ public class CelebHabitDetail {
     public int time;   // 1 : mornig  / 2 : after / 3 : night / 0 : all
 
     @NonNull
-    @ColumnInfo(name ="priority")
-    public int priority; // 우선순위 1 2 3 4
+    @ColumnInfo(name ="seq")
+    public int seq; // 우선순위 1 2 3 4
 
     @NonNull
     @ColumnInfo(name ="habitcode")
-    public int habitcode; // 습관 코드 0001 0002
+    public int habitcode; // 습관 코드 1 2 3
 
     @NonNull
     @ColumnInfo(name ="name")
@@ -29,7 +29,7 @@ public class CelebHabitDetail {
 
     @NonNull
     @ColumnInfo(name ="goal")
-    public String goal; // 상투적인 목표 문구
+    public String goal; //
 
     @NonNull
     @ColumnInfo(name ="daysum")
@@ -38,7 +38,6 @@ public class CelebHabitDetail {
     @NonNull
     @ColumnInfo(name ="full")
     public int full; // 하루 할양
-
 
     @NonNull
     @ColumnInfo(name ="once")
@@ -49,33 +48,57 @@ public class CelebHabitDetail {
     public String unit; // 단위
 
     @NonNull
+    @ColumnInfo(name ="unitcode")
+    public int unitcode; // 단위 코드
+
+    @NonNull
     @ColumnInfo(name ="img")
     public String img; // 이미지
 
     @NonNull
     @ColumnInfo(name ="icon")
-    private int icon; // 단위
+    private int icon; // 아이콘
 
     @NonNull
     @ColumnInfo(name ="color")
     private String color; // 단위
 
+    @NonNull
+    @ColumnInfo(name ="comment")
+    private String comment; // 코멘트
 
-    public CelebHabitDetail(@NonNull int celebcode, @NonNull int time, @NonNull int priority, @NonNull int habitcode, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, @NonNull String img, @NonNull String color, @NonNull int icon) {
+    @NonNull
+    @ColumnInfo(name ="memo")
+    private String memo; // 메모
+
+    @NonNull
+    @ColumnInfo(name ="drawable")
+    private int drawable; // 이미지
+
+    @NonNull
+    @ColumnInfo(name ="realime")
+    public String realime;
+
+
+    public CelebHabitDetail(@NonNull int celebcode, @NonNull int seq, @NonNull int time,  @NonNull int habitcode, @NonNull String name, @NonNull String goal, @NonNull String comment, @NonNull String memo, @NonNull String realime, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull int unitcode, @NonNull String unit, @NonNull String img, @NonNull String color, @NonNull int icon, @NonNull int drawable) {
         this.celebcode = celebcode;
-        this.time = time;
-        this.priority = priority;
+        this.time      = time;
+        this.seq       = seq;
         this.habitcode = habitcode;
-        this.name = name;
-        this.goal = goal;
-        this.daysum = daysum;
-        this.full = full;
-        this.once = once;
-        this.unit = unit;
-        this.img = img;
-        this.icon = icon;
-        this.color = color;
-
+        this.name      = name;
+        this.goal      = goal;
+        this.comment   = comment;
+        this.daysum    = daysum;
+        this.full      = full;
+        this.once      = once;
+        this.unit      = unit;
+        this.img       = img;
+        this.icon      = icon;
+        this.color     = color;
+        this.memo      = memo;
+        this.drawable  = drawable;
+        this.realime   = realime;
+        this.unitcode  = unitcode;
     }
 
     @NonNull
@@ -97,12 +120,12 @@ public class CelebHabitDetail {
     }
 
     @NonNull
-    public int getPriority() {
-        return priority;
+    public int getSeq() {
+        return seq;
     }
 
-    public void setPriority(@NonNull int priority) {
-        this.priority = priority;
+    public void setSeq(@NonNull int priority) {
+        this.seq = priority;
     }
 
     @NonNull
@@ -194,5 +217,49 @@ public class CelebHabitDetail {
 
     public void setColor(@NonNull String color) {
         this.color = color;
+    }
+
+    @NonNull
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(@NonNull String comment) {
+        this.comment = comment;
+    }
+
+    @NonNull
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(@NonNull String memo) {
+        this.memo = memo;
+    }
+
+    @NonNull
+    public int getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(@NonNull int drawable) {
+        this.drawable = drawable;
+    }
+    @NonNull
+    public String getRealime() {
+        return realime;
+    }
+
+    public void setRealime(@NonNull String realime) {
+        this.realime = realime;
+    }
+
+    @NonNull
+    public int getUnitcode() {
+        return unitcode;
+    }
+
+    public void setUnitcode(@NonNull int unitcode) {
+        this.unitcode = unitcode;
     }
 }

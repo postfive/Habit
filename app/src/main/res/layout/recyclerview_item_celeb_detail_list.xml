@@ -3,51 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:orientation="horizontal">
-
-
-    <LinearLayout
-        android:id="@+id/linearlayout_goal_day_my_habit_item"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textview_celeb_detail_item_time"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="4"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="#1 아침 07:30"
+        android:textColor="#ff9d00"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/textview_celeb_detail_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="08:00" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/framelayout_celeb_detail_list_item"
+    <TextView
+        android:id="@+id/textview_celeb_detail_item_dayofweek"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="월.화.수.목.금(30분)"
+        android:textColor="#de575757"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"/>
 
+    <TextView
+        android:id="@+id/textview_celeb_detail_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:text="공복에 아메리카노마시기"
+        android:textColor="#de000000"
+        android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/imgview_celeb_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/imageview_celeb_detail_item_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/img_parkboram_detail_1" />
 
+    <TextView
+        android:id="@+id/textview_celeb_detail_item_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="(박보람)
+계단을 생활화하면서
+조금씩 강도를 높이기로 했어요.
+3층 왔다갔다 했던 걸 5층으로 늘려봤어요.
 
-        <TextView
-            android:id="@+id/textview_celeb_detail_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:text="일어나자 마자 물 1컵" />
+사실 5층까지는 조금 땀 나다가? 괜찮더라구요.
 
-    </FrameLayout>
+그래서 운동강도를 높이고자
+20층까지 도전해봤어요!
 
+그렇게 20층을 1~10층은 한칸씩, 11~20층은 두칸씩
+오르니 2주차부터는 효과가 있더라구요."
+        android:textColor="#de513628"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textview_celeb_detail_item_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="박보람은 아침 유산소 운동 전\n공복에 아메리카노를 한잔씩 마셔요.\n카페인이 지방 연소에 윤활유 역할을 한다고해요."
+        android:textColor="#de000000"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
 
 </LinearLayout>

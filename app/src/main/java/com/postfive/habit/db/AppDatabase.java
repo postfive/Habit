@@ -14,7 +14,8 @@ import android.util.Log;
                         , UserHabitState.class
                         , UserHabitDetail.class
                         , Habit.class
-                        , Unit.class}, version = 2)
+                        , Unit.class
+                        , CelebHabitKit.class}, version = 2)
 public abstract class AppDatabase extends android.arch.persistence.room.RoomDatabase {
     private static final String TAG = "AppDatabase";
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fafafa">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageview_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_parkboram_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="17dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_alert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#de000000"
+                android:textSize="24sp"
+                android:text="40kg 만들어서 비키니 입고
+하와이 가자!"/>
+
+            <TextView
+                android:id="@+id/textview_alert_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#de000000"
+                android:textSize="16sp"
+                android:text="2018.06.01 - 2018.08.06"/>
+        </LinearLayout>
+    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#de000000"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:gravity ="center"
+        android:text="이제 시작해볼까요?"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id = "@+id/btn_alert_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="취소하기"
+            android:textSize="16sp"
+            android:textColor="#de000000"
+            android:background="#00000000"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id = "@+id/btn_alert_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시작하기"
+            android:textSize="16sp"
+            android:textColor="#deff9d00"
+            android:background="#00000000"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+</LinearLayout>

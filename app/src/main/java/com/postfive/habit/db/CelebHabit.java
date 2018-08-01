@@ -38,10 +38,6 @@ public interface CelebHabit {
     void insertCelebDetail(CelebHabitDetail detail);
 
 
-    // 습관만 가저오기 세팅 할 수 있도록
-    @Query("SELECT MAX(PRIORITY) FROM CELEB_HABIT_D where celebcode =:celebcode and time =:time GROUP BY CELEBCODE, TIME")
-    int getMaxPriorityCeleb(int celebcode, int time);
-
     // 시간별로 get
     @Query("SELECT * FROM CELEB_HABIT_D" +
             " where time=:time AND  celebcode =:celebcode")
@@ -59,4 +55,11 @@ public interface CelebHabit {
 
     @Query("SELECT * FROM CELEB_HABIT_M")
     LiveData<List<CelebHabitMaster>> allHabitLive();
+
+
+    @Insert(onConflict = IGNORE)
+    void insertAllKit(List<CelebHabitKit> celebHabitKits);
+
+    @Query("SELECT * FROM celeb_kit WHERE CELEBCODE =:celebcode")
+    List<CelebHabitKit> selectKit(int celebcode);
 }
