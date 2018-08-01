@@ -13,13 +13,16 @@
     <RelativeLayout
         android:id="@+id/proLayout_0_0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"></RelativeLayout>
+        android:layout_height="50dp"
+
+        android:background="@android:color/holo_green_light"
+        android:translationZ="3dp"
+        ></RelativeLayout>
 
     <com.dd.processbutton.iml.SubmitProcessButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="0dp"
         custom:pb_colorComplete="@color/green_complete"
         custom:pb_colorError="@color/red_error"
