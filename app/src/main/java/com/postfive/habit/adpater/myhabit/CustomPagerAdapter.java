@@ -37,6 +37,8 @@ public class CustomPagerAdapter extends PagerAdapter {
     private ArrayList<Integer> wrap_id2 = new ArrayList<>();
     private ArrayList<Integer> btn_id = new ArrayList<>();
     private ArrayList<View> mViews = new ArrayList<>();
+    private ArrayList<View> mViews1 = new ArrayList<>();
+    private ArrayList<View> mViews2 = new ArrayList<>();
     private List<List<UserHabitState>> days = new ArrayList<>();
     private List<List<UserHabitState>> days1 = new ArrayList<>();
     private List<List<UserHabitState>> days2 = new ArrayList<>();
@@ -51,6 +53,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     private ViewGroup layout;
     private int initFirstFlag = 0;
     private List<List<UserHabitState>> tempDay = new ArrayList<>();
+    private int cont_flag = 0;
     public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
         this.mUserHabitRepository = mUserHabitRepository;
@@ -62,8 +65,8 @@ public class CustomPagerAdapter extends PagerAdapter {
         LayoutInflater inflaterP = LayoutInflater.from(mContext);
         layout = (ViewGroup) inflaterP.inflate(customPagerEnum.getLayoutResId(), collection, false);
 
-        if(initFirstFlag == 0) {
-            for(int i = 0; i < getCount(); i++) {
+        if (initFirstFlag == 0) {
+            for (int i = 0; i < getCount(); i++) {
                 day = new ArrayList<>(); //0 yesterday 1 today 2 tomorrow
                 days.add(day);
                 btn_id.add(0);
@@ -88,8 +91,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                 yesterday = 7;
             List<UserHabitState> mUserHabitStatesYesterdayList = mUserHabitRepository.getDayHabit(yesterday);
             createSet(0, position, mUserHabitStatesYesterdayList);
-        }
-        else if (position == 1) {
+        } else if (position == 1) {
             // TODO 현재 지금
             List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(nowTime);
             createSet(0, position, mUserHabitStatesList);
@@ -126,6 +128,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     // 맨처음 db에서 값 가져올때
     private void createSet(int status, int position, List<UserHabitState> List) {
         List<UserHabitState> tmpList;
+        cont_flag = 0;
         if (status == 0)
             days.set(position, List);
         else if (status == 1)
@@ -169,6 +172,10 @@ public class CustomPagerAdapter extends PagerAdapter {
             temp_wrap_id = wrap_id.get(position);
 
         ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
+        if(status != 0 && cont_flag == 0) {
+            temp_wrap_id--;
+            cont_flag = 1;
+        }
         SubmitProcessButton progressIndi = (SubmitProcessButton) wrapView.getChildAt(1);
         ViewGroup innerWrapView = (ViewGroup) wrapView.getChildAt(2);
 
@@ -195,13 +202,20 @@ public class CustomPagerAdapter extends PagerAdapter {
         modiBtn.setVisibility(View.GONE); // 수정
 
         //Add ArrayList
-        if (position == 1 && status == 0) {
-            mViews.add(innerWrapView);
-            mViews.add(setupBtn);
-            mViews.add(minusBtn);
-            mViews.add(plusBtn);
-            mViews.add(modiBtn);
-        }
+        ArrayList<View> tempMViews = null;
+        if (status == 1)
+            tempMViews = mViews1;
+        else if (status == 2)
+            tempMViews = mViews2;
+        else
+            tempMViews = mViews;
+
+        tempMViews.add(innerWrapView);
+        tempMViews.add(setupBtn);
+        tempMViews.add(minusBtn);
+        tempMViews.add(plusBtn);
+        tempMViews.add(modiBtn);
+
         child_id = temp_wrap_id * 100;
 
         //Set ID to each View
@@ -255,8 +269,13 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         //Set onClickListener to each View
         if (position == 1) {
-            for (View view : mViews) {
-                view.setOnClickListener(onClickListener);
+            for (View view : tempMViews) {
+                if (status == 0)
+                    view.setOnClickListener(onClickListener);
+                else if(status ==1)
+                    view.setOnClickListener(onClickListener1);
+                else
+                    view.setOnClickListener(onClickListener2);
             }
             Button showAllBtn = (Button) layout.findViewById(R.id.showAllBtn);
             showAllBtn.setOnClickListener(onClickListener);
@@ -278,10 +297,11 @@ public class CustomPagerAdapter extends PagerAdapter {
                 index = (id - (id % 100)) / 100;
             }
             int pageNum = pager.getCurrentItem();
-            Log.e("Test", "" + pageNum);
+            Log.e("Test", "index" + index + ", pageNum: " + pageNum);
+            UserHabitState tmpState;
+            tmpState = days.get(pageNum).get(index);
 
-            //UserHabitState tmpState = days.get(pageNum).get(index);
-            UserHabitState tmpState = tempDay.get(pageNum).get(index);
+//            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getFull();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
@@ -332,7 +352,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
                             completeV.addView(pL);
-                            if(parent.getChildCount() == 0)
+                            if (parent.getChildCount() == 0)
                                 parent.setVisibility(View.GONE);
                         }
                     }
@@ -377,7 +397,124 @@ public class CustomPagerAdapter extends PagerAdapter {
                     Log.e("Btn", "Default");
                     break;
             }
+        }
+    };
 
+
+    private View.OnClickListener onClickListener1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            if (id == R.id.showAllBtn) {
+                Intent intent = new Intent(mContext, MyHabitListActivity.class);
+                //intent.putExtra("object", habit);
+                mContext.startActivity(intent);
+                return;
+            }
+            int index = 0;
+            if (id >= 100) {
+                index = (id - (id % 100)) / 100;
+            }
+            int pageNum = pager.getCurrentItem();
+            Log.e("Test", "index" + index + ", pageNum: " + pageNum);
+            UserHabitState tmpState;
+            tmpState = days1.get(0).get(index);
+//            UserHabitState tmpState = tempDay.get(pageNum).get(index);
+
+            int maxVal = tmpState.getFull();
+            int conVal = (int) Math.ceil(100 / (float) maxVal);
+            int curVal2 = tmpState.getDid();
+            int pVal;
+
+            Log.e("Get curVal", "Position: " + pageNum + ", Index: " + index + ", CurVal: " + curVal2 + "/" + conVal);
+            Log.e("Btn", "Clicked: " + id);
+
+            ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
+            switch (id % 100) {
+                case 0: // 수정모드 버튼 변경
+                    //Set Visibility to Visible
+                    for (int i = 2; i < 8; i++) {
+                        tempV = v.findViewById(id + i);
+                        Log.e("RT", "" + (id + i));
+                        tempV.setVisibility(View.VISIBLE);
+                    }
+                    for (int i = 8; i < 10; i++) {
+                        tempV = v.findViewById(id + i);
+                        tempV.setVisibility(View.GONE);
+                    }
+                    break;
+                case 2: // setup
+                    //Set Visibility to Invisible
+                    int arr[] = {0, 1, 4, 5};
+                    for (int i : arr) {
+                        tempV = pL.findViewById(id + i);
+                        Log.e("RT", "" + (id + i));
+                        tempV.setVisibility(View.GONE);
+                    }
+                    for (int i = 6; i < 8; i++) {
+                        tempV = pL.findViewById(id + i);
+                        tempV.setVisibility(View.VISIBLE);
+                    }
+                    if (curVal2 == maxVal) {
+                        ViewGroup parent = (ViewGroup) pL.getParent();
+                        parent.removeView(pL);
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
+                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
+                        completeV.addView(pL);
+                        completeV.setVisibility(View.VISIBLE);
+                    } else if (curVal2 < maxVal) {
+                        ViewGroup parent = (ViewGroup) pL.getParent();
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
+
+                        if (gparent.getChildAt(1) == parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
+                            completeV.addView(pL);
+                            if (parent.getChildCount() == 0)
+                                parent.setVisibility(View.GONE);
+                        }
+                    }
+                    mUserHabitRepository.updateUserHabitState(tmpState);
+                    break;
+                case 3: // -
+                    //Decrease curValue
+                    curVal2--;
+                    tmpState.setDid(curVal2);
+                    tempTv = (TextView) pL.findViewById(id + 1);
+                    if (curVal2 < 0)
+                        curVal2 = 0;
+                    pVal = curVal2 * conVal;
+                    Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                    tempTv.setText("" + curVal2);
+                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi.setProgress(pVal);
+                    break;
+                case 6: //+
+                    //Cap to max value
+                    curVal2++;
+                    tmpState.setDid(curVal2);
+                    tempTv = (TextView) pL.findViewById(id - 2);
+                    if (curVal2 > maxVal)
+                        curVal2 = maxVal;
+                    pVal = curVal2 * conVal;
+                    if (pVal > 100)
+                        pVal = 100;
+                    Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                    tempTv.setText("" + curVal2);
+                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
+                    tempPi.setProgress(pVal);
+                    break;
+                case 7:
+                    //Go modiActivity
+                    Intent intent = new Intent(mContext, HabitActivity.class);
+                    UserHabitDetail habit = new UserHabitDetail(0, tmpState);
+                    intent.putExtra("object", habit);
+                    mContext.startActivity(intent);
+                    break;
+                default:
+                    Log.e("Btn", "Default");
+                    break;
+            }
             /// db update
 //            tmpState 이 객체 통째로 update;
             ////////////////
@@ -399,6 +536,122 @@ public class CustomPagerAdapter extends PagerAdapter {
 
             /////////////////////
         }*/
+        }
+    };
+    private View.OnClickListener onClickListener2 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            if (id == R.id.showAllBtn) {
+                Intent intent = new Intent(mContext, MyHabitListActivity.class);
+                //intent.putExtra("object", habit);
+                mContext.startActivity(intent);
+                return;
+            }
+            int index = 0;
+            if (id >= 100) {
+                index = (id - (id % 100)) / 100;
+            }
+            int pageNum = pager.getCurrentItem();
+            Log.e("Test", "index" + index + ", pageNum: " + pageNum);
+            UserHabitState tmpState;
+            tmpState = days2.get(0).get(index);
+//            UserHabitState tmpState = tempDay.get(pageNum).get(index);
+
+            int maxVal = tmpState.getFull();
+            int conVal = (int) Math.ceil(100 / (float) maxVal);
+            int curVal2 = tmpState.getDid();
+            int pVal;
+
+            Log.e("Get curVal", "Position: " + pageNum + ", Index: " + index + ", CurVal: " + curVal2 + "/" + conVal);
+            Log.e("Btn", "Clicked: " + id);
+
+            ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
+            switch (id % 100) {
+                case 0: // 수정모드 버튼 변경
+                    //Set Visibility to Visible
+                    for (int i = 2; i < 8; i++) {
+                        tempV = v.findViewById(id + i);
+                        Log.e("RT", "" + (id + i));
+                        tempV.setVisibility(View.VISIBLE);
+                    }
+                    for (int i = 8; i < 10; i++) {
+                        tempV = v.findViewById(id + i);
+                        tempV.setVisibility(View.GONE);
+                    }
+                    break;
+                case 2: // setup
+                    //Set Visibility to Invisible
+                    int arr[] = {0, 1, 4, 5};
+                    for (int i : arr) {
+                        tempV = pL.findViewById(id + i);
+                        Log.e("RT", "" + (id + i));
+                        tempV.setVisibility(View.GONE);
+                    }
+                    for (int i = 6; i < 8; i++) {
+                        tempV = pL.findViewById(id + i);
+                        tempV.setVisibility(View.VISIBLE);
+                    }
+                    if (curVal2 == maxVal) {
+                        ViewGroup parent = (ViewGroup) pL.getParent();
+                        parent.removeView(pL);
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
+                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
+                        completeV.addView(pL);
+                        completeV.setVisibility(View.VISIBLE);
+                    } else if (curVal2 < maxVal) {
+                        ViewGroup parent = (ViewGroup) pL.getParent();
+                        ViewGroup gparent = (ViewGroup) parent.getParent();
+
+                        if (gparent.getChildAt(1) == parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
+                            completeV.addView(pL);
+                            if (parent.getChildCount() == 0)
+                                parent.setVisibility(View.GONE);
+                        }
+                    }
+                    mUserHabitRepository.updateUserHabitState(tmpState);
+                    break;
+                case 3: // -
+                    //Decrease curValue
+                    curVal2--;
+                    tmpState.setDid(curVal2);
+                    tempTv = (TextView) pL.findViewById(id + 1);
+                    if (curVal2 < 0)
+                        curVal2 = 0;
+                    pVal = curVal2 * conVal;
+                    Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                    tempTv.setText("" + curVal2);
+                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi.setProgress(pVal);
+                    break;
+                case 6: //+
+                    //Cap to max value
+                    curVal2++;
+                    tmpState.setDid(curVal2);
+                    tempTv = (TextView) pL.findViewById(id - 2);
+                    if (curVal2 > maxVal)
+                        curVal2 = maxVal;
+                    pVal = curVal2 * conVal;
+                    if (pVal > 100)
+                        pVal = 100;
+                    Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                    tempTv.setText("" + curVal2);
+                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
+                    tempPi.setProgress(pVal);
+                    break;
+                case 7:
+                    //Go modiActivity
+                    Intent intent = new Intent(mContext, HabitActivity.class);
+                    UserHabitDetail habit = new UserHabitDetail(0, tmpState);
+                    intent.putExtra("object", habit);
+                    mContext.startActivity(intent);
+                    break;
+                default:
+                    Log.e("Btn", "Default");
+                    break;
+            }
         }
     };
 

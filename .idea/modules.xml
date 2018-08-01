@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/HabitProj.iml" filepath="$PROJECT_DIR$/.idea/HabitProj.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/habit.iml" filepath="$PROJECT_DIR$/habit.iml" />
     </modules>
   </component>
 </project>
