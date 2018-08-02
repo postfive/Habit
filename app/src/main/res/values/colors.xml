@@ -14,29 +14,31 @@
 
     <color name="mainTitle">#de000000</color>
 
-    <color name="toggleOn">#222222</color>
-    <color name="toggleOff">#ffffff</color>
-    <color name="toggleOffBorders">#9e9e9e</color>
 
-    <color name="toggleTextOn">#ffffff</color>
-    <color name="toggleTextOff">#9e9e9e</color>
-    <color name="toggleTextPressed">#9e9e9e</color>
+    <color name="button01Contained">#0b0b0b</color>
+    <color name="button01ContainedTextPressed">#de513628</color>
+    <color name="button01ContainedText">#deea8b0c</color>
+    <color name="button02Contained">#0b0b0b</color>
 
-    <color name="buttonContained01">#0b0b0b</color>
-    <color name="buttonContained01TextPressed">#de513628</color>
-    <color name="buttonContained01Text">#deea8b0c</color>
-    <color name="buttonContained02">#0b0b0b</color>
+    <color name="button02ContainedTextPressed">#9e9e9e</color>
+    <color name="button02ContainedText">#deffffff</color>
 
-    <color name="buttonContained02TextPressed">#9e9e9e</color>
-    <color name="buttonContained02Text">#deffffff</color>
-    <color name="buttonContainedGrayTextPressed">#9e9e9e</color>
+    <color name="button03ContainedTextPressed">#9e9e9e</color>
+    <color name="button03ContainedText">#de000000</color>
+    <color name="button03Contained">#bdbdbd</color>
 
-    <color name="buttonContainedGrayText">#de000000</color>
-    <color name="buttonContainedGray">#bdbdbd</color>
-    <color name="buttonOutlinedText">#de000000</color>
-    <color name="buttonOutlinedTextPressed">#9e9e9e</color>
-    <color name="buttonOutlined">@android:color/transparent</color>
-    <color name="buttonOutlinedLine">#bdbdbd</color>
+    <color name="button04OutlinedText">#de000000</color>
+    <color name="button04OutlinedTextPressed">#9e9e9e</color>
+    <color name="button04Outlined">@android:color/transparent</color>
+    <color name="button04OutlinedLine">#bdbdbd</color>
+
+    <color name="button06ToggleOn">#222222</color>
+    <color name="button06toggleOff">#ffffff</color>
+    <color name="button06toggleOffBorders">#9e9e9e</color>
+
+    <color name="button06toggleTextOn">#ffffff</color>
+    <color name="button06toggleTextOff">#9e9e9e</color>
+    <color name="button06toggleTextPressed">#9e9e9e</color>
 
     <color name="hintTextColor">#de999999</color>
     <color name="errorrColor">#b00020</color>

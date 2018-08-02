@@ -5,19 +5,19 @@
     <item
         android:state_checked="true"
         android:state_pressed="true"
-        android:drawable="@drawable/drawable_toggle_on"/>
+        android:drawable="@drawable/drawable_button_06_toggle_on"/>
     <item
         android:state_checked="true"
         android:state_pressed="false"
-        android:drawable="@drawable/drawable_toggle_on"/>
+        android:drawable="@drawable/drawable_button_06_toggle_on"/>
     <item
         android:state_checked="false"
         android:state_pressed="true"
-        android:drawable="@drawable/drawable_toggle_off"/>
+        android:drawable="@drawable/drawable_button_06_toggle_off"/>
     <item
         android:state_checked="false"
         android:state_pressed="false"
-        android:drawable="@drawable/drawable_toggle_off"/>
+        android:drawable="@drawable/drawable_button_06_toggle_off"/>
 
 
 </selector>

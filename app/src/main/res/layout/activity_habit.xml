@@ -114,7 +114,7 @@
 
                 <Button
                     android:id="@+id/btn_habit_list"
-                    style="@style/AppTheme.Button.Contained.Gray"
+                    style="@style/AppTheme.Button.03.Contained"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="onClickHabitList"
@@ -260,32 +260,26 @@
 
                         <ToggleButton
                             android:id="@+id/togglebtn_sunday"
-                            style="?android:attr/borderlessButtonStyle"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:padding="2dp"
                             android:textOff="@string/short_sunday"
-                            android:textOn="@string/short_sunday"
-                            android:textSize="16sp" />
+                            android:textOn="@string/short_sunday" />
 
                         <ToggleButton
                             android:id="@+id/togglebtn_monday"
-                            style="?android:attr/borderlessButtonStyle"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_monday"
-                            android:textOn="@string/short_monday"
-                            android:textSize="16sp"/>
+                            android:textOn="@string/short_monday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_tuesday"
@@ -293,13 +287,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_tuesday"
-                            android:textOn="@string/short_tuesday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle"/>
+                            android:textOn="@string/short_tuesday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_wednesday"
@@ -307,13 +298,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_wednesday"
-                            android:textOn="@string/short_wednesday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle"/>
+                            android:textOn="@string/short_wednesday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_thursday"
@@ -321,13 +309,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_thursday"
                             android:textOn="@string/short_thursday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle" />
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_friday"
@@ -335,26 +320,20 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_friday"
                             android:textOn="@string/short_friday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle" />
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_saturday"
-                            style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_saturday"
                             android:textOn="@string/short_saturday"
-                            android:textSize="16sp"/>
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
 
                     </LinearLayout>
@@ -389,43 +368,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="하루종일"
                         android:textOn="하루종일"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle"/>
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_morning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오전"
                         android:textOn="오전"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle" />
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_afternoon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
+                        android:background="@drawable/drawable_button_06_toggle"
+                        android:textColor="@drawable/drawable_button_06_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오후"
                         android:textOn="오후"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle" />
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_night"
@@ -437,12 +408,11 @@
                         android:text="ToggleButton"
                         android:textOff="저녁"
                         android:textOn="저녁"
-                        android:textSize="16sp"
-                        style="@style/AppTheme.Button.Toggle"
+                        style="@style/AppTheme.Button.06.Toggle"
                         />
                     <!--style="?android:attr/borderlessButtonStyle"
-                    android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
+                    android:background="@drawable/drawable_button_06_toggle"
+                        android:textColor="@drawable/drawable_button_06_toggle_text"
                         -->
 
                 </LinearLayout>
@@ -456,7 +426,7 @@
                 android:onClick="onClickSaveHabit"
 
                 android:text="@string/save"
-                style="@style/AppTheme.Button.Contained.01" />
+                style="@style/AppTheme.Button.01.Contained" />
         </LinearLayout>
     </ScrollView>
 

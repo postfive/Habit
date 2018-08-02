@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-    android:theme="@style/AppTheme.Toolbar">
+    android:theme="@style/AppTheme.AppBarOverlay">
         <!--android:theme="@style/AppTheme.Toolbar">-->
 
 
@@ -145,7 +145,7 @@
                         android:layout_marginLeft="86dp"
                         android:layout_marginRight="86dp"
                         android:layout_marginBottom="40dp"
-                        style="@style/AppTheme.Button.Contained.02"
+                        style="@style/AppTheme.Button.06.Toggle"
                         android:text="다짐 완료"
                         />
 
@@ -176,10 +176,10 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                style="@style/AppTheme.Button.Contained.02"/>
+                style="@style/AppTheme.Button.06.Toggle"/>
 
             <Button
-                style="@style/AppTheme.Button.Outlined"
+                style="@style/AppTheme.Button.04.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginBottom="40dp"

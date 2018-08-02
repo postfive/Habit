@@ -69,9 +69,9 @@ public class HabitNoti {
 
         Intent intent = new Intent(context, BroadcastD.class);
         intent.putExtra("when", when);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, when);
 
-        Log.d(TAG, "알람 시간 확인 " + calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE));
+        Log.d(TAG, "알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE));
         //알람 예약
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }

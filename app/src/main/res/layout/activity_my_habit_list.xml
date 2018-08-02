@@ -53,7 +53,7 @@
                 android:layout_marginRight="86dp"
                 android:layout_marginTop="40dp"
                 android:text="@string/add_habit"
-                style="@style/AppTheme.Button.Contained.02"/>
+                style="@style/AppTheme.Button.02.Contained"/>
 
             <Button
                 android:id="@+id/btn_habit_init"
@@ -63,7 +63,7 @@
                 android:layout_marginRight="86dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/init_habit"
-                style="@style/AppTheme.Button.Outlined"/>
+                style="@style/AppTheme.Button.04.Outlined"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

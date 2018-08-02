@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--color selector-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 클릭 했을 경우 -->
+    <item android:state_pressed="true"  android:color="@color/button06toggleTextPressed"/>
+    <item android:state_checked="true"  android:color ="@color/button06toggleTextOn"/>
+    <item android:state_checked="false" android:color ="@color/button06toggleTextOff"/>
+
+
+</selector>

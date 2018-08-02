@@ -81,33 +81,34 @@
     </style>
 
 
-    <style name="AppTheme.Button.Contained.01" parent="@android:style/Widget.Holo.Button.Borderless">
+    <style name="AppTheme.Button.01.Contained" parent="@android:style/Widget.Holo.Button.Borderless">
 
         <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_01_text</item>
-        <item name ="android:background">@color/buttonContained01</item>
+        <item name ="android:textColor">@drawable/drawable_button_01_contained_text</item>
+        <item name ="android:background">@color/button01Contained</item>
     </style>
 
-    <style name="AppTheme.Button.Contained.02" parent="Base.Widget.AppCompat.Button.Borderless">
+    <style name="AppTheme.Button.02.Contained" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_02_text</item>
-        <item name ="android:background">@color/buttonContained02</item>
+        <item name ="android:textColor">@drawable/drawable_button_02_contained_text</item>
+        <item name ="android:background">@color/button02Contained</item>
     </style>
-    <style name="AppTheme.Button.Contained.Gray" parent="Base.Widget.AppCompat.Button.Borderless">
+    <style name="AppTheme.Button.03.Contained" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_03_gray_text</item>
-        <item name ="android:background">@color/buttonContainedGray</item>
+        <item name ="android:textColor">@drawable/drawable_button_03_contained_text</item>
+        <item name ="android:background">@color/button03Contained</item>
     </style>
-    <style name="AppTheme.Button.Outlined" parent="Base.Widget.AppCompat.Button.Borderless">
+    <style name="AppTheme.Button.04.Outlined" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_outlined_text</item>
-        <item name ="android:background">@drawable/drawable_button_outlined_face</item>
+        <item name ="android:textColor">@drawable/drawable_button_04_outlined_text</item>
+        <item name ="android:background">@drawable/drawable_button_04_outlined_face</item>
     </style>
 
-    <style name="AppTheme.Button.Toggle" parent="Base.Widget.AppCompat.Button.Borderless">
+    <!-- 02 Contained 디자인으로 쓰는 토글버튼 -->
+    <style name="AppTheme.Button.06.Toggle" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_toggle_text</item>
-        <item name ="android:background">@drawable/drawable_toggle</item>
+        <item name ="android:textColor">@drawable/drawable_button_06_toggle_text</item>
+        <item name ="android:background">@drawable/drawable_button_06_toggle</item>
     </style>
 
     <style name="AppTheme.TextInputLayout" parent="Widget.Design.TextInputLayout">

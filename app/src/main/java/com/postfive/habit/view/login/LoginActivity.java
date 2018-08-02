@@ -257,10 +257,10 @@ public class LoginActivity extends AppCompatActivity {
         mHabitRespository.insertCelebHabitDetail(celebHabitd5);
 
         List<CelebHabitKit> celebHabitKits = new ArrayList<>();
-        celebHabitKits.add(new CelebHabitKit(1, "투썸 아메리카노\n모바일 상품권", "#아침에 마시는 아메리카노", R.drawable.rectangle));
-        celebHabitKits.add(new CelebHabitKit(1, "아임 닭 1kg", "#저녁에 먹는 \n닭가슴살 쉐이크", R.drawable.rectangle));
-        celebHabitKits.add(new CelebHabitKit(1, "올리브영 \n바디쇼 요가메트", "#저녁 근력운동 메트", R.drawable.rectangle));
-        celebHabitKits.add(new CelebHabitKit(1, "닌자 블랜디드\n모바일 상품권", "#아침에 마시는 아메리카노", R.drawable.rectangle));
+        celebHabitKits.add(new CelebHabitKit(1, "투썸 아메리카노\n모바일 상품권", "#요즘 날씨엔 뜨아죠", R.drawable.img_tta));
+        celebHabitKits.add(new CelebHabitKit(1, "아임 닭 1kg", "#저녁에 먹는 \n닭가슴살 쉐킷쉐킷", R.drawable.img_chi));
+        celebHabitKits.add(new CelebHabitKit(1, "올리브영 \n바디쇼 요가메트", "#오늘밤 나와 함께 근력운동 \n헛둘 헛둘 메트", R.drawable.img_mat));
+        celebHabitKits.add(new CelebHabitKit(1, "닌자 블랜디드\n모바일 상품권", "#다갈아 시...", R.drawable.img_mix));
 
         mHabitRespository.insertHabitKit(celebHabitKits);
 
