@@ -2,6 +2,8 @@ package com.postfive.habit.adpater.myhabit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -193,7 +195,10 @@ public class CustomPagerAdapter extends PagerAdapter {
         TextView valueUnit = (TextView) innerWrapView.getChildAt(5);
         TextView maxValue = (TextView) innerWrapView.getChildAt(6);
         View plusBtn = innerWrapView.getChildAt(7);
-        View modiBtn = innerWrapView.getChildAt(8);
+        TextView modiBtn = (TextView) innerWrapView.getChildAt(8);
+
+        modiBtn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
 
         //Hide childViews
         setupBtn.setVisibility(View.GONE); // 버튼 띄우기
@@ -318,8 +323,17 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Btn", "Clicked: " + id);
 
             ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
+
+            ViewGroup parent = (ViewGroup) pL.getParent();
+            ViewGroup gparent = (ViewGroup) parent.getParent();
+
+
             switch (id % 100) {
-                case 0: // 수정모드 버튼 변경
+                case 0: // 수정모드 버튼
+                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                    ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
+                    backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
+                    ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
@@ -330,6 +344,11 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = v.findViewById(id + i);
                         tempV.setVisibility(View.GONE);
                     }
+                    ViewGroup tempP = (ViewGroup) tempV.getParent();
+                    tempP.setVisibility(View.GONE);
+                    wrapL.getChildAt(1).setVisibility(View.GONE);
+                    wrapL.getChildAt(5).setVisibility(View.GONE);
+                    wrapL.getChildAt(6).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
@@ -343,17 +362,14 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
+                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
+                    tempP1.setVisibility(View.VISIBLE);
                     if (curVal2 == maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
                         parent.removeView(pL);
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
                         ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
                         completeV.addView(pL);
                         completeV.setVisibility(View.VISIBLE);
                     } else if (curVal2 < maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
-
                         if (gparent.getChildAt(1) == parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
@@ -362,6 +378,14 @@ public class CustomPagerAdapter extends PagerAdapter {
                                 parent.setVisibility(View.GONE);
                         }
                     }
+                    //backLayout2.getResources().getColor(R.color.colorPrimary);
+                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
+                    ViewGroup vg = (ViewGroup) pL.getChildAt(2);
+                    ViewGroup pp = (ViewGroup) parent.getChildAt(index);
+                    pp.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
+                    vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(5).setVisibility(View.VISIBLE);
+                    vg.getChildAt(6).setVisibility(View.VISIBLE);
                     mUserHabitRepository.updateUserHabitState(tmpState);
                     break;
                 case 3: // -
@@ -451,8 +475,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
-                    int arr[] = {0, 1, 4, 5};
-                    for (int i : arr) {
+                    int arr1[] = {0, 1, 4, 5};
+                    for (int i : arr1) {
                         tempV = pL.findViewById(id + i);
                         Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.GONE);
@@ -521,27 +545,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                     Log.e("Btn", "Default");
                     break;
             }
-            /// db update
-//            tmpState 이 객체 통째로 update;
-            ////////////////
-//            todayList.set(index,tmpState);
-    /*    //
-        public void updateCell(CustomPagerEnum day, UserHabitState userHabitState){
-            List<UserHabitState> tmpList = null;
-            if(day == CustomPagerEnum.TODAY)
-                tmpList = todayList;
-
-            int idx = tmpList.indexOf(userHabitState);
-
-            UserHabitState tmpUserHabitState = tmpList.get(idx);
-
-            tmpUserHabitState = userHabitState;
-
-            tmpUserHabitState.getGoal();
-            //// idx로 view 에 데이터 찾아서 바꾸기
-
-            /////////////////////
-        }*/
         }
     };
     private View.OnClickListener onClickListener2 = new View.OnClickListener() {
