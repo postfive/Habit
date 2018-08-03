@@ -23,7 +23,9 @@
             <ImageView
                 android:id="@+id/image_celeb_list_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:id="@+id/layout_gradation_celeb_list_item"
@@ -59,15 +61,15 @@
                     android:layout_height="wrap_content"
                     android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
                     android:textColor="#deffffff"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/textview_subtitle_celeb_list_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="75Kg에서 40kg로 만드는 방법"
-                    android:textColor="#deffffff"
-                    android:textSize="16sp" />
+                    style="@style/AppTheme.TextView.Subtitle.02.white"/>
             </LinearLayout>
         </FrameLayout>
     </android.support.v7.widget.CardView>

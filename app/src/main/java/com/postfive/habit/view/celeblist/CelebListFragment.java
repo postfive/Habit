@@ -77,7 +77,7 @@ public class CelebListFragment extends Fragment {
                 CelebHabitMaster habit = mCelebRecyclerViewAdapter.getHabit(position);
 
                 Intent intent = new Intent(getContext(), CelebActivity.class);
-                intent.putExtra("celebcode", habit.getCelebcode());
+                intent.putExtra("celebcode", habit);
                 startActivity(intent);
             }
         });

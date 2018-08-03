@@ -20,9 +20,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.postfive.habit.R;
+import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.adpater.celebdetaillist.celeblist.CelebDetailRecyclerViewAdapter;
 import com.postfive.habit.adpater.celebdetaillist.celeblist.HabitKitRecyclerViewAdapter;
 import com.postfive.habit.db.CelebHabitDetail;
@@ -34,6 +34,7 @@ import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,13 +50,9 @@ public class CelebActivity extends AppCompatActivity  {
     private Button mBtnResolution;
     private EditText editTextResolution;
     private TextView mHintTextView;
-
-
     private Dialog MyDialog;
-    private Button btnStart, btnCancel;
 
     private boolean isCompleteResolution;
-
 
     private RecyclerView mRecyclerViewCelebDetailList;
     private RecyclerView mRecyclerViewCelebKitList;
@@ -66,6 +63,8 @@ public class CelebActivity extends AppCompatActivity  {
     private List<CelebHabitKit>    mCelebHabitKits;
     private CelebHabitMaster mCelebHabitMaster;
 
+    private String startDate = null;
+    private String endDate = null;
 
     private UserHabitRespository mUserHabitRespository;
     @Override
@@ -96,13 +95,14 @@ public class CelebActivity extends AppCompatActivity  {
 
     private void processIntent() {
         Intent receivedIntent = getIntent();
-//        int celebCode = receivedIntent.getIntExtra("celebcode", 0);
+        mCelebHabitMaster = (CelebHabitMaster) receivedIntent.getSerializableExtra("celebcode");
         int celebCode = 1;
 
-        if(celebCode == 0){
+        if(mCelebHabitMaster == null){
             finish();
         }
-        readCelebDetail(celebCode);
+        readCelebDetail(mCelebHabitMaster);
+//        readCelebDetail(celebCode);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class CelebActivity extends AppCompatActivity  {
 
     private void setComponent() {
 
-        Log.d(TAG, Integer.toString(mCelebHabitMaster.getDrawable()));
+        Log.d(TAG, "????" + Integer.toString(mCelebHabitMaster.getDrawable()));
         imageViewTitle.setImageResource(mCelebHabitMaster.getDrawabledetail());
 
         textViewTitle.setText(mCelebHabitMaster.getTitle());
@@ -127,15 +127,14 @@ public class CelebActivity extends AppCompatActivity  {
         mHabitKitRecyclerViewAdapter.setAllHabit(mCelebHabitKits);
 
     }
-
-    private void readCelebDetail(int celebCode){
-        Log.d(TAG, "readCelebDetail "+Integer.toString(celebCode));
+    private void readCelebDetail(CelebHabitMaster celeb){
+        Log.d(TAG, "readCelebDetail "+Integer.toString(celeb.getCelebcode()));
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.isTerminated();
-        mCelebHabitDetailList = mHabitRespository.getCelebHabit(celebCode);
-        mCelebHabitMaster     =  mHabitRespository.getCelebHabitMater(celebCode);
+        mCelebHabitDetailList = mHabitRespository.getCelebHabit(celeb.getCelebcode());
+//        mCelebHabitMaster     =  mHabitRespository.getCelebHabitMater(celebCode);
 
-        mCelebHabitKits = mHabitRespository.getHabitKit(celebCode);
+        mCelebHabitKits = mHabitRespository.getHabitKit(celeb.getCelebcode());
 
         disconnectDB();
         if(mCelebHabitDetailList == null) {
@@ -148,6 +147,27 @@ public class CelebActivity extends AppCompatActivity  {
             finish();
         }
     }
+/*
+    private void readCelebDetail(int celeb){
+        Log.d(TAG, "readCelebDetail "+Integer.toString(celeb));
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.isTerminated();
+        mCelebHabitDetailList = mHabitRespository.getCelebHabit(celeb);
+        mCelebHabitMaster     =  mHabitRespository.getCelebHabitMater(celeb);
+
+        mCelebHabitKits = mHabitRespository.getHabitKit(celeb);
+
+        disconnectDB();
+        if(mCelebHabitDetailList == null) {
+            finish();
+        }
+*//*        if(mCelebHabitMaster == null) {
+            finish();
+        }*//*
+        if(mCelebHabitKits == null) {
+            finish();
+        }
+    }*/
 
     private void componentInit(){
         // Toolbar 설정
@@ -158,6 +178,7 @@ public class CelebActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_chevron_left);
 
 
         // 헤더 부분
@@ -230,6 +251,10 @@ public class CelebActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 // 다짐 완료 여부
                 if(!isCompleteResolution){
+                    if(editTextResolution.getText().length() <1) {
+                        comfirmResolutionDialog();
+                        return;
+                    }
                     // 다짐 완료시
                     //  1. editTextResolution 초기 색으로 fix
                     //  2. editTextResolution 수정 안됨
@@ -239,19 +264,23 @@ public class CelebActivity extends AppCompatActivity  {
                     isCompleteResolution = true;
                     mHintTextView.setTextColor(getResources().getColor(R.color.hintTextColor));
                     mHintTextView.setVisibility(View.INVISIBLE);
-
+                    mBtnResolution.setBackgroundResource(R.drawable.drawable_button_outlined_face);
+                    mBtnResolution.setText(getResources().getText(R.string.modify_resolution));
+                    mBtnResolution.setTextColor(getResources().getColor(R.color.button02ContainedHold));
                 }else{
                     // 다짐 수정시
                     //  1. editTextResolution 기본색으로 변경(클릭시 배경 흰줄로 바뀌는 색)
                     //  2. editTextResolution 수정 가능
                     //  3. 완료 여부 isCompleteResolution false
-                    editTextResolution.setBackgroundResource(R.drawable.drawable_edittext_01);
                     editTextResolution.setEnabled(true);
+                    editTextResolution.setTextColor(getResources().getColor(R.color.black));
                     isCompleteResolution = false;
                     mHintTextView.setTextColor(getResources().getColor(R.color.hintTextColor));
                     mHintTextView.setVisibility(View.VISIBLE);
                     // 글자수에 따라서 색 변경
                     setEditTextColor(editTextResolution.getText().toString());
+                    mBtnResolution.setText(getResources().getText(R.string.complite_resolution));
+                    mBtnResolution.setBackgroundColor(getResources().getColor(R.color.button02Contained));
                 }
             }
         });
@@ -291,35 +320,46 @@ public class CelebActivity extends AppCompatActivity  {
         String strResolution = editTextResolution.getText().toString();
 
 
-        if(strResolution.length() < 1){
+        if(!isCompleteResolution){
 
+            comfirmResolutionDialog();
+
+/*
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             // 제목셋팅
-            alertDialogBuilder.setTitle("다짐을 입력하지 않으셨습니다!");
+            alertDialogBuilder.setTitle(getResources().getText(R.string.alert_resolution_title));
 
             // AlertDialog 셋팅
             alertDialogBuilder
-                    .setMessage("습관시작 전\n다짐을 입력해주세요")
+                    .setMessage(getResources().getText(R.string.alert_resolution))
                     .setCancelable(false)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
                             editTextResolution.requestFocus();
+                            dialog.dismiss();
                         }
                     });
-                    /*.setNegativeButton("그냥시작하기", new DialogInterface.OnClickListener() {
+                    *//*.setNegativeButton("그냥시작하기", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which){
                         }
-                    });*/
+                    });*//*
 
             AlertDialog alertDialog = alertDialogBuilder.create();
 
-            alertDialog.show();
+            alertDialog.show();*/
 
         }else{
+            Calendar today = Calendar.getInstance();
+            startDate = Integer.toString(today.get(Calendar.YEAR)) + "."
+                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                        + Integer.toString(today.get(Calendar.DATE));
+            endDate = Integer.toString(today.get(Calendar.YEAR)) + "."
+                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                        + Integer.toString(today.get(Calendar.DATE) + 7);
+
             myCustomDialog();
         }
     }
@@ -376,10 +416,26 @@ public class CelebActivity extends AppCompatActivity  {
 
         mUserHabitRespository.insertAllUserHabit(userHabitDetailList, userHabitStateList);
 
-        Toast.makeText(this,"저장! 완료", Toast.LENGTH_LONG).show();;
+//        Toast.makeText(this,"저장! 완료", Toast.LENGTH_LONG).show();;
 
         mUserHabitRespository.destroyInstance();
 
+//        startDate + "~" + endDate
+        if(startDate == null || endDate == null){
+
+            Calendar today = Calendar.getInstance();
+            startDate = Integer.toString(today.get(Calendar.YEAR)) + "."
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE));
+            endDate = Integer.toString(today.get(Calendar.YEAR)) + "."
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE) + 7);
+        }
+        UserSettingValue userSettingValue = new UserSettingValue(getApplicationContext());
+        userSettingValue.setStartDate(startDate);
+        userSettingValue.setEndDate(endDate);
+        userSettingValue.setMainImgResource(mCelebHabitMaster.getDrawable());
+        userSettingValue.setResolutionValue(editTextResolution.getText().toString());
         finish();
     }
 
@@ -390,8 +446,24 @@ public class CelebActivity extends AppCompatActivity  {
         MyDialog.setContentView(R.layout.dialog_habit_start);
         MyDialog.setTitle("My Custom Dialog");
 
+
+        Button btnStart, btnCancel;
+        ImageView imgviewAlert;
+        TextView textviewTitle, textviewDate;
+
         btnStart = (Button)MyDialog.findViewById(R.id.btn_alert_start);
         btnCancel = (Button)MyDialog.findViewById(R.id.btn_alert_cancel);
+
+        imgviewAlert =(ImageView)MyDialog.findViewById(R.id.imageview_alert);
+        textviewTitle    = (TextView)MyDialog.findViewById(R.id.textview_alert_title);
+        textviewDate = (TextView)MyDialog.findViewById(R.id.textview_alert_date);
+
+        Log.d(TAG, " 어디갔어 ????" + Integer.toString(mCelebHabitMaster.getDrawable()));
+
+        imgviewAlert.setImageResource(mCelebHabitMaster.getDrawable());
+        textviewTitle.setText(mCelebHabitMaster.getTitle());
+        textviewDate.setText(startDate + "~" + endDate);
+
 
         btnStart.setEnabled(true);
         btnCancel.setEnabled(true);
@@ -413,6 +485,34 @@ public class CelebActivity extends AppCompatActivity  {
         });
 
         MyDialog.show();
+    }
+    public void comfirmResolutionDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // 제목셋팅
+        alertDialogBuilder.setTitle(getResources().getText(R.string.alert_resolution_title));
+
+        // AlertDialog 셋팅
+        alertDialogBuilder
+                .setMessage(getResources().getText(R.string.alert_resolution))
+                .setCancelable(false)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editTextResolution.setFocusableInTouchMode(true);
+                        editTextResolution.requestFocus();
+                        dialog.dismiss();
+                    }
+                });
+                    /*.setNegativeButton("그냥시작하기", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which){
+                        }
+                    });*/
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
     }
 
     private void comfirmHabit(){

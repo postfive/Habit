@@ -1,4 +1,26 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_size">16dp</dimen>
+    <dimen name="layout_left_right">16dp</dimen>
+    <dimen name="layout_top_bottom">40dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_size_button">16sp</dimen>
+    <dimen name="text_size_hint">12sp</dimen>
+    <dimen name="body_title_text_size">24sp</dimen>
+    <dimen name="body_title_line_space">12sp</dimen>
+    <dimen name="text_size_item_title">16sp</dimen>
+
+    <dimen name="subtitle_02">16sp</dimen>
+    <dimen name="main_title_02_textsize">20sp</dimen>
+    <dimen name="main_title_02_linespace">10sp</dimen>
+
+    <dimen name="btn_04_01_text_size">16sp</dimen>
+    <dimen name="btn_04_01_line_space">8sp</dimen>
+
+    <dimen name="main_habit_title_02_textsize">16sp</dimen>
+    <dimen name="main_habit_title_02_linespace">8sp</dimen>
+
+    <dimen name="main_habit_title_date_02_textsize">12sp</dimen>
+    <dimen name="main_habit_title_date_02_linesapce">6sp</dimen>
+
 </resources>

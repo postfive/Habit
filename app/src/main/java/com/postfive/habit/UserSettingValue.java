@@ -384,6 +384,19 @@ public class UserSettingValue {
 
 
 
+    public static boolean setResolutionValue(String resolutionValue) {
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(RESOLUTION, resolutionValue);
+
+        if(editor.commit()){
+            UserSettingValue.resolutionValue = resolutionValue;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static String getStartDate() {
         return startDate;
     }

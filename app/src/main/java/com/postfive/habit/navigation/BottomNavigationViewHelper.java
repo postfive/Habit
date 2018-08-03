@@ -16,12 +16,12 @@ public class BottomNavigationViewHelper {
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
             shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setBoolean(menuView, false); //4개 이상일때 안작아 지게 하기 
             shiftingMode.setAccessible(false);
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                 //noinspection RestrictedApi
-//                item.setShiftingMode(false);
+                item.setShiftingMode(false); // 숨는거
                 // set once again checked value, so view will be updated
                 //noinspection RestrictedApi
                 item.setChecked(item.getItemData().isChecked());

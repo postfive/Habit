@@ -145,6 +145,7 @@ public class HabitActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_chevron_left);
 
         mActivityTitleName = (TextView)findViewById(R.id.textview_habit_title);
 
@@ -311,6 +312,7 @@ public class HabitActivity extends AppCompatActivity {
             unitList.set(i, unitList.get(i)+" / 일");
         }
 
+        // spinner
         arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner, unitList );
         arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         mSpinnerUnit.setAdapter(arrayAdapter);
@@ -468,6 +470,7 @@ public class HabitActivity extends AppCompatActivity {
 
     public void onClickSaveHabit(View v){
         if(mHabit == null){
+            Toast.makeText(this,"습관을 선택하지 않으셨습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
 

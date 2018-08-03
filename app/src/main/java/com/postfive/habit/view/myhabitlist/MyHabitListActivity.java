@@ -61,6 +61,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_chevron_left);
 
         mBtnHait = (Button)findViewById(R.id.btn_add_habit);
         mBtnHait.setOnClickListener(this);

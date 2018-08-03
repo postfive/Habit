@@ -61,7 +61,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="@string/habit_name"
-                        android:theme="@style/AppTheme.TextView" />
+                        android:theme="@style/AppTheme.TextView"
+                        android:textStyle="bold"/>
 
                     <FrameLayout
                         android:id="@+id/goal_text_input"
@@ -335,9 +336,7 @@
                             android:textOn="@string/short_saturday"
                             style="@style/AppTheme.Button.06.Toggle"/>
 
-
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -410,23 +409,19 @@
                         android:textOn="저녁"
                         style="@style/AppTheme.Button.06.Toggle"
                         />
-                    <!--style="?android:attr/borderlessButtonStyle"
-                    android:background="@drawable/drawable_button_06_toggle"
-                        android:textColor="@drawable/drawable_button_06_toggle_text"
-                        -->
 
                 </LinearLayout>
-
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="@dimen/layout_top_bottom"
+                    android:onClick="onClickSaveHabit"
+                    android:text="@string/save_habit"
+                    style="@style/AppTheme.Button.01.Contained" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickSaveHabit"
 
-                android:text="@string/save"
-                style="@style/AppTheme.Button.01.Contained" />
         </LinearLayout>
     </ScrollView>
 

@@ -45,12 +45,12 @@ public class BroadcastD extends BroadcastReceiver {
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 //        Log.e("Service", "style: " + style);
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_water)
+                .setSmallIcon(R.drawable.ic_main)
                 .setContentTitle("Biskit")
                 .setContentText(text)
 //                .setTicker("the best sandwiches in town")
                 .setAutoCancel(true)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_dry_fruits))
+//                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_dry_fruits))
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{500, 500, 500})
                 .setSound(uri)

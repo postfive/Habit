@@ -13,7 +13,8 @@
         android:text="#1 아침 07:30"
         android:textColor="#ff9d00"
         android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textview_celeb_detail_item_dayofweek"
@@ -23,7 +24,8 @@
         android:text="월.화.수.목.금(30분)"
         android:textColor="#de575757"
         android:textSize="16sp"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textview_celeb_detail_item_title"
@@ -32,15 +34,13 @@
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"
         android:text="공복에 아메리카노마시기"
-        android:textColor="#de000000"
-        android:textSize="20sp" />
+        style="@style/AppTheme.TextView.02.Main.Title"/>
 
     <ImageView
         android:id="@+id/imageview_celeb_detail_item_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/img_parkboram_detail_1" />
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:id="@+id/textview_celeb_detail_item_comment"
@@ -59,17 +59,15 @@
 
 그렇게 20층을 1~10층은 한칸씩, 11~20층은 두칸씩
 오르니 2주차부터는 효과가 있더라구요."
-        android:textColor="#de513628"
-        android:textSize="16sp" />
+        style="AppTheme.TextView.02.Celeb.Detail.Coment"/>
 
     <TextView
         android:id="@+id/textview_celeb_detail_item_memo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:text="박보람은 아침 유산소 운동 전\n공복에 아메리카노를 한잔씩 마셔요.\n카페인이 지방 연소에 윤활유 역할을 한다고해요."
-        android:textColor="#de000000"
-        android:textSize="16sp"
-        android:layout_marginBottom="32dp"/>
+        style="@style/AppTheme.TextView.02.Main.Habit.Title"/>
 
 </LinearLayout>

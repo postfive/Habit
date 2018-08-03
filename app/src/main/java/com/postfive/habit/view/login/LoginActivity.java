@@ -1,13 +1,16 @@
 package com.postfive.habit.view.login;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
@@ -19,12 +22,12 @@ import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.Unit;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.noti.HabitNoti;
-import com.postfive.habit.view.main.MainActivity;
+import com.postfive.habit.view.survey.SurveyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
     private static final String PREFS_NAME = "Init";
@@ -34,33 +37,47 @@ public class LoginActivity extends AppCompatActivity {
 
     UserSettingValue mUserSettingValue;
 
-    private Button mBtnLookAround;
-    private TextView mTextView;
-
+    private ImageView mImageView;
+    private LinearLayout mBtnKakao;
+    private LinearLayout mBtnFacebook;
+    private LinearLayout mBtnGoogle;
+    private LinearLayout mBtnNoLogin;
+    private TextView mTextviewForgetAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mImageView = (ImageView)findViewById(R.id.imageview_login_bg);
 
-        mUserSettingValue = new UserSettingValue(this);
+
+
+        mUserSettingValue = new UserSettingValue(getApplication());
 
         // 앱 최초 실행 여부 확인
         if(mUserSettingValue.init()) {
             // 디비 초기화
-            new CheckTypesTask().execute();
-            connectDB();
-            populateWithTestData();
-        }else{
-//            new CheckTypesTask().execute();
+            ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+            new CheckTypesTask(progressBar).execute();
 
-            Intent lookAround = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(lookAround);
-            finish();
+        }else{
+
         }
 
         new HabitNoti(this).Alarm();
+
+        mBtnKakao = (LinearLayout)findViewById(R.id.btn_login_kakao);
+        mBtnFacebook = (LinearLayout)findViewById(R.id.btn_login_facebook);
+        mBtnGoogle = (LinearLayout)findViewById(R.id.btn_login_google);
+        mBtnNoLogin = (LinearLayout)findViewById(R.id.btn_no_login);
+        mTextviewForgetAccount = (TextView)findViewById(R.id.textview_forget_account);
+
+        mBtnKakao.setOnClickListener(this);
+        mBtnFacebook.setOnClickListener(this);
+        mBtnGoogle.setOnClickListener(this);
+        mBtnNoLogin.setOnClickListener(this);
+        mTextviewForgetAccount.setOnClickListener(this);
 
 
     }
@@ -71,24 +88,35 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()== R.id.textview_forget_account){
+            Toast.makeText(this,"계정찾기", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(this, SurveyActivity.class);
+        startActivity(intent);
+    }
+
     private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog asyncDialog = new ProgressDialog(
-                LoginActivity.this);
+        ProgressBar progressBar;
+
+        public CheckTypesTask(ProgressBar progressBar) {
+            this.progressBar = progressBar;
+        }
 
         @Override
         protected void onPreExecute() {
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다..");
-
-            // show dialog
-            asyncDialog.show();
+            progressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
         @Override
         protected Void doInBackground(Void... arg0) {
             try {
+                connectDB();
+                populateWithTestData();
                 for (int i = 0; i < 5; i++) {
                     //asyncDialog.setProgress(i * 30);
                     Thread.sleep(500);
@@ -101,11 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            asyncDialog.dismiss();
-
-            Intent lookAround = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(lookAround);
-            finish();
+            progressBar.setVisibility(View.INVISIBLE);
             super.onPostExecute(result);
 
         }

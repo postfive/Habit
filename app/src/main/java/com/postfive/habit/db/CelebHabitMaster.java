@@ -2,12 +2,13 @@ package com.postfive.habit.db;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 
 @Entity(tableName ="celeb_habit_m",
         primaryKeys = { "celebcode"})
-public class CelebHabitMaster {
+public class CelebHabitMaster implements Serializable {
     @NonNull
     @ColumnInfo(name ="name")
     public String name;  // 유명인사 이름

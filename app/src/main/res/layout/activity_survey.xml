@@ -1,77 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".view.survey.SurveyActivity">
+<!--
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_survey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.Toolbar"
-        app:elevation="0dp">
+        android:theme="@style/AppTheme.Toolbar.Title.Noncenter"
+        android:fitsSystemWindows="true">
 
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax" />
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_survey"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppTheme.Toolbar">
+            android:theme="@style/AppTheme.Toolbar.Title.Noncenter"
+            app:layout_collapseMode="pin">
 
         </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>-->
 
-    <TextView
-        android:id="@+id/textview_survery_main"
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/survery_main" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/textview_question1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/survery_question1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_left_right"
+            android:layout_marginRight="@dimen/layout_left_right"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        style="@style/AppTheme.Button.06.Toggle"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_chevron_left"/>
+            <TextView
+                android:id="@+id/textview_survery_main"
+                style="@style/AppTheme.TextView.Body.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:text="@string/survery_main" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        style="@style/AppTheme.Button.06.Toggle"/>
+            <TextView
+                android:id="@+id/textview_question1"
+                style="@style/AppTheme.TextView.Body.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/survery_question1" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        style="@style/AppTheme.Button.06.Toggle"/>
+            <ToggleButton
+                android:id="@+id/togglebtn_woman"
+                style="@style/AppTheme.Button.06.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:onClick="onClickGender"
+                android:text="@string/woman"
+                android:textOff="@string/woman"
+                android:textOn="@string/woman" />
 
-    <TextView
-        android:id="@+id/textview_question2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/survery_question2" />
+            <ToggleButton
+                android:id="@+id/togglebtn_man"
+                style="@style/AppTheme.Button.06.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:onClick="onClickGender"
+                android:textOff="@string/man"
+                android:textOn="@string/man" />
 
-    <TextView
-        android:id="@+id/textview_question3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/survery_question2" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/textview_question2"
+                style="@style/AppTheme.TextView.Body.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/survery_question2" />
+
+            <FrameLayout
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/drawable_spinner">
+
+                <Spinner
+                    android:id="@+id/spinner_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="18dp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textview_question3"
+                style="@style/AppTheme.TextView.Body.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/survery_question3" />
+
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/discreteseekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                app:dsb_indicatorColor="#222222"
+                app:dsb_indicatorFormatter="%d0대"
+                app:dsb_max="9"
+                app:dsb_min="1"
+                app:dsb_progressColor="#222222"
+                app:dsb_rippleColor="#e0e0e0"
+                app:dsb_scrubberHeight="2dp"
+                app:dsb_trackColor="#e0e0e0"
+                app:dsb_trackHeight="2dp"/>
+
+            <Button
+                style="@style/AppTheme.Button.01.Contained"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="@dimen/layout_top_bottom"
+                android:layout_marginTop="40dp"
+                android:onClick="onClickSaveSurvey"
+                android:text="@string/save" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -20,7 +20,8 @@
     <string name="save">저장</string>
     <string name="perday">/일</string>
     <string name="once_doing">1회 수행</string>
-    <string name="save_habit">알람저장</string>
+    <string name="saving_habit">습관저장</string>
+    <string name="save_habit">습관 저장하기</string>
     <string name="edit_habit">습관편집</string>
     <string name="add_habit_name">습관추가</string>
 
@@ -65,4 +66,14 @@
     <string name="woman">여성</string>
     <string name="man">남성</string>
 
+    <string name="kakao_login">카카오톡으로 시작하기</string>
+    <string name="facebook_login">페이스북으로 시작하기</string>
+    <string name="google_login">구글로 시작하기</string>
+    <string name="no_login">가입 없이 둘러보기</string>
+
+    <string name="complite_resolution">다짐 완료</string>
+    <string name="modify_resolution">다짐 수정하기</string>
+
+    <string name="alert_resolution">다짐입력 후 다짐완료를\n눌러주세요!</string>
+    <string name="alert_resolution_title">다짐을 확인해주세요!</string>
 </resources>

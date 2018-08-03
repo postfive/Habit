@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-    android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.Toolbar.Title.Noncenter">
         <!--android:theme="@style/AppTheme.Toolbar">-->
 
 
@@ -34,10 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                android:theme="@style/AppTheme.Toolbar.Title.Noncenter">
                 <!--android:theme="@style/AppTheme.Toolbar">-->
-
-
 
             </android.support.v7.widget.Toolbar>
 
@@ -64,18 +62,18 @@
                 android:layout_marginTop="40dp"
                 android:gravity="center_horizontal"
                 android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
-                android:textColor="#de000000"
-                android:textSize="24sp" />
+                style="@style/AppTheme.TextView.Body.Title" />
 
             <TextView
                 android:id="@+id/textview_celeb_subtitle2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
                 android:gravity="center_horizontal"
                 android:text="박보람이 알려주는 라이프스타일 팁으로\n다이어트의 기초를 탄탄히 다져보세요!"
-                android:textColor="#de000000"
-                android:textSize="16sp" />
+                style="@style/AppTheme.TextView.02.Main.Habit.Title"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview_celeb_detail_list"
                 android:layout_width="match_parent"
@@ -98,7 +96,8 @@
                     android:gravity="center_horizontal"
                     android:text="라이프스타일 다짐하기"
                     android:textColor="#de000000"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -106,8 +105,7 @@
                     android:layout_marginTop="32dp"
                     android:gravity="center_horizontal"
                     android:text="다짐하며 시작하면 꾸준히 할 힘이 생겨요!"
-                    android:textColor="#de000000"
-                    android:textSize="16sp" />
+                    style="@style/AppTheme.TextView.02.Main.Habit.Title"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,7 +124,8 @@
                             android:layout_marginTop="8dp"
                             style="@style/AppTheme.EditText.MultiLine"
                             android:lines="2"
-                            android:maxLength="24"/>
+                            android:maxLength="24"
+                            android:gravity="top"/>
 
                     <TextView
                         android:id="@+id/textview_resoution_hint"
@@ -145,8 +144,11 @@
                         android:layout_marginLeft="86dp"
                         android:layout_marginRight="86dp"
                         android:layout_marginBottom="40dp"
-                        style="@style/AppTheme.Button.06.Toggle"
-                        android:text="다짐 완료"
+                        style="@style/AppTheme.Button.02.Contained"
+                        android:textSize="@dimen/text_size_button"
+                        android:textColor="@drawable/drawable_button_02_contained_text"
+                        android:background="@color/button02Contained"
+                        android:text="@string/complite_resolution"
                         />
 
                 </LinearLayout>
@@ -158,14 +160,16 @@
                 android:text="박보람 라이프스타일 키트"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop ="40dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview_celeb_kit_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
             </android.support.v7.widget.RecyclerView>
             <Button
@@ -176,7 +180,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                style="@style/AppTheme.Button.06.Toggle"/>
+                style="@style/AppTheme.Button.01.Contained"/>
 
             <Button
                 style="@style/AppTheme.Button.04.Outlined"
