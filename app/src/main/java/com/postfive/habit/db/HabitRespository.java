@@ -1,15 +1,8 @@
 package com.postfive.habit.db;
 
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.ContentFrameLayout;
-
-import com.postfive.habit.view.login.LoginActivity;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -469,6 +462,47 @@ public class HabitRespository {
         }
     }
 
+    public List<CelebHabitKit> getHabitKit(int celebcode){
+        List<CelebHabitKit> celebHabitKits = null;
 
+        try {
+            celebHabitKits = new QueryHabitKitAsyncTask(mCelebHabitDao).execute(celebcode).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
+        return celebHabitKits;
+    }
+
+    private class QueryHabitKitAsyncTask extends AsyncTask<Integer, Void, List<CelebHabitKit>>{
+        CelebHabit mCelebHabit;
+        public QueryHabitKitAsyncTask(CelebHabit celebHabit) {
+            this.mCelebHabit = celebHabit;
+        }
+
+        @Override
+        protected List<CelebHabitKit> doInBackground(Integer... integers) {
+            List<CelebHabitKit> celebHabitKits = mCelebHabit.selectKit(integers[0]);
+            return celebHabitKits;
+        }
+    }
+
+    public void insertHabitKit(List<CelebHabitKit> celebHabitKits){
+        new InsertHabitKitAsyncTask(mCelebHabitDao).execute(celebHabitKits);
+    }
+
+    private class InsertHabitKitAsyncTask extends AsyncTask<List<CelebHabitKit>, Void, Void>{
+        CelebHabit mCelebHabitDao;
+        public InsertHabitKitAsyncTask(CelebHabit mCelebHabitDao) {
+            this.mCelebHabitDao = mCelebHabitDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<CelebHabitKit>... lists) {
+            mCelebHabitDao.insertAllKit(lists[0]);
+            return null;
+        }
+    }
 }

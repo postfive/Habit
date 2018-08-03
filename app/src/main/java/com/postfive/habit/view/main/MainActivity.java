@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-
-
         loadFragment(new MyHabitsFragment());
-
     }
 
     private boolean loadFragment(Fragment fragment){
@@ -78,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.home :
                             fragment = new MyHabitsFragment();
+                            break;
+                        case R.id.statistics : // 달력으로 바꿀꺼임
+                            fragment = new SettingFragment();
                             break;
                         case R.id.favorite :
                             fragment = new CelebListFragment();

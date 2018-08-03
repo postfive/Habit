@@ -56,20 +56,13 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textview_habit_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="@string/habit_name"
-                        android:theme="@style/AppTheme.TextView" />
-                    <!--<android.support.design.widget.TextInputLayout
-                        android:id="@+id/goal_text_input"
-
-                        style="@style/AppTheme.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hintEnabled="false"
-                        android:layout_marginBottom="3dp">
--->
+                        android:theme="@style/AppTheme.TextView"
+                        android:textStyle="bold"/>
 
                     <FrameLayout
                         android:id="@+id/goal_text_input"
@@ -79,17 +72,18 @@
                         android:layout_marginBottom="3dp">
 
                         <EditText
-                            android:id="@+id/edittext_habit_name"
+                            android:id="@+id/edittext_habit_username"
                             style="@style/AppTheme.EditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/drawable_edittext"
                             android:hint="@string/hint_habitname"
                             android:inputType="text"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:maxLength="10"/>
 
                         <ImageButton
-                            android:id="@+id/btn_habit_name_clear"
+                            android:id="@+id/btn_habit_username_clear"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|right"
@@ -99,11 +93,11 @@
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/textview_habit_name_hint"
+                        android:id="@+id/textview_habit_username_hint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/error_habit_name"
+                        android:text="@string/error_habit_username"
                         style="@style/AppTheme.HabitActivity.HintTextView"
                         android:visibility="invisible"/>
                     <!--
@@ -120,11 +114,12 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_habit_list"
+                    style="@style/AppTheme.Button.03.Contained"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="onClickHabitList"
-                    android:text="@string/habit_list"
-                    style="@style/AppTheme.Button.Contained.Gray"/>
+                    android:text="@string/habit_list" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -164,6 +159,7 @@
                                 <EditText
                                     android:id="@+id/edittext_goal"
                                     style="@style/AppTheme.EditText"
+                                    android:background="@drawable/drawable_edittext"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="number|numberDecimal"
@@ -265,32 +261,26 @@
 
                         <ToggleButton
                             android:id="@+id/togglebtn_sunday"
-                            style="?android:attr/borderlessButtonStyle"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:padding="2dp"
                             android:textOff="@string/short_sunday"
-                            android:textOn="@string/short_sunday"
-                            android:textSize="16sp" />
+                            android:textOn="@string/short_sunday" />
 
                         <ToggleButton
                             android:id="@+id/togglebtn_monday"
-                            style="?android:attr/borderlessButtonStyle"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_monday"
-                            android:textOn="@string/short_monday"
-                            android:textSize="16sp"/>
+                            android:textOn="@string/short_monday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_tuesday"
@@ -298,13 +288,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_tuesday"
-                            android:textOn="@string/short_tuesday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle"/>
+                            android:textOn="@string/short_tuesday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_wednesday"
@@ -312,13 +299,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
+                            style="@style/AppTheme.Button.06.Toggle"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_wednesday"
-                            android:textOn="@string/short_wednesday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle"/>
+                            android:textOn="@string/short_wednesday"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_thursday"
@@ -326,13 +310,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_thursday"
                             android:textOn="@string/short_thursday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle" />
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_friday"
@@ -340,30 +321,22 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_friday"
                             android:textOn="@string/short_friday"
-                            android:textSize="16sp"
-                            style="?android:attr/borderlessButtonStyle" />
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
                         <ToggleButton
                             android:id="@+id/togglebtn_saturday"
-                            style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/drawable_toggle"
-                            android:textColor="@drawable/drawable_toggle_text"
                             android:onClick="onClickDayofWeek"
                             android:textOff="@string/short_saturday"
                             android:textOn="@string/short_saturday"
-                            android:textSize="16sp"/>
-
+                            style="@style/AppTheme.Button.06.Toggle"/>
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -394,43 +367,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="하루종일"
                         android:textOn="하루종일"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle"/>
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_morning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오전"
                         android:textOn="오전"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle" />
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_afternoon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
+                        android:background="@drawable/drawable_button_06_toggle"
+                        android:textColor="@drawable/drawable_button_06_toggle_text"
                         android:onClick="onClickTime"
                         android:text="ToggleButton"
                         android:textOff="오후"
                         android:textOn="오후"
-                        android:textSize="16sp"
-                        style="?android:attr/borderlessButtonStyle" />
+                        style="@style/AppTheme.Button.06.Toggle" />
 
                     <ToggleButton
                         android:id="@+id/toggleBtn_night"
@@ -442,26 +407,21 @@
                         android:text="ToggleButton"
                         android:textOff="저녁"
                         android:textOn="저녁"
-                        android:textSize="16sp"
-                        style="@style/AppTheme.Button.Toggle"
+                        style="@style/AppTheme.Button.06.Toggle"
                         />
-                    <!--style="?android:attr/borderlessButtonStyle"
-                    android:background="@drawable/drawable_toggle"
-                        android:textColor="@drawable/drawable_toggle_text"
-                        -->
 
                 </LinearLayout>
-
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="@dimen/layout_top_bottom"
+                    android:onClick="onClickSaveHabit"
+                    android:text="@string/save_habit"
+                    style="@style/AppTheme.Button.01.Contained" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickSaveHabit"
 
-                android:text="@string/save"
-                style="@style/AppTheme.Button.Contained.01" />
         </LinearLayout>
     </ScrollView>
 

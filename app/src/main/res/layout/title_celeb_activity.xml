@@ -1,65 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="16dp"
     tools:showIn="@layout/activity_celeb">
 
+    <ImageView
+        android:id="@+id/image_celeb_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds ="true"
+        />
 
-        <FrameLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/image_celeb_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="left|bottom"
-                android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_horizontal|bottom"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_gradation_celeb_list_item"/>
+    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="32dp"
+        android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="fill_horizontal|bottom"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_gradation_celeb_list_item" />
-            </LinearLayout>
+        <TextView
+            android:id="@+id/textview_celeb_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
+            android:textColor="#deffffff"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:layout_marginBottom="36dp"
-                android:layout_marginLeft="32dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textview_title_celeb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
-                    android:textColor="#deffffff"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textview_subtitle_celeb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="75Kg에서 40kg로 만드는 방법"
-                    android:textColor="#deffffff"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </FrameLayout>
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/textview_subtitle_celeb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="75Kg에서 40kg로 만드는 방법"
+            android:textColor="#deffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+</FrameLayout>

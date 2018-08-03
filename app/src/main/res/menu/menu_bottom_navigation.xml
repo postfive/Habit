@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:icon = "@drawable/ic_home_black_24dp"
+        android:icon = "@drawable/ic_main"
         android:title = "@string/habit"/>
-<!--    <item
-        android:id="@+id/search"
-        android:icon = "@drawable/ic_equalizer_black_24dp"
-        android:title = "@string/statistics"/>-->
+    <item
+        android:id="@+id/statistics"
+        android:icon = "@drawable/ic_tic"
+        android:title = "@string/statistics"/>
     <item
         android:id="@+id/favorite"
-        android:icon = "@drawable/ic_star_black_24dp"
+        android:icon = "@drawable/ic_reco"
         android:title = "@string/recommendation"/>
     <item
         android:id="@+id/setting"
-        android:icon = "@drawable/ic_settings_black_24dp"
+        android:icon = "@drawable/ic_setup"
         android:title = "@string/setting"/>
 
 </menu>

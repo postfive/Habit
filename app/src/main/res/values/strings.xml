@@ -20,8 +20,10 @@
     <string name="save">저장</string>
     <string name="perday">/일</string>
     <string name="once_doing">1회 수행</string>
-    <string name="save_habit">알람저장</string>
+    <string name="saving_habit">습관저장</string>
+    <string name="save_habit">습관 저장하기</string>
     <string name="edit_habit">습관편집</string>
+    <string name="add_habit_name">습관추가</string>
 
 
     <string name="health_habit">건강</string>
@@ -33,9 +35,7 @@
     <string name="add_time">시간 추가하기</string>
 
     <string name="celeb_title">박보람의 다이어트 습관</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
     <!-- 버튼 글씨 -->
     <string name="short_sunday">일</string>
@@ -47,18 +47,33 @@
     <string name="short_saturday">토</string>
 
     <string name="habit_name">습관 이름</string>
-    <string name="error_habit_name">10자 이하로 입력해 주세요.</string>
+    <string name="error_habit_username">10자 이하로 입력해 주세요.</string>
+    <string name="error_resolution">25자 이하로 입력해 주세요.</string>
     <string name="error_habit_goal">숫자로 입력해 주세요</string>
     <string name="hint_habitname">습관 이름 입력</string>
 
-
-    <string name="celeb_fragment">하루하루를 모아\n여러문의 미래를 만드세요!</string>
-
-    <!-- firebase
-    <string name="other_platform_oauth_client">979804397949-egtlg6vjk4ssebhcjbg09r7l6780b5q4.apps.googleusercontent.com</string>-->
+    <string name="celeb_fragment">하루하루를 모아\n여러분의 미래를 만드세요!</string>
 
     <string name="morning_noti">오늘 오전에 해야할 습관들을 확인 해보세요!</string>
     <string name="afternoon_noti">오늘 오후에 해야할 습관들을 확인 해보세요!</string>
     <string name="night_noti">오늘 저녁에 해야할 습관들을 확인 해보세요!</string>
     <string name="goodnight_noti">오늘 하루동안 할 습관들을 다 하셨나요?</string>
+
+    <string name="survery_main">당신을 설명해주세요\n라이프스타일을 추천해드립니다.</string>
+    <string name="survery_question1">당신의 성별은 무엇인가요?</string>
+    <string name="survery_question2">직업은 무엇인가요?</string>
+    <string name="survery_question3">나이대는 어떻게 되나요?</string>
+    <string name="woman">여성</string>
+    <string name="man">남성</string>
+
+    <string name="kakao_login">카카오톡으로 시작하기</string>
+    <string name="facebook_login">페이스북으로 시작하기</string>
+    <string name="google_login">구글로 시작하기</string>
+    <string name="no_login">가입 없이 둘러보기</string>
+
+    <string name="complite_resolution">다짐 완료</string>
+    <string name="modify_resolution">다짐 수정하기</string>
+
+    <string name="alert_resolution">다짐입력 후 다짐완료를\n눌러주세요!</string>
+    <string name="alert_resolution_title">다짐을 확인해주세요!</string>
 </resources>

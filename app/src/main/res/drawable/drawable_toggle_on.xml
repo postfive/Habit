@@ -1,4 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:visible="true">
-    <solid android:color="@color/toggleOn"/>
-</shape>

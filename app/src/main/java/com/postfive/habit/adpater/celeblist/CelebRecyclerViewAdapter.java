@@ -1,6 +1,7 @@
 package com.postfive.habit.adpater.celeblist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.postfive.habit.R;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.Habit;
+import com.postfive.habit.view.celeb.CelebActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,6 +72,7 @@ public class CelebRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             imageView = (ImageView)view.findViewById(R.id.image_celeb_list_item);
             textViewTitle = (TextView) view.findViewById(R.id.textview_title_celeb_list_item);
             textViewSubTiutle = (TextView) view.findViewById(R.id.textview_subtitle_celeb_list_item);
+
         }
     }
 
@@ -92,5 +95,6 @@ public class CelebRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         mCelebHabitMaster = celebHabitMaster;
         notifyDataSetChanged();
     }
+
 
 }

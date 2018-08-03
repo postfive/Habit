@@ -18,6 +18,7 @@ import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.adpater.myhabit.CustomPagerAdapter;
 import com.postfive.habit.adpater.myhabit.MyHabitRecyclerViewAdapter;
+import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
@@ -73,7 +74,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         pager.setCurrentItem(1);
 
         // TODO 현재 지금
-        List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(1);
+        List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(Habit.NIGHT_TIME);
 
         adapter.setData(mUserHabitStatesList);
 
@@ -186,6 +187,10 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         // Fragment가 화면에 표시될때 사용자의 Action과 상호작용 불가
 //        Toast.makeText(getContext(), "onStart", Toast.LENGTH_SHORT).show();
+
+        if(mUserHabitRepository == null) {
+            mUserHabitRepository = new UserHabitRespository(getActivity().getApplication());
+        }
     }
 
     @Override

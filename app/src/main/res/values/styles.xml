@@ -7,44 +7,60 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:fontFamily">@font/applesdgothicneo</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.MainActivity" parent="AppTheme.NoStatusBar">
+        <item name="colorPrimary">#f5f5f5</item>
+
+    </style>
     <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- Toolbar Title Color-->
-        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/black</item>
         <!-- Toolbar Up Button Colo  -->
-        <item name="android:textColorSecondary">@color/mainTitle</item>
+        <item name="android:textColorSecondary">@color/main_title</item>
         <item name ="android:gravity">center</item>
     </style>
 
-    <style name="AppTheme.Main" parent="AppTheme">
+    <!--<item name="android:layout_marginTop">16dp</item>-->
+    <style name="AppTheme.Toolbar.Title" parent="AppTheme.Toolbar">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.Toolbar.Title.Noncenter" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/main_title</item>
+    </style>
+
+
+    <style name="AppTheme.NoStatusBar" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="AppTheme.Toolbar.PopupTheme" parent="ThemeOverlay.AppCompat.Light">
     </style>
 
-    <style name="AppTheme.Toolbar.Title" parent="AppTheme">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-    </style>
-
     <style name="AppTheme.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
     </style>
 
     <!-- 디자인 스타일 추가 -->
 
     <style name="AppTheme.TextView" parent="@android:style/Widget.TextView">
         <item name ="android:textSize">16sp</item>
-        <item name ="android:textColor">#de000000</item>\
+        <item name ="android:textColor">#de000000</item>
         <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/applesdgothicneo</item>
     </style>
 
     <style name="AppTheme.EditText" parent="@android:style/Widget.EditText">
@@ -57,44 +73,132 @@
         <item name = "android:paddingTop">18dp</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="AppTheme.EditText.MultiLine" parent="AppTheme.TextView.05.TextFild.Input.Inactivie">
+        <item name ="android:textSize">20sp</item>
+        <item name ="android:textColor">#de000000</item>
+        <item name ="android:textColorHint">#999999</item>
+        <item name = "android:paddingBottom">25dp</item>
+        <item name = "android:paddingLeft">16dp</item>
+        <item name = "android:paddingRight">16dp</item>
+        <item name = "android:paddingTop">26dp</item>
+        <item name="android:background">@drawable/drawable_edittext_01</item>
+    </style>
 
     <style name="AppTheme.HabitActivity.HintTextView" parent="@android:style/Widget.TextView">
-        <item name ="android:textSize">12sp</item>
-        <item name ="android:textColor">#de999999</item>
+        <item name ="android:textSize">@dimen/text_size_hint</item>
+        <item name ="android:textColor">@color/hintTextColor</item>
     </style>
 
 
-    <style name="AppTheme.Button.Contained.01" parent="@android:style/Widget.Holo.Button.Borderless">
+    <style name="AppTheme.Button.01.Contained" parent="Base.Widget.AppCompat.Button.Borderless">
 
-        <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_01_text</item>
-        <item name ="android:background">@color/buttonContained01</item>
-    </style>
-
-    <style name="AppTheme.Button.Contained.02" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_02_text</item>
-        <item name ="android:background">@color/buttonContained02</item>
-    </style>
-    <style name="AppTheme.Button.Contained.Gray" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_contained_03_gray_text</item>
-        <item name ="android:background">@color/buttonContainedGray</item>
-    </style>
-    <style name="AppTheme.Button.Outlined" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_button_outlined_text</item>
-        <item name ="android:background">@drawable/drawable_button_outlined_face</item>
+        <item name ="android:textSize">@dimen/text_size_button</item>
+        <item name ="android:textColor">@drawable/drawable_button_01_contained_text</item>
+        <item name ="android:background">@color/button01Contained</item>
     </style>
 
-    <style name="AppTheme.Button.Toggle" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name ="android:textSize">@dimen/text_size</item>
-        <item name ="android:textColor">@drawable/drawable_toggle_text</item>
-        <item name ="android:background">@drawable/drawable_toggle</item>
+    <style name="AppTheme.Button.02.Contained" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name ="android:textSize">@dimen/text_size_button</item>
+        <item name ="android:textColor">@drawable/drawable_button_02_contained_text</item>
+        <item name ="android:background">@color/button02Contained</item>
+    </style>
+    <style name="AppTheme.Button.03.Contained" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name ="android:textSize">@dimen/text_size_button</item>
+        <item name ="android:textColor">@drawable/drawable_button_03_contained_text</item>
+        <item name ="android:background">@color/button03Contained</item>
+    </style>
+    <style name="AppTheme.Button.04.Outlined" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name ="android:textSize">@dimen/text_size_button</item>
+        <item name ="android:textColor">@drawable/drawable_button_04_outlined_text</item>
+        <item name ="android:background">@drawable/drawable_button_04_outlined_face</item>
+    </style>
+
+    <!-- 02 Contained 디자인으로 쓰는 토글버튼 -->
+    <style name="AppTheme.Button.06.Toggle" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name ="android:textSize">@dimen/text_size_button</item>
+        <item name ="android:textColor">@drawable/drawable_button_06_toggle_text</item>
+        <item name ="android:background">@drawable/drawable_button_06_toggle</item>
     </style>
 
     <style name="AppTheme.TextInputLayout" parent="Widget.Design.TextInputLayout">
         <item name="android:background">@drawable/drawable_edittext</item>
     </style>
 
+    <!-- 유명인 body title -->
+    <style name="AppTheme.TextView.Body.Title" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/main_title</item>
+        <item name="android:textSize">@dimen/body_title_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/body_title_line_space</item>
+    </style>
+
+    <style name="AppTheme.TextView.Body.Item" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/item_title</item>
+        <item name="android:textSize">@dimen/text_size_item_title</item>
+    </style>
+    <style name="AppTheme.TextView.Subtitle.02.white" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/subtitle_02</item>
+        <item name="android:textSize">@dimen/subtitle_02</item>
+
+    </style>
+    <style name="AppTheme.TextView.Main.Title" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/main_title</item>
+        <item name="android:textSize">@dimen/main_title_02_textsize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 글자 스타일 -->
+    <style name="AppTheme.TextView.02.Main.Title" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/main_title_02_textsize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="AppTheme.TextView.05.TextFild.Input.Done" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/main_title_02_textsize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/main_title_02_linespace</item>
+    </style>
+    <style name="AppTheme.TextView.05.TextFild.Input.Inactivie" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/textfildInputInactivie</item>
+        <item name="android:textSize">@dimen/main_title_02_textsize</item>
+        <item name="android:lineSpacingExtra">@dimen/main_title_02_linespace</item>
+    </style>
+
+    <style name="AppTheme.TextView.04.Button.01" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/btn_04_01_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/btn_04_01_line_space</item>
+    </style>
+
+    <!-- 유명인 상세 메인 두번째 타이틀-->
+    <style name="AppTheme.TextView.02.Main.Habit.Title" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/main_habit_title_02_textsize</item>
+        <item name="android:lineSpacingExtra">@dimen/main_habit_title_02_linespace</item>
+    </style>
+    <style name="AppTheme.TextView.02.Main.Habit.Sub" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/hintTextColor</item>
+        <item name="android:textSize">@dimen/main_habit_title_date_02_textsize</item>
+        <item name="android:lineSpacingExtra">@dimen/main_habit_title_date_02_linesapce</item>
+    </style>
+
+
+
+
+    <style name="AppTheme.TextView.02.Main.Title.Date" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">@dimen/main_habit_title_date_02_textsize</item>
+        <item name="android:lineSpacingExtra">@dimen/main_habit_title_date_02_linesapce</item>
+    </style>
+
+
+    <style name="AppTheme.TextView.02.Celeb.Detail.Coment" parent="AppTheme.TextView.02.Main.Habit.Title">
+        <item name="android:textColor">@color/celebHabitComment</item>
+    </style>
+
+    android:textColor="#de513628"
+    android:textSize="16sp"
+    android:lineSpacingExtra="8dp"
+    <!--<item name="android:lineSpacingExtra">@dimen/main_title_02_linespace</item>-->
 </resources>

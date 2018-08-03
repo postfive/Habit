@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.Toolbar.Title.Noncenter">
+        <!--android:theme="@style/AppTheme.Toolbar">-->
+
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -22,6 +24,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+<<<<<<< HEAD
             <!--app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"-->
                         <ImageView
@@ -32,50 +35,175 @@
                             android:scaleType="centerCrop"
                             app:layout_collapseMode="parallax"
                             android:contentDescription="TODO" />
+=======
+            <include layout="@layout/title_celeb_activity"
+
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"/>
+>>>>>>> origin/bpkim
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_celeb"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                android:theme="@style/AppTheme.Toolbar.Title.Noncenter">
+                <!--android:theme="@style/AppTheme.Toolbar">-->
 
-                <!--                android:theme="@style/AppTheme.Toolbar"
-                    <TextView
-                    android:id="@+id/textview_celeb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/celeb_title"
-                    android:theme="@style/AppTheme.Toolbar.Title" />
-                <TextView
-                    android:id="@+id/textview_celeb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="40kg 만들어서 비키니 입자! 화이팅!" />-->
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-        </RelativeLayout>-->
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/content_scrolling" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:id="@+id/textview_celeb_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:text="박보람의 40kg 만드는\n다이어트 라이프스타일"
+                style="@style/AppTheme.TextView.Body.Title" />
+
+            <TextView
+                android:id="@+id/textview_celeb_subtitle2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="center_horizontal"
+                android:text="박보람이 알려주는 라이프스타일 팁으로\n다이어트의 기초를 탄탄히 다져보세요!"
+                style="@style/AppTheme.TextView.02.Main.Habit.Title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_celeb_detail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="#f5f5f5"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_horizontal"
+                    android:text="라이프스타일 다짐하기"
+                    android:textColor="#de000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_horizontal"
+                    android:text="다짐하며 시작하면 꾸준히 할 힘이 생겨요!"
+                    style="@style/AppTheme.TextView.02.Main.Habit.Title"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/edittext_celeb_resoution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="다짐입력\n예시)49kg까지는 빼자!"
+                            android:inputType="textMultiLine"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="8dp"
+                            style="@style/AppTheme.EditText.MultiLine"
+                            android:lines="2"
+                            android:maxLength="24"
+                            android:gravity="top"/>
+
+                    <TextView
+                        android:id="@+id/textview_resoution_hint"
+                        style="@style/AppTheme.HabitActivity.HintTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="16dp"
+                        android:text="@string/error_resolution"
+                        android:visibility="invisible" />
+                    
+                    <Button
+                        android:id="@+id/btn_celeb_resolution"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="86dp"
+                        android:layout_marginRight="86dp"
+                        android:layout_marginBottom="40dp"
+                        style="@style/AppTheme.Button.02.Contained"
+                        android:textSize="@dimen/text_size_button"
+                        android:textColor="@drawable/drawable_button_02_contained_text"
+                        android:background="@color/button02Contained"
+                        android:text="@string/complite_resolution"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="박보람 라이프스타일 키트"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop ="40dp"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_celeb_kit_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
+
+            </android.support.v7.widget.RecyclerView>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="키트와 함께 라이프스타일 만들기"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                style="@style/AppTheme.Button.01.Contained"/>
+
+            <Button
+                style="@style/AppTheme.Button.04.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:onClick="onClickSave"
+                android:text="라이프스타일 만들기" />
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
-</android.support.design.widget.CoordinatorLayout>
+\</android.support.design.widget.CoordinatorLayout>

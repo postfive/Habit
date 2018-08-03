@@ -27,29 +27,30 @@ public class BroadcastD extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int strWhen = intent.getIntExtra("when",0);
-        String text="";
-        Log.d("Service", "HabitNoti get Extra text: " + strWhen);
 
-        if(strWhen ==1) {
+        int when = intent.getIntExtra("when",0);
+        String text="";
+        Log.d("Service", "HabitNoti get Extra text: " + when);
+
+        if(when == 1) {
             text = context.getString(R.string.morning_noti);
-        }else if (strWhen == 2){
+        }else if (when == 2){
             text = context.getString(R.string.afternoon_noti);
-        }else if (strWhen == 3){
+        }else if (when == 3){
             text = context.getString(R.string.night_noti);
-        }else if (strWhen == 4){
+        }else if (when == 4){
             text = context.getString(R.string.goodnight_noti);
         }
 
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 //        Log.e("Service", "style: " + style);
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_water)
+                .setSmallIcon(R.drawable.ic_main)
                 .setContentTitle("Biskit")
                 .setContentText(text)
 //                .setTicker("the best sandwiches in town")
                 .setAutoCancel(true)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_dry_fruits))
+//                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_dry_fruits))
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{500, 500, 500})
                 .setSound(uri)

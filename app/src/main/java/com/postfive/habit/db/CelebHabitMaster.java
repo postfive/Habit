@@ -2,12 +2,13 @@ package com.postfive.habit.db;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 
 @Entity(tableName ="celeb_habit_m",
         primaryKeys = { "celebcode"})
-public class CelebHabitMaster {
+public class CelebHabitMaster implements Serializable {
     @NonNull
     @ColumnInfo(name ="name")
     public String name;  // 유명인사 이름
@@ -41,15 +42,22 @@ public class CelebHabitMaster {
     @ColumnInfo(name ="drawable")
     public int drawable; // 이미지
 
-    public CelebHabitMaster(@NonNull String name, @NonNull int celebcode, @NonNull String title, @NonNull String subtitle, @NonNull String subtitle2, @NonNull String subtitle3, @NonNull String img, @NonNull int drawable){
+
+    @NonNull
+    @ColumnInfo(name ="drawabledetail")
+    public int drawabledetail; // 이미지
+
+
+    public CelebHabitMaster(@NonNull String name, @NonNull int celebcode, @NonNull String title, @NonNull String subtitle, @NonNull String subtitle2, @NonNull String subtitle3, @NonNull String img, @NonNull int drawable, @NonNull int drawabledetail) {
         this.name = name;
         this.celebcode = celebcode;
         this.title = title;
         this.subtitle = subtitle;
-        this.img = img;
-        this.drawable = drawable;
         this.subtitle2 = subtitle2;
         this.subtitle3 = subtitle3;
+        this.img = img;
+        this.drawable = drawable;
+        this.drawabledetail = drawabledetail;
     }
 
     @NonNull
@@ -89,25 +97,6 @@ public class CelebHabitMaster {
     }
 
     @NonNull
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(@NonNull String img) {
-        this.img = img;
-    }
-
-    @NonNull
-    public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(@NonNull int drawable) {
-        this.drawable = drawable;
-    }
-
-
-    @NonNull
     public String getSubtitle2() {
         return subtitle2;
     }
@@ -125,4 +114,30 @@ public class CelebHabitMaster {
         this.subtitle3 = subtitle3;
     }
 
+    @NonNull
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(@NonNull String img) {
+        this.img = img;
+    }
+
+    @NonNull
+    public int getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(@NonNull int drawable) {
+        this.drawable = drawable;
+    }
+
+    @NonNull
+    public int getDrawabledetail() {
+        return drawabledetail;
+    }
+
+    public void setDrawabledetail(@NonNull int drawabledetail) {
+        this.drawabledetail = drawabledetail;
+    }
 }

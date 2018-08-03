@@ -13,41 +13,31 @@ public class UserHabitDetail implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "habitseq")
-    private int habitseq;  // 키값 1 2 3 4 ~
+    private int habitseq=-1;  // 키값 1 2 3 4 ~
 
     @NonNull
     @ColumnInfo(name = "habitcode")
     private int habitcode;  // 물마시기 0001
 
-/*    @NonNull
-    @ColumnInfo(name = "priority")
-    private int priority; // 1++ 그냥 max*/
-
     @NonNull
     @ColumnInfo(name = "time")
     private int time; // 1 : mornig  / 2 : after / 3 : night / 0 : all
-
-/*
-    @NonNull
-    @ColumnInfo(name = "type")
-    public String type; // 줄넘기 skiprope
-*/
 
     @NonNull
     @ColumnInfo(name = "name")
     private String name; // 이름 ex 물마시기
 
     @NonNull
-    @ColumnInfo(name = "goal")
-    private String goal; // 목표 문구 개인 설정 가능
+    @ColumnInfo(name = "customname")
+    private String customname; // 목표 문구 개인 설정 가능
 
     @NonNull
     @ColumnInfo(name = "daysum")
     private int daysum; // 요일표시
 
     @NonNull
-    @ColumnInfo(name = "full")
-    private int full; // 하루 할 양
+    @ColumnInfo(name = "goal")
+    private int goal; // 하루 할 양
 
     @NonNull
     @ColumnInfo(name = "once")
@@ -65,18 +55,14 @@ public class UserHabitDetail implements Serializable {
     @ColumnInfo(name ="icon")
     private int icon; // 단위
 
-//    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int priority, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, String img, String color) {
-    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int time, @NonNull String name, @NonNull String goal, @NonNull int daysum, @NonNull int full, @NonNull int once, @NonNull String unit, @NonNull String color, @NonNull int icon) {
+    public UserHabitDetail(@NonNull int habitseq, @NonNull int habitcode, @NonNull int time, @NonNull String name, @NonNull String customname, @NonNull int daysum, @NonNull int goal, @NonNull int once, @NonNull String unit, @NonNull String color, @NonNull int icon) {
         this.habitseq = habitseq;
         this.habitcode = habitcode;
-
-//        this.priority = priority;
         this.time = time;
         this.name = name;
-        this.goal = goal;
-//        this.type = type;
+        this.customname = customname;
         this.daysum = daysum;
-        this.full = full;
+        this.goal = goal;
         this.once = once;
         this.unit = unit;
         this.color = color;
@@ -86,16 +72,15 @@ public class UserHabitDetail implements Serializable {
     public UserHabitDetail(@NonNull int habitseq , @NonNull CelebHabitDetail celebHabit) {
         this.habitseq = habitseq;
         this.habitcode = celebHabit.getHabitcode();
-//        this.priority = celebHabit.getPriority();
-        this.time = celebHabit.getTime();
+        this.time = celebHabit.getTime();     //
         this.name = celebHabit.getName();
-        this.goal = celebHabit.getGoal();
-        this.daysum = celebHabit.getDaysum();
-        this.full = celebHabit.getFull();
-        this.once = celebHabit.getOnce();
-        this.unit = celebHabit.getUnit();
-        this.color = celebHabit.getColor();
-        this.icon = celebHabit.getIcon();
+        this.customname = celebHabit.getGoal();     //
+        this.daysum = celebHabit.getDaysum(); //
+        this.goal = celebHabit.getFull();     //
+        this.once = celebHabit.getOnce();     //
+        this.unit = celebHabit.getUnit();     //
+        this.color = celebHabit.getColor();   //
+        this.icon = celebHabit.getIcon();     //
     }
 
     public UserHabitDetail(@NonNull int habitseq , @NonNull UserHabitState userHabitState) {
@@ -103,9 +88,9 @@ public class UserHabitDetail implements Serializable {
         this.habitcode = userHabitState.getHabitcode();
         this.time = userHabitState.getTime();
         this.name = userHabitState.getName();
-        this.goal = userHabitState.getGoal();
+        this.customname = userHabitState.getCustomname();
         this.daysum = userHabitState.getDaysum();
-        this.full = userHabitState.getFull();
+        this.goal = userHabitState.getGoal();
         this.once = userHabitState.getOnce();
         this.unit = userHabitState.getUnit();
         this.color = userHabitState.getColor();
@@ -115,12 +100,11 @@ public class UserHabitDetail implements Serializable {
     public UserHabitDetail( @NonNull Habit habit) {
         this.habitseq = 0;
         this.habitcode = habit.getHabitcode();
-//        this.priority = 0;
         this.time = habit.getTime();
         this.name = habit.getName();
-        this.goal = habit.getName();
+        this.customname = habit.getName();
         this.daysum = habit.getDaysum();
-        this.full = habit.getFull();
+        this.goal = habit.getFull();
         this.once = habit.getOnce();
         this.unit = "";
         this.color = habit.getColor();
@@ -135,38 +119,6 @@ public class UserHabitDetail implements Serializable {
     public void setHabitseq(@NonNull int habitseq) {
         this.habitseq = habitseq;
     }
-    @NonNull
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(@NonNull int time) {
-        if( this.time == time){
-            this.time =0;
-        }else {
-            this.time = time;
-        }
-
-
-    }
-
-/*    @NonNull
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(@NonNull int priority) {
-        this.priority = priority;
-    }*/
-
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    public void setName(@NonNull String name) {
-        this.name = name;
-    }
 
     @NonNull
     public int getHabitcode() {
@@ -178,12 +130,30 @@ public class UserHabitDetail implements Serializable {
     }
 
     @NonNull
-    public String getGoal() {
-        return goal;
+    public int getTime() {
+        return time;
     }
 
-    public void setGoal(@NonNull String goal) {
-        this.goal = goal;
+    public void setTime(@NonNull int time) {
+        this.time = time;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    public String getCustomname() {
+        return customname;
+    }
+
+    public void setCustomname(@NonNull String customname) {
+        this.customname = customname;
     }
 
     @NonNull
@@ -196,29 +166,12 @@ public class UserHabitDetail implements Serializable {
     }
 
     @NonNull
-    public int getFull() {
-        return full;
+    public int getGoal() {
+        return goal;
     }
 
-    public void setFull(@NonNull int full) {
-        this.full = full;
-    }
-
-    @NonNull
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(@NonNull String unit) {
-        this.unit = unit;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setGoal(@NonNull int goal) {
+        this.goal = goal;
     }
 
     @NonNull
@@ -231,6 +184,24 @@ public class UserHabitDetail implements Serializable {
     }
 
     @NonNull
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(@NonNull String unit) {
+        this.unit = unit;
+    }
+
+    @NonNull
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(@NonNull String color) {
+        this.color = color;
+    }
+
+    @NonNull
     public int getIcon() {
         return icon;
     }
@@ -238,15 +209,7 @@ public class UserHabitDetail implements Serializable {
     public void setIcon(@NonNull int icon) {
         this.icon = icon;
     }
-/*
-    @NonNull
-    public String getType() {
-        return type;
-    }
 
-    public void setType(@NonNull String type) {
-        this.type = type;
-    }*/
     public void setDaysumUsingOf(int mDayofWeek, boolean isSet) {
 
         if(isSet){

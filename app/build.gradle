@@ -32,20 +32,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
-
     // calenarview
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
-/*
-    // firebase
-    implementation "com.google.firebase:firebase-core:${project.GOOGLE_SERVICE_VERION}"
-    // firebase auth google
-    implementation "com.google.firebase:firebase-auth:${project.GOOGLE_SERVICE_VERION}"
-    implementation "com.google.android.gms:play-services-auth:${project.GOOGLE_SERVICE_VERION}"
-    // firebase database
-    implementation "com.google.firebase:firebase-database:${project.GOOGLE_SERVICE_VERION}"
-*/
-
-
+    implementation 'org.adw.library:discrete-seekbar:1.0.1'
+    /*
+                // firebase
+                implementation "com.google.firebase:firebase-core:${project.GOOGLE_SERVICE_VERION}"
+                // firebase auth google
+                implementation "com.google.firebase:firebase-auth:${project.GOOGLE_SERVICE_VERION}"
+                implementation "com.google.android.gms:play-services-auth:${project.GOOGLE_SERVICE_VERION}"
+                // firebase database
+                implementation "com.google.firebase:firebase-database:${project.GOOGLE_SERVICE_VERION}"
+            */
     // room start
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
@@ -55,6 +53,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     /// room end
+    implementation 'com.github.katoro:typekit:1.0.1'
 }
 
 // firebase

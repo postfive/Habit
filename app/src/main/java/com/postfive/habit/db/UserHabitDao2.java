@@ -48,6 +48,15 @@ public abstract class UserHabitDao2 {
     @Delete
     abstract void deleteUserHabitState(UserHabitState a);
 
+
+    // 유저 습관 디테일 삭제
+    @Query("DELETE FROM USER_HABIT_D")
+    abstract void deleteAllUserHabitDetail();
+
+    // 유저 습관 디테일 수정
+    @Query("DELETE FROM USER_HABIT_S")
+    abstract void deleteAllUserHabitState();
+
     @Query("DELETE FROM USER_HABIT_S WHERE masterseq =:masterseq")
     abstract void deleteUserHabitState(int masterseq);
     /*=========== 삭제 끝 ============*/
@@ -69,6 +78,8 @@ public abstract class UserHabitDao2 {
 
     @Transaction
     void insertUserAllHabit(List<UserHabitDetail> userHabitDetail, List<UserHabitState> userHabitStateList ){
+        deleteAllUserHabitDetail();
+        deleteAllUserHabitState();
         insertAllUserHabitDetail(userHabitDetail);
         insertAllUserHabitState(userHabitStateList);
     }

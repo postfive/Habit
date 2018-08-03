@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.myhabitlist.MyHabitListActivity">
+    tools:context=".view.myhabitlist.MyHabitListActivity"
+    android:background="#f5f5f5">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_habit_list"
@@ -53,7 +54,7 @@
                 android:layout_marginRight="86dp"
                 android:layout_marginTop="40dp"
                 android:text="@string/add_habit"
-                style="@style/AppTheme.Button.Contained.02"/>
+                style="@style/AppTheme.Button.02.Contained"/>
 
             <Button
                 android:id="@+id/btn_habit_init"
@@ -63,7 +64,7 @@
                 android:layout_marginRight="86dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/init_habit"
-                style="@style/AppTheme.Button.Outlined"/>
+                style="@style/AppTheme.Button.04.Outlined"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
