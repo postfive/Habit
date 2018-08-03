@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -185,17 +186,22 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         View setupBtn = innerWrapView.getChildAt(0);
         ImageView habitImg = (ImageView) innerWrapView.getChildAt(1);
-        ViewGroup descLayout = (ViewGroup) innerWrapView.getChildAt(2);
+        ViewGroup descLayout = (ViewGroup) innerWrapView.getChildAt(3);
 
         TextView titleV = (TextView) descLayout.getChildAt(0);
         TextView wDayV = (TextView) descLayout.getChildAt(1);
 
-        View minusBtn = innerWrapView.getChildAt(3);
-        TextView curValue = (TextView) innerWrapView.getChildAt(4);
-        TextView valueUnit = (TextView) innerWrapView.getChildAt(5);
-        TextView maxValue = (TextView) innerWrapView.getChildAt(6);
-        View plusBtn = innerWrapView.getChildAt(7);
-        TextView modiBtn = (TextView) innerWrapView.getChildAt(8);
+        ViewGroup descLayout2 = (ViewGroup) innerWrapView.getChildAt(4);
+        ViewGroup descLayout2_1 = (ViewGroup) descLayout2.getChildAt(0);
+        ViewGroup descLayout2_2 = (ViewGroup) descLayout2.getChildAt(1);
+
+        View minusBtn = descLayout2_1.getChildAt(0);
+        TextView curValue = (TextView) descLayout2_1.getChildAt(1);
+        TextView valueUnit = (TextView) descLayout2_1.getChildAt(2);
+        View plusBtn = descLayout2_1.getChildAt(3);
+        TextView modiBtn = (TextView) descLayout2_1.getChildAt(4);
+        TextView maxValue = (TextView) descLayout2_2.getChildAt(0);
+        TextView valueUnit2 = (TextView) descLayout2_2.getChildAt(1);
 
         modiBtn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -235,6 +241,8 @@ public class CustomPagerAdapter extends PagerAdapter {
 //        descLayout.setId(child_id++);//8
         titleV.setId(child_id++);//8
         wDayV.setId(child_id++);//9
+        valueUnit2.setId(child_id++); //10
+        descLayout2_2.setId(child_id); //11
 
         temp_wrap_id++;
         if (status == 1)
@@ -247,6 +255,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         curValue.setText("" + userHabitState.getDid());
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
+        valueUnit2.setText(userHabitState.getUnit());
         maxValue.setText("" + userHabitState.getFull());
         String tmpDayOfWeek = "";
         int intDayOfWeek = userHabitState.getDaysum();
@@ -323,10 +332,8 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Btn", "Clicked: " + id);
 
             ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
-
             ViewGroup parent = (ViewGroup) pL.getParent();
             ViewGroup gparent = (ViewGroup) parent.getParent();
-
 
             switch (id % 100) {
                 case 0: // 수정모드 버튼
@@ -337,18 +344,21 @@ public class CustomPagerAdapter extends PagerAdapter {
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
-                        Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    for (int i = 8; i < 10; i++) {
+                    for (int i = 8; i < 12; i++) {
                         tempV = v.findViewById(id + i);
                         tempV.setVisibility(View.GONE);
                     }
-                    ViewGroup tempP = (ViewGroup) tempV.getParent();
-                    tempP.setVisibility(View.GONE);
+                    LinearLayout tempP = (LinearLayout) tempV.getParent();
+                    LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    tempP.setLayoutParams(attrLayoutParams);
+
                     wrapL.getChildAt(1).setVisibility(View.GONE);
-                    wrapL.getChildAt(5).setVisibility(View.GONE);
-                    wrapL.getChildAt(6).setVisibility(View.GONE);
+                    wrapL.getChildAt(3).setVisibility(View.GONE);
+//                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
@@ -358,12 +368,12 @@ public class CustomPagerAdapter extends PagerAdapter {
                         Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.GONE);
                     }
-                    for (int i = 6; i < 8; i++) {
+                    for (int i = 6; i < 10; i++) {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
                     ViewGroup tempP1 = (ViewGroup) tempV.getParent();
-                    tempP1.setVisibility(View.VISIBLE);
+                    //tempP1.setVisibility(View.VISIBLE);
                     if (curVal2 == maxVal) {
                         parent.removeView(pL);
                         ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
@@ -381,31 +391,34 @@ public class CustomPagerAdapter extends PagerAdapter {
                     //backLayout2.getResources().getColor(R.color.colorPrimary);
                     //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
                     ViewGroup vg = (ViewGroup) pL.getChildAt(2);
-                    ViewGroup pp = (ViewGroup) parent.getChildAt(index);
-                    pp.getChildAt(0).setBackgroundColor(Color.parseColor("#ffffff"));
+                    ViewGroup pg = (ViewGroup) parent.getChildAt(index);
+                    ViewGroup pp = (ViewGroup) pg.getChildAt(0);
+                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
+                    pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
-                    vg.getChildAt(5).setVisibility(View.VISIBLE);
-                    vg.getChildAt(6).setVisibility(View.VISIBLE);
+                    vg.getChildAt(3).setVisibility(View.VISIBLE);
+                    pg.getChildAt(1).setVisibility(View.VISIBLE);
+
                     mUserHabitRepository.updateUserHabitState(tmpState);
                     break;
                 case 3: // -
                     //Decrease curValue
                     curVal2--;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id + 1);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id + 1);
                     if (curVal2 < 0)
                         curVal2 = 0;
                     pVal = curVal2 * conVal;
                     Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 2);
                     tempPi.setProgress(pVal);
                     break;
                 case 6: //+
                     //Cap to max value
                     curVal2++;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id - 2);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id - 2);
                     if (curVal2 > maxVal)
                         curVal2 = maxVal;
                     pVal = curVal2 * conVal;
@@ -413,7 +426,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                         pVal = 100;
                     Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 5);
                     tempPi.setProgress(pVal);
                     break;
                 case 7:
@@ -429,7 +442,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             }
         }
     };
-
 
     private View.OnClickListener onClickListener1 = new View.OnClickListener() {
         @Override
@@ -448,7 +460,8 @@ public class CustomPagerAdapter extends PagerAdapter {
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
-            tmpState = days1.get(0).get(index);
+            tmpState = days1.get(pageNum).get(index);
+
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getFull();
@@ -460,42 +473,54 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Btn", "Clicked: " + id);
 
             ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
+            ViewGroup parent = (ViewGroup) pL.getParent();
+            ViewGroup gparent = (ViewGroup) parent.getParent();
+
             switch (id % 100) {
-                case 0: // 수정모드 버튼 변경
+                case 0: // 수정모드 버튼
+                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                    ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
+                    backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
+                    ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
-                        Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    for (int i = 8; i < 10; i++) {
+                    for (int i = 8; i < 12; i++) {
                         tempV = v.findViewById(id + i);
                         tempV.setVisibility(View.GONE);
                     }
+                    LinearLayout tempP = (LinearLayout) tempV.getParent();
+                    LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    tempP.setLayoutParams(attrLayoutParams);
+
+                    wrapL.getChildAt(1).setVisibility(View.GONE);
+                    wrapL.getChildAt(3).setVisibility(View.GONE);
+//                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
-                    int arr1[] = {0, 1, 4, 5};
-                    for (int i : arr1) {
+                    int arr[] = {0, 1, 4, 5};
+                    for (int i : arr) {
                         tempV = pL.findViewById(id + i);
                         Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.GONE);
                     }
-                    for (int i = 6; i < 8; i++) {
+                    for (int i = 6; i < 10; i++) {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
+                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
+                    //tempP1.setVisibility(View.VISIBLE);
                     if (curVal2 == maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
                         parent.removeView(pL);
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
                         ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
                         completeV.addView(pL);
                         completeV.setVisibility(View.VISIBLE);
                     } else if (curVal2 < maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
-
                         if (gparent.getChildAt(1) == parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
@@ -504,26 +529,37 @@ public class CustomPagerAdapter extends PagerAdapter {
                                 parent.setVisibility(View.GONE);
                         }
                     }
+                    //backLayout2.getResources().getColor(R.color.colorPrimary);
+                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
+                    ViewGroup vg = (ViewGroup) pL.getChildAt(2);
+                    ViewGroup pg = (ViewGroup) parent.getChildAt(index);
+                    ViewGroup pp = (ViewGroup) pg.getChildAt(0);
+                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
+                    pp.setBackgroundColor(Color.parseColor("#ffffff"));
+                    vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(3).setVisibility(View.VISIBLE);
+                    pg.getChildAt(1).setVisibility(View.VISIBLE);
+
                     mUserHabitRepository.updateUserHabitState(tmpState);
                     break;
                 case 3: // -
                     //Decrease curValue
                     curVal2--;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id + 1);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id + 1);
                     if (curVal2 < 0)
                         curVal2 = 0;
                     pVal = curVal2 * conVal;
                     Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 2);
                     tempPi.setProgress(pVal);
                     break;
                 case 6: //+
                     //Cap to max value
                     curVal2++;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id - 2);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id - 2);
                     if (curVal2 > maxVal)
                         curVal2 = maxVal;
                     pVal = curVal2 * conVal;
@@ -531,7 +567,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                         pVal = 100;
                     Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 5);
                     tempPi.setProgress(pVal);
                     break;
                 case 7:
@@ -547,6 +583,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             }
         }
     };
+
     private View.OnClickListener onClickListener2 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -564,7 +601,8 @@ public class CustomPagerAdapter extends PagerAdapter {
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
-            tmpState = days2.get(0).get(index);
+            tmpState = days2.get(pageNum).get(index);
+
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getFull();
@@ -576,18 +614,33 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Btn", "Clicked: " + id);
 
             ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
+            ViewGroup parent = (ViewGroup) pL.getParent();
+            ViewGroup gparent = (ViewGroup) parent.getParent();
+
             switch (id % 100) {
-                case 0: // 수정모드 버튼 변경
+                case 0: // 수정모드 버튼
+                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                    ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
+                    backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
+                    ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
-                        Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    for (int i = 8; i < 10; i++) {
+                    for (int i = 8; i < 12; i++) {
                         tempV = v.findViewById(id + i);
                         tempV.setVisibility(View.GONE);
                     }
+                    LinearLayout tempP = (LinearLayout) tempV.getParent();
+                    LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    tempP.setLayoutParams(attrLayoutParams);
+
+                    wrapL.getChildAt(1).setVisibility(View.GONE);
+                    wrapL.getChildAt(3).setVisibility(View.GONE);
+//                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
@@ -597,21 +650,18 @@ public class CustomPagerAdapter extends PagerAdapter {
                         Log.e("RT", "" + (id + i));
                         tempV.setVisibility(View.GONE);
                     }
-                    for (int i = 6; i < 8; i++) {
+                    for (int i = 6; i < 10; i++) {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
+                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
+                    //tempP1.setVisibility(View.VISIBLE);
                     if (curVal2 == maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
                         parent.removeView(pL);
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
                         ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
                         completeV.addView(pL);
                         completeV.setVisibility(View.VISIBLE);
                     } else if (curVal2 < maxVal) {
-                        ViewGroup parent = (ViewGroup) pL.getParent();
-                        ViewGroup gparent = (ViewGroup) parent.getParent();
-
                         if (gparent.getChildAt(1) == parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
@@ -620,26 +670,37 @@ public class CustomPagerAdapter extends PagerAdapter {
                                 parent.setVisibility(View.GONE);
                         }
                     }
+                    //backLayout2.getResources().getColor(R.color.colorPrimary);
+                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
+                    ViewGroup vg = (ViewGroup) pL.getChildAt(2);
+                    ViewGroup pg = (ViewGroup) parent.getChildAt(index);
+                    ViewGroup pp = (ViewGroup) pg.getChildAt(0);
+                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
+                    pp.setBackgroundColor(Color.parseColor("#ffffff"));
+                    vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(3).setVisibility(View.VISIBLE);
+                    pg.getChildAt(1).setVisibility(View.VISIBLE);
+
                     mUserHabitRepository.updateUserHabitState(tmpState);
                     break;
                 case 3: // -
                     //Decrease curValue
                     curVal2--;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id + 1);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id + 1);
                     if (curVal2 < 0)
                         curVal2 = 0;
                     pVal = curVal2 * conVal;
                     Log.e("DEC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 2);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 2);
                     tempPi.setProgress(pVal);
                     break;
                 case 6: //+
                     //Cap to max value
                     curVal2++;
                     tmpState.setDid(curVal2);
-                    tempTv = (TextView) pL.findViewById(id - 2);
+                    tempTv = (TextView) pL.getChildAt(0).findViewById(id - 2);
                     if (curVal2 > maxVal)
                         curVal2 = maxVal;
                     pVal = curVal2 * conVal;
@@ -647,7 +708,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                         pVal = 100;
                     Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
-                    tempPi = (SubmitProcessButton) pL.findViewById(id - 5);
+                    tempPi = (SubmitProcessButton) gparent.findViewById(id - 5);
                     tempPi.setProgress(pVal);
                     break;
                 case 7:
@@ -663,7 +724,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             }
         }
     };
-
     @Override
     public int getCount() {
         // TODO Auto-generated method stub

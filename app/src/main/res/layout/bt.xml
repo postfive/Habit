@@ -6,8 +6,7 @@
     android:layout_height="70dp"
     android:layout_gravity="center_horizontal"
     android:background="@android:color/transparent"
-    android:padding="0dp"
-    >
+    android:padding="0dp">
     <!--show progress-->
 
 
@@ -15,18 +14,19 @@
         android:id="@+id/proLayout_0_0"
         android:layout_width="match_parent"
         android:layout_height="66dp"
-        android:background="#ffffff"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:background="#ffffff"
         android:translationZ="3dp"></RelativeLayout>
+
     <com.dd.processbutton.iml.SubmitProcessButton
         android:id="@+id/btnSubmit"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="0dp"
         android:elevation="3dp"
         custom:pb_colorComplete="@color/green_complete"
@@ -51,17 +51,17 @@
         android:layout_marginRight="16dp"
         android:background="@android:color/transparent"
         android:padding="0dp"
-        android:translationZ="3dp">
+        android:translationZ="5dp">
 
         <!--invisible tvs-->
         <TextView
             android:id="@+id/tv_0_0_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:animateLayoutChanges="true"
             android:background="@drawable/ic_back"
-            android:layout_gravity="center_vertical"
             android:gravity="center" />
 
         <ImageView
@@ -69,12 +69,22 @@
             android:layout_width="48dp"
             android:layout_height="44dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
             android:src="@drawable/watericon" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:background="#e0e0e0" />
 
         <LinearLayout
             android:id="@+id/desc"
             android:layout_width="148dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="13dp"
             android:orientation="vertical">
 
             <TextView
@@ -82,92 +92,131 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1.3"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1.0"
                 android:animateLayoutChanges="true"
-                android:gravity="center"
+                android:gravity="left"
                 android:maxLines="1"
                 android:text="TODO"
-                android:textSize="16dp" />
+                android:textColor="#de000000"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="0.7"
+                android:layout_marginBottom="13dp"
+                android:layout_weight="0.5"
                 android:animateLayoutChanges="true"
-                android:gravity="center"
+                android:gravity="left"
                 android:maxLines="1"
                 android:text="월월월No data"
-                android:textColor="#de999999
-
-"
-                android:textSize="12dp" />
+                android:textColor="#de999999"
+                android:textSize="12sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/minus_0_0"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_minus"
-            android:layout_gravity="center_vertical"
-            android:padding="15dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginLeft="8dp">
 
-        <TextView
-            android:id="@+id/tv_0_0_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:layout_gravity="center_vertical"
-            android:maxLines="1"
-            android:text="Val"
-            android:textSize="16sp"
-            android:textColor="#de000000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginTop="13dp"
+                >
 
-        <TextView
-            android:id="@+id/unit_0_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center_vertical"
-            android:text="회"
-            android:textColor="#de000000"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/minus_0_0"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/ic_minus"
+                    android:padding="0dp" />
 
-        <TextView
-            android:id="@+id/maxVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|center_horizontal|center"
-            android:maxLines="1"
-            android:text="Max"
-            android:textColor="#de999999"
-            android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tv_0_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Val"
+                    android:textColor="#de000000"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/plus_0_0"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_plus"
-            android:layout_gravity="center_vertical"
-            android:padding="15dp" />
+                <TextView
+                    android:id="@+id/unit_0_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="회"
+                    android:textColor="#de000000"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_0_0_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:layout_gravity="center_vertical"
-            android:maxLines="1"
-            android:text="편집하기"
-            android:textColor="#de000000"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/plus_0_0"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="13dp"
+                    android:background="@drawable/ic_plus" />
+
+                <TextView
+                    android:id="@+id/tv_0_0_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="편집하기"
+                    android:textColor="#de000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="horizontal"
+                android:layout_marginBottom="13dp"
+                >
+
+                <TextView
+                    android:id="@+id/maxVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal|center"
+                    android:maxLines="1"
+                    android:text="Max"
+                    android:textColor="#de999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/unit_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="회"
+                    android:textColor="#de999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>
