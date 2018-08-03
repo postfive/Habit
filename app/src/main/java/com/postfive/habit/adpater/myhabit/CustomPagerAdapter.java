@@ -338,7 +338,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             switch (id % 100) {
                 case 0: // 수정모드 버튼
                     ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
-                    ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0); 
+                    ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
                     ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
