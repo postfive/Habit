@@ -255,16 +255,12 @@ public class CustomPagerAdapter extends PagerAdapter {
         curValue.setText("" + userHabitState.getDid());
         titleV.setText(userHabitState.getName());
         valueUnit.setText(userHabitState.getUnit());
-<<<<<<< HEAD
+
         valueUnit2.setText(userHabitState.getUnit());
-        maxValue.setText("" + userHabitState.getFull());
+        maxValue.setText("" + userHabitState.getGoal());
         String tmpDayOfWeek = "";
         int intDayOfWeek = userHabitState.getDaysum();
-=======
-        maxValue.setText("" + userHabitState.getGoal());
-        String tmpDayofWeek = "";
-        int intDayofWeek = userHabitState.getDaysum();
->>>>>>> origin/bpkim
+
         for (int i = 1; i < 8; i++) {
             if ((intDayOfWeek & (1 << i)) > 0) {
                 tmpDayOfWeek += strArrayDayOfWeek[i - 1];
@@ -471,7 +467,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
-            int maxVal = tmpState.getFull();
+            int maxVal = tmpState.getGoal();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
             int curVal2 = tmpState.getDid();
             int pVal;
@@ -612,7 +608,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
-            int maxVal = tmpState.getFull();
+            int maxVal = tmpState.getGoal();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
             int curVal2 = tmpState.getDid();
             int pVal;

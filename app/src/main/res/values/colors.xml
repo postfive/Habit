@@ -33,9 +33,7 @@
     <color name="button03ContainedText">#de000000</color>
     <color name="button03Contained">#bdbdbd</color>
 
-<<<<<<< HEAD
     <color name="modiModeBtn">#eeeeee</color>
-=======
     <color name="button04OutlinedText">#de000000</color>
     <color name="button04OutlinedTextPressed">#9e9e9e</color>
     <color name="button04Outlined">@android:color/transparent</color>

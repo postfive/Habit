@@ -53,7 +53,6 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     /// room end
-    implementation 'com.github.katoro:typekit:1.0.1'
 }
 
 // firebase

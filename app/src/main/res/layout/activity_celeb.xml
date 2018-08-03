@@ -24,24 +24,11 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-<<<<<<< HEAD
-            <!--app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"-->
-                        <ImageView
-                            android:id="@+id/image_celeb_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fitsSystemWindows="true"
-                            android:scaleType="centerCrop"
-                            app:layout_collapseMode="parallax"
-                            android:contentDescription="TODO" />
-=======
+
             <include layout="@layout/title_celeb_activity"
 
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
->>>>>>> origin/bpkim
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_celeb"
                 android:layout_width="match_parent"

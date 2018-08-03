@@ -115,18 +115,8 @@ public class CelebActivity extends AppCompatActivity  {
 
     private void setComponent() {
 
-<<<<<<< HEAD
-//        imageViewTitle.setImageDrawable(assignImage());
-        imageViewTitle.setImageResource(mCelebHabitMaster.getDrawable());
-
-        String resoution = mCelebHabitMaster.getTitle();
-
-        CharSequence charSequence = resoution;
-        getSupportActionBar().setTitle(charSequence);
-=======
         Log.d(TAG, "????" + Integer.toString(mCelebHabitMaster.getDrawable()));
         imageViewTitle.setImageResource(mCelebHabitMaster.getDrawabledetail());
->>>>>>> origin/bpkim
 
         textViewTitle.setText(mCelebHabitMaster.getTitle());
         textViewSubTitle.setText(mCelebHabitMaster.getTitle());
