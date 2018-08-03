@@ -374,6 +374,18 @@ public class CustomPagerAdapter extends PagerAdapter {
                     }
                     ViewGroup tempP1 = (ViewGroup) tempV.getParent();
                     //tempP1.setVisibility(View.VISIBLE);
+
+                    //backLayout2.getResources().getColor(R.color.colorPrimary);
+                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
+                    ViewGroup vg = (ViewGroup) pL.getChildAt(2);
+                    ViewGroup pg = (ViewGroup) parent.getChildAt(index);
+                    ViewGroup pp = (ViewGroup) pg.getChildAt(0);
+                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
+                    pp.setBackgroundColor(Color.parseColor("#ffffff"));
+                    vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(3).setVisibility(View.VISIBLE);
+                    pg.getChildAt(1).setVisibility(View.VISIBLE);
+
                     if (curVal2 == maxVal) {
                         parent.removeView(pL);
                         ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
@@ -388,17 +400,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                                 parent.setVisibility(View.GONE);
                         }
                     }
-                    //backLayout2.getResources().getColor(R.color.colorPrimary);
-                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
-                    ViewGroup vg = (ViewGroup) pL.getChildAt(2);
-                    ViewGroup pg = (ViewGroup) parent.getChildAt(index);
-                    ViewGroup pp = (ViewGroup) pg.getChildAt(0);
-                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
-                    pp.setBackgroundColor(Color.parseColor("#ffffff"));
-                    vg.getChildAt(1).setVisibility(View.VISIBLE);
-                    vg.getChildAt(3).setVisibility(View.VISIBLE);
-                    pg.getChildAt(1).setVisibility(View.VISIBLE);
-
                     mUserHabitRepository.updateUserHabitState(tmpState);
                     break;
                 case 3: // -
