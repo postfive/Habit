@@ -130,6 +130,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:layout_marginTop="13dp"
+                android:id="@+id/desc1"
                 >
 
                 <TextView

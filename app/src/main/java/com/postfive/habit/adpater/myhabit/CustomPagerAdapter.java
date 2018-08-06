@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -219,7 +220,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         modiBtn.setVisibility(View.GONE); // 수정
 
         //Add ArrayList
-        ArrayList<View> tempMViews = null;
+        ArrayList<View> tempMViews;
         if (status == 1)
             tempMViews = mViews1;
         else if (status == 2)
@@ -236,7 +237,6 @@ public class CustomPagerAdapter extends PagerAdapter {
         child_id = temp_wrap_id * 100;
 
         //Set ID to each View
-//        wrapView.setId(1000 + g_id++);
 
         innerWrapView.setId(child_id++); //0
         progressIndi.setId(child_id++); //1
@@ -360,9 +360,15 @@ public class CustomPagerAdapter extends PagerAdapter {
                     }
                     LinearLayout tempP = (LinearLayout) tempV.getParent();
                     LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//                  attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                    attrLayoutParams.setMargins(90, 40, 0, 0);
 
-                    tempP.setLayoutParams(attrLayoutParams);
+                    ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
+                    TextView tempView = (TextView) tempVg.getChildAt(1);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView = (TextView) tempVg.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempVg.setLayoutParams(attrLayoutParams);
 
                     wrapL.getChildAt(1).setVisibility(View.GONE);
                     wrapL.getChildAt(3).setVisibility(View.GONE);
@@ -387,6 +393,18 @@ public class CustomPagerAdapter extends PagerAdapter {
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
+
+                    LinearLayout.LayoutParams attrLayoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    attrLayoutParams1.setMargins(0, 28, 0, 0);
+                    ViewGroup tempVg1 = (ViewGroup) vg.getChildAt(4).findViewById(R.id.desc1);
+                    TextView tempView1 = (TextView) tempVg1.getChildAt(1);
+                    tempView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView = (TextView) tempVg1.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempVg1.setLayoutParams(attrLayoutParams1);
+
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
@@ -510,8 +528,15 @@ public class CustomPagerAdapter extends PagerAdapter {
                     LinearLayout tempP = (LinearLayout) tempV.getParent();
                     LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                    attrLayoutParams.setMargins(90, 40, 0, 0);
 
-                    tempP.setLayoutParams(attrLayoutParams);
+                    ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
+                    TextView tempView = (TextView) tempVg.getChildAt(1);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView = (TextView) tempVg.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempVg.setLayoutParams(attrLayoutParams);
+
                     ViewGroup temp_vg = (ViewGroup) v;
                     temp_vg.getChildAt(1).setVisibility(View.GONE);
                     temp_vg.getChildAt(3).setVisibility(View.GONE);
@@ -537,6 +562,17 @@ public class CustomPagerAdapter extends PagerAdapter {
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
                     //tempP1.setVisibility(View.VISIBLE);
+
+                    LinearLayout.LayoutParams attrLayoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    attrLayoutParams1.setMargins(0, 28, 0, 0);
+                    ViewGroup tempVg1 = (ViewGroup) vg.getChildAt(4).findViewById(R.id.desc1);
+                    TextView tempView1 = (TextView) tempVg1.getChildAt(1);
+                    tempView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView = (TextView) tempVg1.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempVg1.setLayoutParams(attrLayoutParams1);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
@@ -660,8 +696,14 @@ public class CustomPagerAdapter extends PagerAdapter {
                     LinearLayout tempP = (LinearLayout) tempV.getParent();
                     LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                    attrLayoutParams.setMargins(90, 40, 0, 0);
 
-                    tempP.setLayoutParams(attrLayoutParams);
+                    ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
+                    TextView tempView = (TextView) tempVg.getChildAt(1);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView = (TextView) tempVg.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempVg.setLayoutParams(attrLayoutParams);
 
                     wrapL.getChildAt(1).setVisibility(View.GONE);
                     wrapL.getChildAt(3).setVisibility(View.GONE);
@@ -686,6 +728,17 @@ public class CustomPagerAdapter extends PagerAdapter {
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
+
+                    LinearLayout.LayoutParams attrLayoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+                    attrLayoutParams1.setMargins(0, 28, 0, 0);
+                    ViewGroup tempVg1 = (ViewGroup) vg.getChildAt(4).findViewById(R.id.desc1);
+                    TextView tempView1 = (TextView) tempVg1.getChildAt(1);
+                    tempView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView = (TextView) tempVg1.getChildAt(2);
+                    tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempVg1.setLayoutParams(attrLayoutParams1);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
