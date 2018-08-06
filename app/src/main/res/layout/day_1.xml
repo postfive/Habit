@@ -13,37 +13,53 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"></LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_done"
+        android:text="완료"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textColor="#de575757"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+
+        />
     <LinearLayout
         android:id="@+id/inLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="해냈어"
-            android:textColor="#F12345"
-            android:background="#123456"/>
+
     </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_missed"
+        android:text="건너 뜀"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textColor="#de575757"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+
+        />
     <LinearLayout
         android:id="@+id/inLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="놓쳤어"
-            android:textColor="#F54321"
-            android:background="#123456"/>
+
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="188dp"
+        android:layout_height="52dp"
         android:text="전체 습관 보기"
+        android:textColor="#de000000"
+        android:textSize="16sp"
         android:id="@+id/showAllBtn"
         android:layout_gravity="center"
         style="@style/AppTheme.Button.04.Outlined"/>

@@ -48,7 +48,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     private ArrayList<UserHabitState> day = null;
     private UserHabitRespository mUserHabitRepository;
     private String[] strArrayDayOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
-
+    private int g_id = 0; // 1000..
     private View tempV;
     private TextView tempTv;
     private SubmitProcessButton tempPi; // Progress Indicator
@@ -57,6 +57,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     private int initFirstFlag = 0;
     private List<List<UserHabitState>> tempDay = new ArrayList<>();
     private int cont_flag = 0;
+
     public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
         this.mUserHabitRepository = mUserHabitRepository;
@@ -99,12 +100,12 @@ public class CustomPagerAdapter extends PagerAdapter {
             List<UserHabitState> mUserHabitStatesList = mUserHabitRepository.getNowHabit(nowTime);
             createSet(0, position, mUserHabitStatesList);
             // TODO 오늘 완성
-            wrap_id1.add(1); // each row
+            wrap_id1.add(0); // each row
 
             List<UserHabitState> mTodayCompleteHabitStatesList = mUserHabitRepository.getComplite();
             createSet(1, position, mTodayCompleteHabitStatesList);
             // TODO 오늘 놓친것
-            wrap_id2.add(1); // each row
+            wrap_id2.add(0); // each row
 
             List<UserHabitState> mTodayMissedHabitStatesList = mUserHabitRepository.getPassHabit(nowTime);
             createSet(2, position, mTodayMissedHabitStatesList);
@@ -155,9 +156,11 @@ public class CustomPagerAdapter extends PagerAdapter {
         // 각 페이지
         if (status == 1) {
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout1);
+            layout.findViewById(R.id.tv_done).setVisibility(View.VISIBLE);
             inLayout.setVisibility(View.VISIBLE);
         } else if (status == 2) {
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout2);
+            layout.findViewById(R.id.tv_missed).setVisibility(View.VISIBLE);
             inLayout.setVisibility(View.VISIBLE);
         } else {// status == 0
             inLayout = (LinearLayout) layout.findViewById(R.id.inLayout);
@@ -176,8 +179,11 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
         if(status != 0 && cont_flag == 0) {
-            temp_wrap_id--;
+//            temp_wrap_id--;
             cont_flag = 1;
+        }
+        if(wrapView == null){
+            Log.e("Stop", "here");
         }
         SubmitProcessButton progressIndi = (SubmitProcessButton) wrapView.getChildAt(1);
         ViewGroup innerWrapView = (ViewGroup) wrapView.getChildAt(2);
@@ -230,6 +236,8 @@ public class CustomPagerAdapter extends PagerAdapter {
         child_id = temp_wrap_id * 100;
 
         //Set ID to each View
+//        wrapView.setId(1000 + g_id++);
+
         innerWrapView.setId(child_id++); //0
         progressIndi.setId(child_id++); //1
         setupBtn.setId(child_id++); //2
@@ -301,7 +309,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                 view.setOnClickListener(onClickListener);
             }
         }
-
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -310,7 +317,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             int id = v.getId();
             if (id == R.id.showAllBtn) {
                 Intent intent = new Intent(mContext, MyHabitListActivity.class);
-                //intent.putExtra("object", habit);
                 mContext.startActivity(intent);
                 return;
             }
@@ -322,8 +328,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
             tmpState = days.get(pageNum).get(index);
-
-//            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getGoal();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
@@ -339,7 +343,9 @@ public class CustomPagerAdapter extends PagerAdapter {
 
             switch (id % 100) {
                 case 0: // 수정모드 버튼
-                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                    ViewGroup vParent = (ViewGroup) v.getParent();
+                    ViewGroup backLayout = (ViewGroup) vParent.findViewById(R.id.fraLayout_0);
+
                     ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
                     ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
@@ -354,13 +360,12 @@ public class CustomPagerAdapter extends PagerAdapter {
                     }
                     LinearLayout tempP = (LinearLayout) tempV.getParent();
                     LinearLayout.LayoutParams attrLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+//                  attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
 
                     tempP.setLayoutParams(attrLayoutParams);
 
                     wrapL.getChildAt(1).setVisibility(View.GONE);
                     wrapL.getChildAt(3).setVisibility(View.GONE);
-//                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
@@ -374,35 +379,41 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
-                    //tempP1.setVisibility(View.VISIBLE);
 
-                    //backLayout2.getResources().getColor(R.color.colorPrimary);
-                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
                     ViewGroup vg = (ViewGroup) pL.getChildAt(2);
                     ViewGroup pg = (ViewGroup) parent.getChildAt(index);
                     ViewGroup pp = (ViewGroup) pg.getChildAt(0);
-                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
                     pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
 
+                    mUserHabitRepository.updateUserHabitState(tmpState);
+
                     if (curVal2 == maxVal) {
-                        parent.removeView(pL);
-                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
-                        completeV.addView(pL);
-                        completeV.setVisibility(View.VISIBLE);
-                    } else if (curVal2 < maxVal) {
-                        if (gparent.getChildAt(1) == parent) {
+                        if(gparent.findViewById(R.id.inLayout1) != parent) {
                             parent.removeView(pL);
-                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
                             completeV.addView(pL);
-                            if (parent.getChildCount() == 0)
+                            completeV.setVisibility(View.VISIBLE);
+                            gparent.findViewById(R.id.tv_done).setVisibility(View.VISIBLE);
+                            init();
+                            notifyDataSetChanged();
+                        }
+                    } else if (curVal2 < maxVal) {
+                        if (gparent.findViewById(R.id.inLayout1) == parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout);
+                            completeV.addView(pL);
+                            if (parent.getChildCount() == 0) {
                                 parent.setVisibility(View.GONE);
+                                gparent.findViewById(R.id.tv_done).setVisibility(View.GONE);
+                            }
+                            init();
+                            notifyDataSetChanged();
                         }
                     }
-                    mUserHabitRepository.updateUserHabitState(tmpState);
+
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -463,7 +474,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
-            tmpState = days1.get(pageNum).get(index);
+            tmpState = days1.get(0).get(index);
 
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
@@ -475,16 +486,21 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Get curVal", "Position: " + pageNum + ", Index: " + index + ", CurVal: " + curVal2 + "/" + conVal);
             Log.e("Btn", "Clicked: " + id);
 
-            ViewGroup pL = (ViewGroup) (v.getParent()).getParent();
-            ViewGroup parent = (ViewGroup) pL.getParent();
+            ViewGroup pL = (ViewGroup) (v.getParent()).getParent(); // inlay
+            ViewGroup parent = (ViewGroup) pL.getParent(); //linear lay
             ViewGroup gparent = (ViewGroup) parent.getParent();
 
             switch (id % 100) {
-                case 0: // 수정모드 버튼
-                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                case 0: // 수정모드 버튼// v liLayout
+                    ViewGroup vParent = (ViewGroup) v.getParent();
+                    ViewGroup wrapL = (ViewGroup) v.findViewById(R.id.liLayout_0_0);
+                    ViewGroup backLayout = (ViewGroup) vParent.findViewById(R.id.fraLayout_0);
+
+//                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index); //frame
+
                     ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
-                    ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
+                    //ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
@@ -499,9 +515,9 @@ public class CustomPagerAdapter extends PagerAdapter {
 //                    attrLayoutParams.gravity = Gravity.CENTER_HORIZONTAL;
 
                     tempP.setLayoutParams(attrLayoutParams);
-
-                    wrapL.getChildAt(1).setVisibility(View.GONE);
-                    wrapL.getChildAt(3).setVisibility(View.GONE);
+                    ViewGroup temp_vg = (ViewGroup) v;
+                    temp_vg.getChildAt(1).setVisibility(View.GONE);
+                    temp_vg.getChildAt(3).setVisibility(View.GONE);
 //                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
@@ -516,34 +532,43 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
-                    //tempP1.setVisibility(View.VISIBLE);
-                    if (curVal2 == maxVal) {
-                        parent.removeView(pL);
-                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
-                        completeV.addView(pL);
-                        completeV.setVisibility(View.VISIBLE);
-                    } else if (curVal2 < maxVal) {
-                        if (gparent.getChildAt(1) == parent) {
-                            parent.removeView(pL);
-                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
-                            completeV.addView(pL);
-                            if (parent.getChildCount() == 0)
-                                parent.setVisibility(View.GONE);
-                        }
-                    }
-                    //backLayout2.getResources().getColor(R.color.colorPrimary);
-                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
                     ViewGroup vg = (ViewGroup) pL.getChildAt(2);
                     ViewGroup pg = (ViewGroup) parent.getChildAt(index);
                     ViewGroup pp = (ViewGroup) pg.getChildAt(0);
-                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
                     pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
+                    //tempP1.setVisibility(View.VISIBLE);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
+
+                    if (curVal2 == maxVal) {
+                        if(gparent.findViewById(R.id.inLayout1) != parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
+                            completeV.addView(pL);
+                            completeV.setVisibility(View.VISIBLE);
+                            gparent.findViewById(R.id.tv_done).setVisibility(View.VISIBLE);
+                            init();
+                            notifyDataSetChanged();
+                        }
+                    } else if (curVal2 < maxVal) {
+                        if (gparent.findViewById(R.id.inLayout1) == parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout);
+                            completeV.addView(pL);
+                            if (parent.getChildCount() == 0) {
+                                parent.setVisibility(View.GONE);
+                                gparent.findViewById(R.id.tv_done).setVisibility(View.GONE);
+                            }
+                            init();
+                            notifyDataSetChanged();
+                        }
+                    }
+
+
+
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -604,7 +629,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             int pageNum = pager.getCurrentItem();
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
-            tmpState = days2.get(pageNum).get(index);
+            tmpState = days2.get(0).get(index);
 
 //            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
@@ -622,7 +647,9 @@ public class CustomPagerAdapter extends PagerAdapter {
 
             switch (id % 100) {
                 case 0: // 수정모드 버튼
-                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index);
+                    ViewGroup vParent = (ViewGroup) v.getParent();
+                    ViewGroup backLayout = (ViewGroup) vParent.findViewById(R.id.fraLayout_0);
+
                     ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
                     ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
@@ -657,34 +684,41 @@ public class CustomPagerAdapter extends PagerAdapter {
                         tempV = pL.findViewById(id + i);
                         tempV.setVisibility(View.VISIBLE);
                     }
-                    ViewGroup tempP1 = (ViewGroup) tempV.getParent();
-                    //tempP1.setVisibility(View.VISIBLE);
-                    if (curVal2 == maxVal) {
-                        parent.removeView(pL);
-                        ViewGroup completeV = (ViewGroup) gparent.getChildAt(1);
-                        completeV.addView(pL);
-                        completeV.setVisibility(View.VISIBLE);
-                    } else if (curVal2 < maxVal) {
-                        if (gparent.getChildAt(1) == parent) {
-                            parent.removeView(pL);
-                            ViewGroup completeV = (ViewGroup) gparent.getChildAt(0);
-                            completeV.addView(pL);
-                            if (parent.getChildCount() == 0)
-                                parent.setVisibility(View.GONE);
-                        }
-                    }
-                    //backLayout2.getResources().getColor(R.color.colorPrimary);
-                    //backLayout.getChildAt(1).setVisibility(View.VISIBLE);
                     ViewGroup vg = (ViewGroup) pL.getChildAt(2);
                     ViewGroup pg = (ViewGroup) parent.getChildAt(index);
                     ViewGroup pp = (ViewGroup) pg.getChildAt(0);
-                    ViewGroup pq = (ViewGroup) pL.getChildAt(4);
                     pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
+
+                    if (curVal2 == maxVal) {
+                        if(gparent.findViewById(R.id.inLayout1) != parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
+                            completeV.addView(pL);
+                            completeV.setVisibility(View.VISIBLE);
+                            gparent.findViewById(R.id.tv_done).setVisibility(View.VISIBLE);
+                            init();
+                            notifyDataSetChanged();
+                        }
+                    } else if (curVal2 < maxVal) {
+                        if (gparent.findViewById(R.id.inLayout1) == parent) {
+                            parent.removeView(pL);
+                            ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout);
+                            completeV.addView(pL);
+                            if (parent.getChildCount() == 0) {
+                                parent.setVisibility(View.GONE);
+                                gparent.findViewById(R.id.tv_done).setVisibility(View.GONE);
+                            }
+                            init();
+                            notifyDataSetChanged();
+                        }
+                    }
+
+
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -708,8 +742,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                         curVal2 = maxVal;
                     pVal = curVal2 * conVal;
                     if (pVal > 100)
-                        pVal = 100;
-                    Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                        pVal = 100;             Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
                     tempPi = (SubmitProcessButton) gparent.findViewById(id - 5);
                     tempPi.setProgress(pVal);
@@ -727,6 +760,12 @@ public class CustomPagerAdapter extends PagerAdapter {
             }
         }
     };
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
@@ -741,6 +780,29 @@ public class CustomPagerAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
+    }
+
+    public void init(){
+        wrap_id.clear();
+        wrap_id1.clear();
+        wrap_id2.clear();
+        btn_id.clear();
+        mViews.clear();
+        mViews1.clear();
+        mViews2.clear();
+        days.clear();
+        days1.clear();
+        days2.clear();
+        day.clear();
+
+        for (int i = 0; i < getCount(); i++) {
+            day = new ArrayList<>(); //0 yesterday 1 today 2 tomorrow
+            days.add(day);
+            btn_id.add(0);
+            wrap_id.add(0);
+        }
+        days1.add(day);
+        days2.add(day);
     }
 }
 
