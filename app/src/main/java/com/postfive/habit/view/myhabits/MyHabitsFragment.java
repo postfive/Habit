@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -99,8 +100,8 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         TextView end_day_tv = (TextView) view.findViewById(R.id.end_day);
         end_day_tv.setText(UserSettingValue.getEndDate());
 
-        LinearLayout upperLayout = (LinearLayout) view.findViewById(R.id.upperLayout);
-        upperLayout.setBackgroundResource(UserSettingValue.getMainImgResource());
+        ImageView upper_background = (ImageView) view.findViewById(R.id.upper_back_img);
+        upper_background.setImageResource(UserSettingValue.getMainImgResource());
         final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setDay(date_tv, 0);
 
