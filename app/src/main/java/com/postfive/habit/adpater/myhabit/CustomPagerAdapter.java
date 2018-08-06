@@ -493,10 +493,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             switch (id % 100) {
                 case 0: // 수정모드 버튼// v liLayout
                     ViewGroup vParent = (ViewGroup) v.getParent();
-                    ViewGroup wrapL = (ViewGroup) v.findViewById(R.id.liLayout_0_0);
                     ViewGroup backLayout = (ViewGroup) vParent.findViewById(R.id.fraLayout_0);
-
-//                    ViewGroup backLayout = (ViewGroup) pL.getChildAt(index); //frame
 
                     ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
@@ -630,8 +627,6 @@ public class CustomPagerAdapter extends PagerAdapter {
             Log.e("Test", "index" + index + ", pageNum: " + pageNum);
             UserHabitState tmpState;
             tmpState = days2.get(0).get(index);
-
-//            UserHabitState tmpState = tempDay.get(pageNum).get(index);
 
             int maxVal = tmpState.getGoal();
             int conVal = (int) Math.ceil(100 / (float) maxVal);
