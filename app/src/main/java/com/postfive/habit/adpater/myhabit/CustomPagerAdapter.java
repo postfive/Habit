@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -49,7 +50,6 @@ public class CustomPagerAdapter extends PagerAdapter {
     private ArrayList<UserHabitState> day = null;
     private UserHabitRespository mUserHabitRepository;
     private String[] strArrayDayOfWeek = {"일", "월", "화", "수", "목", "금", "토"};
-    private int g_id = 0; // 1000..
     private View tempV;
     private TextView tempTv;
     private SubmitProcessButton tempPi; // Progress Indicator
@@ -58,6 +58,8 @@ public class CustomPagerAdapter extends PagerAdapter {
     private int initFirstFlag = 0;
     private List<List<UserHabitState>> tempDay = new ArrayList<>();
     private int cont_flag = 0;
+    int[] colors = {Color.parseColor("#75d185"), Color.parseColor("#65bfce")};
+    GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
 
     public CustomPagerAdapter(Context context, UserHabitRespository mUserHabitRepository) {
         mContext = context;
@@ -179,11 +181,11 @@ public class CustomPagerAdapter extends PagerAdapter {
             temp_wrap_id = wrap_id.get(position);
 
         ViewGroup wrapView = (ViewGroup) inLayout.getChildAt(temp_wrap_id);
-        if(status != 0 && cont_flag == 0) {
+        if (status != 0 && cont_flag == 0) {
 //            temp_wrap_id--;
             cont_flag = 1;
         }
-        if(wrapView == null){
+        if (wrapView == null) {
             Log.e("Stop", "here");
         }
         SubmitProcessButton progressIndi = (SubmitProcessButton) wrapView.getChildAt(1);
@@ -221,11 +223,14 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         //Add ArrayList
         ArrayList<View> tempMViews;
-        if (status == 1)
+        if (status == 1) {
             tempMViews = mViews1;
-        else if (status == 2)
+            wrapView.getChildAt(0).setBackground(gd);
+
+        } else if (status == 2) {
             tempMViews = mViews2;
-        else
+            wrapView.getChildAt(0).setBackgroundColor(Color.parseColor("#bdbdbd"));
+        } else
             tempMViews = mViews;
 
         tempMViews.add(innerWrapView);
@@ -296,15 +301,14 @@ public class CustomPagerAdapter extends PagerAdapter {
             for (View view : tempMViews) {
                 if (status == 0)
                     view.setOnClickListener(onClickListener);
-                else if(status ==1)
+                else if (status == 1)
                     view.setOnClickListener(onClickListener1);
                 else
                     view.setOnClickListener(onClickListener2);
             }
             Button showAllBtn = (Button) layout.findViewById(R.id.showAllBtn);
             showAllBtn.setOnClickListener(onClickListener);
-        }
-        else{
+        } else {
             for (View view : tempMViews) {
                 view.setOnClickListener(onClickListener);
             }
@@ -409,7 +413,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
                     if (curVal2 == maxVal) {
-                        if(gparent.findViewById(R.id.inLayout1) != parent) {
+                        if (gparent.findViewById(R.id.inLayout1) != parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
                             completeV.addView(pL);
@@ -577,7 +581,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
                     if (curVal2 == maxVal) {
-                        if(gparent.findViewById(R.id.inLayout1) != parent) {
+                        pp.setBackground(gd);
+                        if (gparent.findViewById(R.id.inLayout1) != parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
                             completeV.addView(pL);
@@ -599,7 +604,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                             notifyDataSetChanged();
                         }
                     }
-
 
 
                     break;
@@ -743,7 +747,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
                     if (curVal2 == maxVal) {
-                        if(gparent.findViewById(R.id.inLayout1) != parent) {
+
+                        if (gparent.findViewById(R.id.inLayout1) != parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout1);
                             completeV.addView(pL);
@@ -753,6 +758,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                             notifyDataSetChanged();
                         }
                     } else if (curVal2 < maxVal) {
+                        pp.setBackgroundColor(Color.parseColor("#bdbdbd"));
+
                         if (gparent.findViewById(R.id.inLayout1) == parent) {
                             parent.removeView(pL);
                             ViewGroup completeV = (ViewGroup) gparent.findViewById(R.id.inLayout);
@@ -765,8 +772,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                             notifyDataSetChanged();
                         }
                     }
-
-
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -790,7 +795,8 @@ public class CustomPagerAdapter extends PagerAdapter {
                         curVal2 = maxVal;
                     pVal = curVal2 * conVal;
                     if (pVal > 100)
-                        pVal = 100;             Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
+                        pVal = 100;
+                    Log.e("INC", "Clicked" + id + ": " + curVal2 + "/" + pVal);
                     tempTv.setText("" + curVal2);
                     tempPi = (SubmitProcessButton) gparent.findViewById(id - 5);
                     tempPi.setProgress(pVal);
@@ -830,7 +836,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public void init(){
+    public void init() {
         wrap_id.clear();
         wrap_id1.clear();
         wrap_id2.clear();

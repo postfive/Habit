@@ -29,7 +29,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="0dp"
         android:elevation="3dp"
-        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorComplete="@color/done_gradient01"
         custom:pb_colorError="@color/red_error"
         custom:pb_colorNormal="#bdbdbd"
         custom:pb_colorPressed="#bdbdbd"
