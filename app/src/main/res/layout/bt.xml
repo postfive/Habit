@@ -6,9 +6,9 @@
     android:layout_height="70dp"
     android:layout_gravity="center_horizontal"
     android:background="@android:color/transparent"
+    android:clipToPadding="false"
     android:elevation="3dp"
-
-    android:padding="0dp">
+    >
     <!--show progress-->
 
 
@@ -20,7 +20,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="#ffffff"
-        android:translationZ="3dp"></RelativeLayout>
+        
+        android:outlineProvider="paddedBounds"
+        android:elevation="4dp"></RelativeLayout>
 
     <com.dd.processbutton.iml.SubmitProcessButton
         android:id="@+id/btnSubmit"
@@ -30,6 +32,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="0dp"
+        android:elevation="0dp"
         custom:pb_colorComplete="@color/done_gradient01"
         custom:pb_colorError="@color/red_error"
         custom:pb_colorNormal="#bdbdbd"
@@ -51,6 +54,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@android:color/transparent"
+        android:clipToPadding="false"
         android:padding="0dp"
         android:translationZ="5dp">
 
@@ -118,21 +122,20 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/wrap_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_gravity="center_vertical|right"
-            android:id="@+id/wrap_view"
-            android:layout_marginLeft="8dp">
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/desc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
                 android:layout_marginTop="13dp"
-                android:id="@+id/desc1"
-                >
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/minus_0_0"
@@ -176,8 +179,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="13dp"
-                    android:padding="5dp"
-                    android:background="@drawable/ic_plus" />
+                    android:background="@drawable/ic_plus"
+                    android:padding="5dp" />
 
                 <TextView
                     android:id="@+id/tv_0_0_2"
@@ -187,8 +190,8 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="편집하기"
                     android:padding="5dp"
+                    android:text="편집하기"
                     android:textColor="#de000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -196,10 +199,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:orientation="horizontal"
                 android:layout_marginBottom="13dp"
-                >
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/maxVal"

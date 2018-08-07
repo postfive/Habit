@@ -211,6 +211,18 @@ public class CustomPagerAdapter extends PagerAdapter {
         TextView maxValue = (TextView) descLayout2_2.getChildAt(0);
         TextView valueUnit2 = (TextView) descLayout2_2.getChildAt(1);
 
+        if(status != 0){
+            habitImg.setColorFilter(Color.parseColor("#ffffff"));
+            innerWrapView.getChildAt(2).setBackgroundColor(Color.parseColor("#ffffff"));
+            titleV.setTextColor(Color.parseColor("#ffffff"));
+            wDayV.setTextColor(Color.parseColor("#ffffff"));
+            curValue.setTextColor(Color.parseColor("#ffffff"));
+            valueUnit.setTextColor(Color.parseColor("#ffffff"));
+            maxValue.setTextColor(Color.parseColor("#ffffff"));
+            valueUnit2.setTextColor(Color.parseColor("#ffffff"));
+        }
+
+
         modiBtn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
 
@@ -369,8 +381,10 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
                     TextView tempView = (TextView) tempVg.getChildAt(1);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempView = (TextView) tempVg.getChildAt(2);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempVg.setLayoutParams(attrLayoutParams);
 
                     wrapL.getChildAt(1).setVisibility(View.GONE);
@@ -534,13 +548,17 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
                     TextView tempView = (TextView) tempVg.getChildAt(1);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempView = (TextView) tempVg.getChildAt(2);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempVg.setLayoutParams(attrLayoutParams);
 
                     ViewGroup temp_vg = (ViewGroup) v;
                     temp_vg.getChildAt(1).setVisibility(View.GONE);
+                    temp_vg.getChildAt(2).setBackgroundColor(Color.parseColor("#e0e0e0"));
                     temp_vg.getChildAt(3).setVisibility(View.GONE);
+
 //                    wrapL.getChildAt(7).setVisibility(View.GONE);
                     break;
                 case 2: // setup
@@ -560,6 +578,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup pp = (ViewGroup) pg.getChildAt(0);
                     pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(2).setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
                     //tempP1.setVisibility(View.VISIBLE);
@@ -571,8 +590,10 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup tempVg1 = (ViewGroup) vg.getChildAt(4).findViewById(R.id.desc1);
                     TextView tempView1 = (TextView) tempVg1.getChildAt(1);
                     tempView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView1.setTextColor(Color.parseColor("#ffffff"));
                     tempView = (TextView) tempVg1.getChildAt(2);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView.setTextColor(Color.parseColor("#ffffff"));
                     tempVg1.setLayoutParams(attrLayoutParams1);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
@@ -683,7 +704,6 @@ public class CustomPagerAdapter extends PagerAdapter {
 
                     ViewGroup backLayout2 = (ViewGroup) backLayout.getChildAt(0);
                     backLayout2.setBackgroundColor(Color.parseColor("#eeeeee"));
-                    ViewGroup wrapL = (ViewGroup) backLayout.getChildAt(2);
                     //Set Visibility to Visible
                     for (int i = 2; i < 8; i++) {
                         tempV = v.findViewById(id + i);
@@ -701,13 +721,17 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup tempVg = (ViewGroup) tempP.findViewById(R.id.desc1);
                     TextView tempView = (TextView) tempVg.getChildAt(1);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempView = (TextView) tempVg.getChildAt(2);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tempView.setTextColor(Color.parseColor("#de000000"));
                     tempVg.setLayoutParams(attrLayoutParams);
 
-                    wrapL.getChildAt(1).setVisibility(View.GONE);
-                    wrapL.getChildAt(3).setVisibility(View.GONE);
-//                    wrapL.getChildAt(7).setVisibility(View.GONE);
+                    ViewGroup temp_vg = (ViewGroup) v;
+
+                    temp_vg.getChildAt(1).setVisibility(View.GONE);
+                    temp_vg.getChildAt(2).setBackgroundColor(Color.parseColor("#e0e0e0"));
+                    temp_vg.getChildAt(3).setVisibility(View.GONE);
                     break;
                 case 2: // setup
                     //Set Visibility to Invisible
@@ -726,6 +750,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup pp = (ViewGroup) pg.getChildAt(0);
                     pp.setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(1).setVisibility(View.VISIBLE);
+                    vg.getChildAt(2).setBackgroundColor(Color.parseColor("#ffffff"));
                     vg.getChildAt(3).setVisibility(View.VISIBLE);
                     pg.getChildAt(1).setVisibility(View.VISIBLE);
 
@@ -736,8 +761,10 @@ public class CustomPagerAdapter extends PagerAdapter {
                     ViewGroup tempVg1 = (ViewGroup) vg.getChildAt(4).findViewById(R.id.desc1);
                     TextView tempView1 = (TextView) tempVg1.getChildAt(1);
                     tempView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView1.setTextColor(Color.parseColor("#ffffff"));
                     tempView = (TextView) tempVg1.getChildAt(2);
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tempView.setTextColor(Color.parseColor("#ffffff"));
                     tempVg1.setLayoutParams(attrLayoutParams1);
 
                     mUserHabitRepository.updateUserHabitState(tmpState);
