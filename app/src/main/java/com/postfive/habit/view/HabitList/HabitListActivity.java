@@ -36,6 +36,8 @@ public class HabitListActivity extends AppCompatActivity {
 
     private RecyclerView mHealthHabitRecyclerView;
     private RecyclerView mEatHabitRecyclerView;
+    private RecyclerView mSocialHabitRecyclerView;
+    private RecyclerView mMindHabitRecyclerView;
 
     private HabitViewModel mHabitViewModel;
 
@@ -44,6 +46,8 @@ public class HabitListActivity extends AppCompatActivity {
 
     List<Habit> mHealthHabitList = new ArrayList<>();
     List<Habit> mEatHabitList    = new ArrayList<>();
+    List<Habit> mSocialHabitList    = new ArrayList<>();
+    List<Habit> mMindHabitList    = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,18 +71,29 @@ public class HabitListActivity extends AppCompatActivity {
         mHealthHabitRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_health_habit_list);
         mEatHabitRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_eat_habit_list);
 
+        mSocialHabitRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_social_habit_list);
+        mMindHabitRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_mind_habit_list);
+
 
         // 그리드 뷰로 만들것을 정의하는 부분
         RecyclerView.LayoutManager layoutManagerHealth = new LinearLayoutManager(getApplication());
         RecyclerView.LayoutManager layoutManagerEat = new LinearLayoutManager(getApplication());
+        RecyclerView.LayoutManager layoutManagerSocial = new LinearLayoutManager(getApplication());
+        RecyclerView.LayoutManager layoutManagerMind = new LinearLayoutManager(getApplication());
         mHealthHabitRecyclerView.setLayoutManager(layoutManagerHealth);
         mEatHabitRecyclerView.setLayoutManager(layoutManagerEat);
+        mSocialHabitRecyclerView.setLayoutManager(layoutManagerSocial);
+        mMindHabitRecyclerView.setLayoutManager(layoutManagerMind);
 
         // 어댑터를 연결 시켜 주는 부분
         final HabitRecyclerViewAdapter myHealthRecyclerViewAdapter = new HabitRecyclerViewAdapter();
         final HabitRecyclerViewAdapter myEatRecyclerViewAdapter = new HabitRecyclerViewAdapter();
+        final HabitRecyclerViewAdapter mySocailRecyclerViewAdapter = new HabitRecyclerViewAdapter();
+        final HabitRecyclerViewAdapter myMindRecyclerViewAdapter = new HabitRecyclerViewAdapter();
         mHealthHabitRecyclerView.setAdapter(myHealthRecyclerViewAdapter);
         mEatHabitRecyclerView.setAdapter(myEatRecyclerViewAdapter);
+        mSocialHabitRecyclerView.setAdapter(mySocailRecyclerViewAdapter);
+        mMindHabitRecyclerView.setAdapter(myMindRecyclerViewAdapter);
 
 
         ItemClickSupport healthClickSupport = ItemClickSupport.addTo(mHealthHabitRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -118,11 +133,17 @@ public class HabitListActivity extends AppCompatActivity {
                                 mHealthHabitList.add(tmp);
                             } else if (tmp.getCategory() == Habit.EAT_CATEGORY){
                                 mEatHabitList.add(tmp);
+                            }else if (tmp.getCategory() == Habit.SOCIAL_LIFE_CATEGORY){
+                                mSocialHabitList.add(tmp);
+                            }else if (tmp.getCategory() == Habit.MIND_CATEGORY){
+                                mMindHabitList.add(tmp);
                             }
                         }
 
                         myHealthRecyclerViewAdapter.setAllHabit(mHealthHabitList);
                         myEatRecyclerViewAdapter.setAllHabit(mEatHabitList);
+                        mySocailRecyclerViewAdapter.setAllHabit(mSocialHabitList);
+                        myMindRecyclerViewAdapter.setAllHabit(mMindHabitList);
                     }
                 }
         );

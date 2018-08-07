@@ -90,6 +90,57 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/textview_social_habit"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/eat_habit"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_health_habit_list"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerview_health_habit_list" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_social_habit_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textview_eat_habit"
+            app:layout_constraintTop_toBottomOf="@+id/textview_eat_habit"
+            app:layout_constraintVertical_bias="0.0">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textview_mind_habit"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/eat_habit"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_health_habit_list"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerview_health_habit_list" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_mind_habit_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textview_eat_habit"
+            app:layout_constraintTop_toBottomOf="@+id/textview_eat_habit"
+            app:layout_constraintVertical_bias="0.0">
+
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.constraint.ConstraintLayout>
 

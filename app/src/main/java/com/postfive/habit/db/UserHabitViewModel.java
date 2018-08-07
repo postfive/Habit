@@ -5,33 +5,22 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import com.postfive.habit.view.statistics.HabitStatistics;
+import com.postfive.habit.view.statistics.HabitStatisticsCalendar;
+
 import java.util.List;
 
 public class UserHabitViewModel extends AndroidViewModel {
     private UserHabitRespository mHabitRespository;
-    private LiveData<List<UserHabitDetail>> mDetailList;
-    private LiveData<List<UserHabitState>> mStatelList;
+    private LiveData<List<HabitStatistics>> mHabitStatistics;
 
     public UserHabitViewModel(@NonNull Application application) {
         super(application);
         mHabitRespository = new UserHabitRespository(application);
 
-//        mDetailList = mHabitRespository
-        mDetailList = this.mHabitRespository.getUserAllHabitLive();
-        mStatelList = this.mHabitRespository.getTodayHabitLive();
+        mHabitStatistics = this.mHabitRespository.getHabitStatics();
     }
-
-    public LiveData<List<UserHabitDetail>> getAllUserHabitDetailLive() {
-        return mDetailList;
-    }
-    public LiveData<List<UserHabitState>> getTodayUserHabitStateLive() {
-        return mStatelList;
-    }
-
-    public List<UserHabitDetail> getAllUserHabitDetail() {
-        return mHabitRespository.getAllUserHabitDetail();
-    }
-    public List<UserHabitState> getAllUserHabitState() {
-        return mHabitRespository.getAllUserHabitState();
+    public LiveData<List<HabitStatistics>> getHabitStatics() {
+        return mHabitStatistics;
     }
 }

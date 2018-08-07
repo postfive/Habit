@@ -14,7 +14,6 @@ public class HabitViewModel extends AndroidViewModel {
     public HabitViewModel(@NonNull Application application) {
         super(application);
         mHabitRespository = new HabitRespository(application);
-
         mList = mHabitRespository.getAllHabitLive();
     }
 
@@ -22,11 +21,4 @@ public class HabitViewModel extends AndroidViewModel {
         return mList;
     }
 
-    public List<Habit> getAllHabit() {
-        return mHabitRespository.getAllHabit();
-    }
-
-    public Habit getHabit(int code) {
-        return mHabitRespository.getHabit(code);
-    }
 }

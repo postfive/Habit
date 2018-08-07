@@ -21,25 +21,33 @@
                     android:scaleType="centerCrop"
                     android:background="@drawable/drawable_kit_borders"/>
 
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                >
             <TextView
                 android:id="@+id/textview_kit_title"
                 style="@style/AppTheme.TextView.04.Button.01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="투썸 아메리카노
-모바일 상품권" />
+                android:layout_gravity="top"
+                android:text="투썸 아메리카노\
+모바일 상품권"/>
 
             <TextView
                 android:id="@+id/textview_kit_explanation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginTop="6dp"
 
                 android:text="#저녁에 먹는
 닭가슴살 쉐이크"
                 style="@style/AppTheme.TextView.02.Main.Title.Date" />
+
+            </LinearLayout>
         </LinearLayout>
 
 </LinearLayout>

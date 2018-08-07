@@ -7,7 +7,7 @@
     tools:context=".view.celeblist.CelebListFragment">
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedscrollview"
+        android:id="@+id/nestedscrollview_celeb_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,12 +17,45 @@
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/init_title_celeb_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingBottom="24dp"
+                android:gravity="bottom|left"
+                android:visibility="gone">
+
+
+                <TextView
+                    style="@style/AppTheme.TextView.Subtitle.02.white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="63dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="안녕하세요!" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="이런 라이프스타일
+어떠세요?"
+                    android:textSize="24sp"
+                    android:textColor="#deffffff"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
             <TextView
+                android:id="@+id/textview_title_celeb_list_itemtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="64dp"
                 android:text="@string/celeb_fragment"
                 style="@style/AppTheme.TextView.02.Main.Title"/>
 
@@ -30,9 +63,7 @@
                 android:id="@+id/recyclerview_celeb_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="16dp" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -2,6 +2,7 @@ package com.postfive.habit.view.main;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -15,21 +16,28 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.UserSettingValue;
+import com.postfive.habit.db.CelebHabitMaster;
+import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.navigation.BottomNavigationViewHelper;
+import com.postfive.habit.noti.HabitNoti;
 import com.postfive.habit.view.celeblist.CelebListFragment;
 import com.postfive.habit.view.login.LoginActivity;
 import com.postfive.habit.view.myhabits.MyHabitsFragment;
 import com.postfive.habit.view.setting.SettingFragment;
+import com.postfive.habit.view.statistics.StatisticsFragment;
 
 import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity mainActivity;
     private static final String TAG = "MainActivity" ;
+    public static final int GET_CELEB_HABIT = 5001;
     private BottomNavigationView mBottomNavigationView;
 
     @Override
@@ -44,14 +52,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //getHashKey(getApplicationContext());
-
+        mainActivity = this;
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
         BottomNavigationViewHelper.removeShiftMode(mBottomNavigationView);
 
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        loadFragment(new MyHabitsFragment());
+
+        processIntent();
+
+        new HabitNoti(this).Alarm();
+    }
+
+    protected void onNewIntent(Intent intent){
+//        processIntent();
+        super.onNewIntent(intent);
+    }
+
+    private void processIntent() {
+        UserSettingValue userSettingValue = new UserSettingValue(this);
+        Log.d(TAG, "noti " +Integer.toString(userSettingValue.getMainImgResource()));
+        if(userSettingValue.getMainImgResource() < 0){
+            // 최초 로그인 시
+
+            loadFragment(new CelebListFragment(true));
+            mBottomNavigationView.setOnNavigationItemSelectedListener(null);
+            mBottomNavigationView.setClickable(false);
+        }else {
+            // 두번째 로그인 시
+            loadFragment(new MyHabitsFragment());
+        }
     }
 
     private boolean loadFragment(Fragment fragment){
@@ -77,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new MyHabitsFragment();
                             break;
                         case R.id.statistics : // 달력으로 바꿀꺼임
-                            fragment = new SettingFragment();
+                            fragment = new StatisticsFragment();
                             break;
                         case R.id.favorite :
                             fragment = new CelebListFragment();
                             break;
                         case R.id.setting :
-                            fragment = new SettingFragment();
+//                            fragment = new SettingFragment();
                             break;
                         default :
                             break;
@@ -160,4 +191,17 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "유명인 설정 됨 완료 되었네 ?"+ requestCode +" "+resultCode);
+        if(resultCode == GET_CELEB_HABIT){
+            Log.d(TAG, "유명인 설정 됨 완료 되었네 ");
+            loadFragment(new MyHabitsFragment());
+            mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        }
+
+    }
 }

@@ -2,6 +2,7 @@ package com.postfive.habit.db;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
@@ -109,6 +110,21 @@ public class UserHabitDetail implements Serializable {
         this.unit = "";
         this.color = habit.getColor();
         this.icon = habit.getIcon();
+    }
+
+    @Ignore
+    public UserHabitDetail(UserHabitDetail mHabit) {
+        this.habitseq = mHabit.getHabitseq();
+        this.habitcode = mHabit.getHabitcode();
+        this.time = mHabit.getTime();
+        this.name = mHabit.getName();
+        this.customname = mHabit.getName();
+        this.daysum = mHabit.getDaysum();
+        this.goal = mHabit.getGoal();
+        this.once = mHabit.getOnce();
+        this.unit = mHabit.getUnit();
+        this.color = mHabit.getColor();
+        this.icon = mHabit.getIcon();
     }
 
     @NonNull

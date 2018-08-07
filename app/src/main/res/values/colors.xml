@@ -7,7 +7,7 @@
     <color name="black">#de000000</color>
     <color name="gray">#de555555</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#222222</color>
     <color name="background">#FFFFFFFF</color>
     <color name="statusBarColor">#f5f5f5</color>
 
@@ -56,5 +56,21 @@
 
     <color name="celebHabitComment">#de513628</color>
     <color name="textfildInputInactivie">#999999</color>
->>>>>>> origin/bpkim
+
+
+    <color name="today">#4b82ff</color>
+    <color name="greyed_out">#c7c7c7</color>
+
+    <color name="summer">#44eebd82</color>
+    <color name="fall">#44d8d27e</color>
+    <color name="winter">#44a1c1da</color>
+    <color name="spring">#448da64b</color>
+    <color name="darkOrange">#ff9d00</color>
+
+
+    <color name="statistics_25">#40ff9d00</color>
+    <color name="statistics_50">#80ff9d00</color>
+    <color name="statistics_75">#bfff9d00</color>
+    <color name="statistics_100">#ff9d00</color>
+
 </resources>
