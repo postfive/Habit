@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity" ;
     private BottomNavigationView mBottomNavigationView;
+    public static final int GET_CELEB_HABIT = 5001;
 
     @Override
     protected void onStart() {
@@ -160,4 +161,10 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

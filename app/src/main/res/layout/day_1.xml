@@ -18,28 +18,6 @@
             android:orientation="vertical"></LinearLayout>
 
         <TextView
-            android:id="@+id/tv_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="완료"
-            android:textColor="#de575757"
-            android:textSize="16sp"
-            android:visibility="gone"
-
-            />
-
-        <LinearLayout
-            android:id="@+id/inLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-        </LinearLayout>
-
-        <TextView
             android:id="@+id/tv_missed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +38,29 @@
             android:visibility="gone">
 
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="완료"
+            android:textColor="#de575757"
+            android:textSize="16sp"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/inLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/showAllBtn"

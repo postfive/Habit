@@ -6,6 +6,8 @@
     android:layout_height="70dp"
     android:layout_gravity="center_horizontal"
     android:background="@android:color/transparent"
+    android:elevation="3dp"
+
     android:padding="0dp">
     <!--show progress-->
 
@@ -28,7 +30,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="0dp"
-        android:elevation="3dp"
         custom:pb_colorComplete="@color/done_gradient01"
         custom:pb_colorError="@color/red_error"
         custom:pb_colorNormal="#bdbdbd"
@@ -142,7 +143,7 @@
                     android:layout_marginLeft="13dp"
                     android:layout_marginRight="8dp"
                     android:background="@drawable/ic_minus"
-                    android:padding="0dp" />
+                    android:padding="5dp" />
 
                 <TextView
                     android:id="@+id/tv_0_0_1"
@@ -175,6 +176,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="13dp"
+                    android:padding="5dp"
                     android:background="@drawable/ic_plus" />
 
                 <TextView
@@ -186,6 +188,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="편집하기"
+                    android:padding="5dp"
                     android:textColor="#de000000"
                     android:textSize="16sp" />
             </LinearLayout>

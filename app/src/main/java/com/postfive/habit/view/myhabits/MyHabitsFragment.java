@@ -83,11 +83,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         //Init values for TEST
         UserSettingValue userSettingValue = new UserSettingValue(getContext().getApplicationContext());
 
-        userSettingValue.setMainImgResource(R.drawable.img_ahnyoungi_title);
-        userSettingValue.setStartDate("2018.07.31");
-        userSettingValue.setEndDate("2018.08.31");
-
-        Log.d(TAG, "shered test " + Integer.toString(userSettingValue.getMainImgResource())
+         Log.d(TAG, "shered test " + Integer.toString(userSettingValue.getMainImgResource())
                 + " " + userSettingValue.getStartDate()
                 + " "+ userSettingValue.getEndDate());
 
@@ -110,9 +106,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         prev_tv.setOnClickListener(this);
         next_tv.setOnClickListener(this);
-
-
-
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -197,6 +190,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+
         // Fragment가 화면에 완전히 표시되었을때 사용자의 Action과 상호작용 가능
 //        Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
     }

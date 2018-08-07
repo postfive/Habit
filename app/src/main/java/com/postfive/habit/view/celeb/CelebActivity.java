@@ -32,6 +32,7 @@ import com.postfive.habit.db.HabitRespository;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
 import com.postfive.habit.db.UserHabitState;
+import com.postfive.habit.view.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,6 +68,7 @@ public class CelebActivity extends AppCompatActivity  {
     private String endDate = null;
 
     private UserHabitRespository mUserHabitRespository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -354,11 +356,11 @@ public class CelebActivity extends AppCompatActivity  {
         }else{
             Calendar today = Calendar.getInstance();
             startDate = Integer.toString(today.get(Calendar.YEAR)) + "."
-                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
-                        + Integer.toString(today.get(Calendar.DATE));
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE));
             endDate = Integer.toString(today.get(Calendar.YEAR)) + "."
-                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
-                        + Integer.toString(today.get(Calendar.DATE) + 7);
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE) + 7);
 
             myCustomDialog();
         }
@@ -436,6 +438,8 @@ public class CelebActivity extends AppCompatActivity  {
         userSettingValue.setEndDate(endDate);
         userSettingValue.setMainImgResource(mCelebHabitMaster.getDrawable());
         userSettingValue.setResolutionValue(editTextResolution.getText().toString());
+        Intent intent = new Intent();
+        setResult(MainActivity.GET_CELEB_HABIT, intent);
         finish();
     }
 
@@ -461,7 +465,7 @@ public class CelebActivity extends AppCompatActivity  {
         Log.d(TAG, " 어디갔어 ????" + Integer.toString(mCelebHabitMaster.getDrawable()));
 
         imgviewAlert.setImageResource(mCelebHabitMaster.getDrawable());
-        textviewTitle.setText(mCelebHabitMaster.getTitle());
+        textviewTitle.setText(editTextResolution.getText());
         textviewDate.setText(startDate + "~" + endDate);
 
 

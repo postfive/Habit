@@ -56,7 +56,6 @@ public class CustomPagerAdapter extends PagerAdapter {
     private int child_id = 0;
     private ViewGroup layout;
     private int initFirstFlag = 0;
-    private List<List<UserHabitState>> tempDay = new ArrayList<>();
     private int cont_flag = 0;
     int[] colors = {Color.parseColor("#75d185"), Color.parseColor("#65bfce")};
     GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -409,7 +408,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                     tempView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                     tempVg1.setLayoutParams(attrLayoutParams1);
 
-
                     mUserHabitRepository.updateUserHabitState(tmpState);
 
                     if (curVal2 == maxVal) {
@@ -435,7 +433,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                             notifyDataSetChanged();
                         }
                     }
-
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -604,8 +601,6 @@ public class CustomPagerAdapter extends PagerAdapter {
                             notifyDataSetChanged();
                         }
                     }
-
-
                     break;
                 case 3: // -
                     //Decrease curValue
@@ -640,6 +635,7 @@ public class CustomPagerAdapter extends PagerAdapter {
                     Intent intent = new Intent(mContext, HabitActivity.class);
                     UserHabitDetail habit = new UserHabitDetail(0, tmpState);
                     intent.putExtra("object", habit);
+
                     mContext.startActivity(intent);
                     break;
                 default:
