@@ -417,5 +417,4 @@ public class UserSettingValue {
             return false;
         }
     }
-
 }
