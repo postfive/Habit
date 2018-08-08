@@ -11,7 +11,6 @@
     >
     <!--show progress-->
 
-
     <RelativeLayout
         android:id="@+id/proLayout_0_0"
         android:layout_width="match_parent"
@@ -42,7 +41,6 @@
     <!--custom:pb_textProgress="Loading" />-->
     <!--android:text="Submit Button"-->
     <!--android:textColor="@android:color/white"-->
-
     <!--touch here than tvs are appeared-->
 
     <LinearLayout
