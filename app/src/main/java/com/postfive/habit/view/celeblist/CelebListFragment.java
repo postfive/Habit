@@ -1,5 +1,6 @@
 package com.postfive.habit.view.celeblist;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
@@ -21,6 +24,7 @@ import com.postfive.habit.adpater.celeblist.CelebRecyclerViewAdapter;
 import com.postfive.habit.db.CelebHabitMaster;
 import com.postfive.habit.db.CelebHabitViewModel;
 import com.postfive.habit.view.celeb.CelebActivity;
+import com.postfive.habit.view.main.MainActivity;
 
 import java.util.List;
 
@@ -28,6 +32,12 @@ import java.util.List;
 public class CelebListFragment extends Fragment {
 
     private CelebRecyclerViewAdapter mCelebRecyclerViewAdapter;
+    boolean init = false;
+
+    @SuppressLint("ValidFragment")
+    public CelebListFragment(boolean init) {
+        this.init = init;
+    }
     public CelebListFragment() {
     }
 
@@ -44,12 +54,26 @@ public class CelebListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_celeb_list, container, false);
 
-        NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview);
+        NestedScrollView nestedscrollview = (NestedScrollView)view.findViewById(R.id.nestedscrollview_celeb_list);
+/*
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) nestedscrollview.getLayoutParams();
         layoutParams.topMargin = Utils.getStatusBarHeight(getContext());
         nestedscrollview.setLayoutParams(layoutParams);
+*/
 
+
+        // 최초 일때
+        if(init) {
+            TextView textViewTitle = (TextView) view.findViewById(R.id.textview_title_celeb_list_itemtitle);
+            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.init_title_celeb_list);
+
+            linearLayout.setVisibility(View.VISIBLE);
+            textViewTitle.setVisibility(View.GONE);
+        }
+
+        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressbar_celeb_list);
+        progressBar.setVisibility(View.VISIBLE);
         int width = getResources().getDisplayMetrics().widthPixels;
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null);
 
@@ -67,6 +91,7 @@ public class CelebListFragment extends Fragment {
             public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
 
                 mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -78,7 +103,7 @@ public class CelebListFragment extends Fragment {
 
                 Intent intent = new Intent(getContext(), CelebActivity.class);
                 intent.putExtra("celebcode", habit);
-                startActivity(intent);
+                startActivityForResult(intent, MainActivity.GET_CELEB_HABIT);
             }
         });
 

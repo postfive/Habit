@@ -9,8 +9,6 @@ import android.support.annotation.NonNull;
         primaryKeys = { "unitcode", "unit" })
 public class Unit {
 
-
-
     @NonNull
     @ColumnInfo(name = "unitcode")
     private int unitcode;

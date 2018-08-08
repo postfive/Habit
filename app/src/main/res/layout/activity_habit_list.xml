@@ -31,14 +31,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/relativeLayout"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.ProgressBar"/>
         <TextView
             android:id="@+id/textview_health"
             style="@style/AppTheme.TextView"
@@ -46,20 +53,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@string/health_habit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/health_habit"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_health_habit_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textview_health"
-            app:layout_constraintTop_toBottomOf="@+id/textview_health">
+            android:layout_marginTop="6dp">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -70,27 +71,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/eat_habit"
-            app:layout_constraintStart_toStartOf="@+id/recyclerview_health_habit_list"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerview_health_habit_list" />
+            android:text="@string/eat_habit"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_eat_habit_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textview_eat_habit"
-            app:layout_constraintTop_toBottomOf="@+id/textview_eat_habit"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_marginTop="12dp">
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/textview_social_habit"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/social_life_habit"/>
 
-    </android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_social_habit_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textview_mind_habit"
+            style="@style/AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/mind_habit"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_mind_habit_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp">
+
+        </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

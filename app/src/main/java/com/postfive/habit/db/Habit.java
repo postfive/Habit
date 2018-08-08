@@ -64,6 +64,10 @@ public class Habit  {
     public static int HEALTH_CATEGORY = 1;
     @Ignore
     public static int EAT_CATEGORY = 2;
+    @Ignore
+    public static int SOCIAL_LIFE_CATEGORY = 3;
+    @Ignore
+    public static int MIND_CATEGORY = 4;
 
 
     public Habit(){

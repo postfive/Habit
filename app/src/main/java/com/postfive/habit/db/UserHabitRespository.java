@@ -3,9 +3,12 @@ package com.postfive.habit.db;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.postfive.habit.UserSettingValue;
+import com.postfive.habit.view.statistics.HabitStatistics;
+import com.postfive.habit.view.statistics.HabitStatisticsCalendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,59 +21,22 @@ public class UserHabitRespository {
     private AppDatabase db;
     private UserHabitDao mUserHabitDao;
     private UserHabitDao2 mUserHabitDao2;
-    private LiveData<List<UserHabitDetail>> mUserHabitList;
-    private LiveData<List<UserHabitState>> mTodayHabitList;
-    private LiveData<List<UserHabitState>> mYesterdayHabitList;
-    private LiveData<List<UserHabitState>> mTomorrowHabitList;
+    private LiveData<List<HabitStatistics>> mHabitStatisticsList;
+    private LiveData<List<HabitStatisticsCalendar>> mHabitStatisticsCalendarList;
 
 
     public UserHabitRespository(Application application ){
         this.db =  AppDatabase.getInMemoryDatabase(application);
         this.mUserHabitDao = db.userhabitModel();
         this.mUserHabitDao2 = db.userhabitModel2();
-        this.mUserHabitList = this.mUserHabitDao.getAllHabitLive();
-        Calendar day = Calendar.getInstance();
-        int today = day.get(Calendar.DAY_OF_WEEK);
-        int realTime = day.get(Calendar.HOUR_OF_DAY)*100 + day.get(Calendar.MINUTE);
-        int time = 0;
 
-
-        if(realTime < UserSettingValue.getMorning()){
-            // 저녁
-            time = 3;
-        } else if(realTime >= UserSettingValue.getMorning() && realTime < UserSettingValue.getAfternoon()){
-            // 오전
-            time = 1;
-        }else if(realTime >= UserSettingValue.getAfternoon() && realTime < UserSettingValue.getNight()){
-            // 오후
-            time = 2;
-        }else if(realTime >= UserSettingValue.getNight()){
-            // 저녁
-            time = 3;
-        }
-
-        int yesterday = today - 1;
-        int tomorrow = today + 1;
-        if(yesterday == 0 ){
-            yesterday=7;
-        }
-        if (tomorrow==8) {
-            tomorrow =1;
-        }
-        this.mTodayHabitList = this.mUserHabitDao.getTodayHabitLive(today);
-
-        // 어제 내일은 시간 상관 없으므로
-        this.mYesterdayHabitList = this.mUserHabitDao.getTodayHabitLive(yesterday);
-        this.mTomorrowHabitList = this.mUserHabitDao.getTodayHabitLive(tomorrow);
-
+        this.mHabitStatisticsList = db.userhabitModel().getHabitStatics();
+        this.mHabitStatisticsCalendarList = db.userhabitModel().getHabitStaticsCalendar();
     }
 
     // 데이터 변경되면 자동 변경 되도록 일단 만들어는 놓는다..
-    LiveData<List<UserHabitDetail>> getUserAllHabitLive() {return mUserHabitList;}
-    LiveData<List<UserHabitState>> getTodayHabitLive() {return mTodayHabitList;}
-    LiveData<List<UserHabitState>> getTomorrowHabitLive() {return mTomorrowHabitList;}
-    LiveData<List<UserHabitState>> getYesterdayHabitLive() {return mYesterdayHabitList;}
-
+    LiveData<List<HabitStatistics>> getHabitStatics() {return mHabitStatisticsList;}
+    LiveData<List<HabitStatisticsCalendar>> getHabitStaticsCalendar() {return mHabitStatisticsCalendarList;}
 
     public void destroyInstance(){
         db.destroyInstance();
@@ -80,7 +46,7 @@ public class UserHabitRespository {
 
 
 
-    // 전체 습관 get ////////
+    // 전체 습관 get ////// 사용
     public List<UserHabitDetail> getAllHabit(){
         List<UserHabitDetail> userHabitDetailList = null;
 
@@ -93,10 +59,29 @@ public class UserHabitRespository {
         }
         return userHabitDetailList;
     }
+    private class QueryUserAllHabitListAsyncTask extends AsyncTask<Void, Void, List<UserHabitDetail> > {
+        private UserHabitDao mUserHabitDao;
 
+        QueryUserAllHabitListAsyncTask(UserHabitDao mUserHabitDao) {
+            this.mUserHabitDao = mUserHabitDao;
+        }
+
+        @Override
+        protected List<UserHabitDetail> doInBackground(Void... Voids) {
+            List<UserHabitDetail> habit = mUserHabitDao.getAllHabit();
+            return habit;
+        }
+
+        @Override
+        protected void onPostExecute(List<UserHabitDetail> habit) {
+            super.onPostExecute(habit);
+        }
+    }
+    // 전체 습관 get 종료 ////////
+
+    // 유저 습관 설정 사용
     public void insertAllUserHabit(List<UserHabitDetail> userHabitDetailList, List<UserHabitState> userHabitStateList) {
         new insertAllUserHabitAsyncTask(mUserHabitDao2, userHabitDetailList, userHabitStateList).execute();
-
     }
 
     private class insertAllUserHabitAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -148,62 +133,9 @@ public class UserHabitRespository {
         }
 
     }
+    // 유저 습관 설정 종료
 
-
-    public void insertAllUserHabitState(List<UserHabitState> userHabitStateList) {
-        new InsertUserAllUserHabitState(mUserHabitDao).execute(userHabitStateList);
-    }
-
-    private class InsertUserAllUserHabitState extends AsyncTask<List<UserHabitState>, Void, Void> {
-
-        UserHabitDao mUserHabitDao;
-        InsertUserAllUserHabitState(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected Void doInBackground(List<UserHabitState>... lists) {
-            List<UserHabitState> listDetail = lists[0];
-            mUserHabitDao.insertAllUserHabitState(listDetail);
-            return null;
-        }
-    }
-    public void insertAllUserHabitDetail(List<UserHabitDetail> userHabitDetailList) {
-        new InsertUserAllUserHabitDetail(mUserHabitDao).execute(userHabitDetailList);
-
-    }
-
-
-    private class InsertUserAllUserHabitDetail extends AsyncTask<List<UserHabitDetail>, Void, Void> {
-
-        UserHabitDao mUserHabitDao;
-        InsertUserAllUserHabitDetail(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(List<UserHabitDetail>... lists) {
-            List<UserHabitDetail> listDetail = lists[0];
-            mUserHabitDao.insertAllUserHabitDetail(listDetail);
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-    }
-
+    // 습관 update
     public void updateUserHabit(UserHabitDetail mHabit, List<UserHabitState> insertHabitStateList) {
 
         new UpdateUserHabitAsyncTask(mUserHabitDao2, mHabit, insertHabitStateList).execute();
@@ -226,28 +158,6 @@ public class UserHabitRespository {
         }
 
     }
-
-
-    private class QueryUserAllHabitListAsyncTask extends AsyncTask<Void, Void, List<UserHabitDetail> > {
-        private UserHabitDao mUserHabitDao;
-
-        QueryUserAllHabitListAsyncTask(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected List<UserHabitDetail> doInBackground(Void... Voids) {
-            List<UserHabitDetail> habit = mUserHabitDao.getAllHabit();
-            return habit;
-        }
-
-        @Override
-        protected void onPostExecute(List<UserHabitDetail> habit) {
-            super.onPostExecute(habit);
-        }
-    }
-    // 전체 습관 get 종료 ////////
-
 
     public List<UserHabitState> getComplite() {
         List<UserHabitState> userHabitStatesList = null;
@@ -282,7 +192,6 @@ public class UserHabitRespository {
             super.onPostExecute(habit);
         }
     }
-
 
     public List<UserHabitState> getPassHabit(int nowTime) {
         List<UserHabitState> userHabitStatesList = null;
@@ -361,7 +270,6 @@ public class UserHabitRespository {
             super.onPostExecute(habit);
         }
     }
-
     // 요일별 습관 get ////////
     public List<UserHabitState> getDayHabit(int dayofweek){
         List<UserHabitState> userHabitStatesList = null;
@@ -395,15 +303,7 @@ public class UserHabitRespository {
         }
     }
 
-    /*
 
-        @Query("SELECT MAX(habitseq) FROM USER_HABIT_S ")
-    int getMaxSeqUserHabitState();
-    // count
-    @Query("SELECT MAX(habitseq) FROM USER_HABIT_D ")
-    int getMaxSeqUserHabitDetail();
-
-    * */
     // 최고 값
     public int getMaxSeqHabitDetail(){
         int result = 0;
@@ -436,7 +336,6 @@ public class UserHabitRespository {
         }
     }
 
-
     public int getMaxSeqUserHabitState(){
         int result = 0;
         try {
@@ -467,80 +366,6 @@ public class UserHabitRespository {
             super.onPostExecute(habit);
         }
     }
-
-    // 우선순위 구하기
-
-
-
-
-/*
-
-    public int getMaxPriorityHabitDetail(int time ) {
-
-        int habit = 0;
-        try {
-            habit = new QueryMaxPriorityHabitDetail(mUserHabitDao).execute(time).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return habit;
-
-    }
-
-    private class QueryMaxPriorityHabitDetail extends AsyncTask<Integer , Void, Integer> {
-        UserHabitDao mUserHabitDao;
-        QueryMaxPriorityHabitDetail(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected Integer doInBackground(Integer... integers) {
-             Integer result = mUserHabitDao.getMaxPriorityHabitDetail(integers[0]);
-            return result;
-        }
-
-    }
-*/
-
-
-//
-//    public int getMaxPriorityUserHabitState(int time, int dayofweek) {
-//        Integer[] input = new Integer[2];
-//        input[0] = time;
-//        input[1] = dayofweek;
-//
-//        int habit = 0;
-//        try {
-//            habit = new QueryMaxPriorityHabitState(mUserHabitDao).execute(input).get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return habit;
-//    }
-//
-//    private class QueryMaxPriorityHabitState extends AsyncTask<Integer[] , Void, Integer> {
-//        UserHabitDao mUserHabitDao;
-//        QueryMaxPriorityHabitState(UserHabitDao mUserHabitDao) {
-//            this.mUserHabitDao = mUserHabitDao;
-//        }
-//
-//        @Override
-//        protected Integer doInBackground(Integer[]... integers) {
-//            Integer[] input  = integers[0];
-//            Integer result = mUserHabitDao.getMaxPriorityHabitState(input[0], input[1]);
-//            return result;
-//        }
-//
-//    }
-
-
-
     public List<UserHabitDetail> getAllUserHabitDetail() {
         List<UserHabitDetail> habitList = null;
 
@@ -576,122 +401,6 @@ public class UserHabitRespository {
         }
 
     }
-
-    public List<UserHabitState> getAllUserHabitState() {
-        List<UserHabitState> habitList = null;
-
-        try {
-            habitList = new QueryUserStateListAsyncTask(mUserHabitDao).execute().get();
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        } catch (ExecutionException e){
-            e.printStackTrace();
-        }
-        return habitList;
-    }
-
-
-    private class QueryUserStateListAsyncTask extends AsyncTask<Void, Void, List<UserHabitState>> {
-        private UserHabitDao mAsyncTaskHabitDao;
-
-        QueryUserStateListAsyncTask(UserHabitDao mUserHabitDao) {
-            this.mAsyncTaskHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected List<UserHabitState> doInBackground(Void... voids) {
-            List<UserHabitState> habit = mAsyncTaskHabitDao.getAllHabitState();
-            return habit;
-        }
-
-        @Override
-        protected void onPostExecute(List<UserHabitState> habit) {
-            super.onPostExecute(habit);
-        }
-
-    }
-    public List<UserHabitState> getHabitStateMasterSeq(int masterseq) {
-        List<UserHabitState> habitList = null;
-//        getAllHabitState
-        try {
-            habitList = new QueryStateListMasterSeqAsyncTask(mUserHabitDao).execute(masterseq).get();
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        } catch (ExecutionException e){
-            e.printStackTrace();
-        }
-        return habitList;
-    }
-
-
-    private class QueryStateListMasterSeqAsyncTask extends AsyncTask<Integer, Void, List<UserHabitState>> {
-        private UserHabitDao mHabitDao;
-
-        QueryStateListMasterSeqAsyncTask(UserHabitDao mUserHabitDao) {
-            this.mHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected List<UserHabitState> doInBackground(Integer... integers) {
-            List<UserHabitState> userHabitStates = mHabitDao.getAllHabitState(integers[0]);
-            return userHabitStates;
-        }
-    }
-
-    /*=========== 추가 시작 ============*/
-    public void insertUserHabitDetail(UserHabitDetail a){
-        new InsertUserHabitDetailAsyncTask(mUserHabitDao2).execute(a);
-    }
-
-
-    private class InsertUserHabitDetailAsyncTask extends AsyncTask<UserHabitDetail, Void, Void> {
-        private UserHabitDao2 mUserHabitDao2;
-
-        InsertUserHabitDetailAsyncTask(UserHabitDao2 mUserHabitDao2) {
-            this.mUserHabitDao2 = mUserHabitDao2;
-        }
-
-        @Override
-        protected Void doInBackground(UserHabitDetail... userHabitDetails) {
-            mUserHabitDao2.insertUserHabitDetail(userHabitDetails[0]);
-            return null;
-        }
-    }
-
-
-
-    public List<Unit> getUnit(int unitcode){
-
-        List<Unit> unitList = null;
-        try {
-            unitList = new QueryUnitAsyncTask(mUserHabitDao).execute(unitcode).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return unitList;
-    }
-
-    private class QueryUnitAsyncTask extends AsyncTask<Integer, Void, List<Unit> > {
-        private UserHabitDao mUserHabitDao;
-
-        QueryUnitAsyncTask(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-        @Override
-        protected List<Unit> doInBackground(Integer... Integers) {
-            List<Unit> unitList = mUserHabitDao.getUnit(Integers[0]);
-            return unitList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Unit> unitList) {
-            super.onPostExecute(unitList);
-        }
-    }
     public List<String> getHabitUnit(int habitCode){
 
         List<String> unitList = null;
@@ -724,32 +433,6 @@ public class UserHabitRespository {
             super.onPostExecute(unitList);
         }
     }
-
-    public void insertUnit(List<Unit> unitList){
-        new InsertUnitAsyncTask(mUserHabitDao).execute(unitList);
-
-    }
-
-    private class InsertUnitAsyncTask extends AsyncTask<List<Unit>, Void, Void> {
-        private UserHabitDao mUserHabitDao;
-
-        InsertUnitAsyncTask(UserHabitDao mUserHabitDao) {
-            this.mUserHabitDao = mUserHabitDao;
-        }
-
-
-        @Override
-        protected Void doInBackground(List<Unit>... lists) {
-            List<Unit> unit = lists[0];
-            mUserHabitDao.insertUnit(unit);
-            return null;
-        }
-    }
-
-//
-
-
-
     public void updateUserHabitState(UserHabitState userHabitState){
         new UpdateUserHabitStateAsyncTask(mUserHabitDao).execute(userHabitState);
 
@@ -771,7 +454,7 @@ public class UserHabitRespository {
 
 
 
-//    insertUserHabit
+    //    insertUserHabit
     public void insertUserHabit(UserHabitDetail userHabitDetail, List<UserHabitState> userHabitStates){
         new InsertUserHabitAllAsyncTask(mUserHabitDao2, userHabitDetail, userHabitStates).execute();
     }
@@ -792,6 +475,42 @@ public class UserHabitRespository {
         @Override
         protected Void doInBackground(Void... voids) {
             mUserHabitDao2.insertUserHabit(mUserHabitDetail, mUserHabitStates);
+            return null;
+        }
+    }
+
+    public void deleteUserHabitAll(){
+        new DeleteUserHabitAllAsyncTask(mUserHabitDao2).execute();
+    }
+    private class DeleteUserHabitAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private UserHabitDao2 mUserHabitDao2;
+
+
+        DeleteUserHabitAllAsyncTask(UserHabitDao2 mUserHabitDao2) {
+            this.mUserHabitDao2 = mUserHabitDao2;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mUserHabitDao2.delUserAllHabit();
+            return null;
+        }
+    }
+
+    public void deleteUserHabit(int habitseq){
+        new DeleteUserHabitAsyncTask(mUserHabitDao2).execute(habitseq);
+    }
+    private class DeleteUserHabitAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private UserHabitDao2 mUserHabitDao2;
+
+
+        DeleteUserHabitAsyncTask(UserHabitDao2 mUserHabitDao2) {
+            this.mUserHabitDao2 = mUserHabitDao2;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            this.mUserHabitDao2.delUserHabit(integers[0]);
             return null;
         }
     }

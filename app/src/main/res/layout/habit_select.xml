@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     android:layout_gravity="right|center_vertical">
 
-    <TextView
+    <Button
         android:id = "@+id/btn_habit_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
         android:text="@string/select_complite"
         android:textColor="@color/button01ContainedText"
+        android:background="@android:color/transparent"
         android:clickable="true"
         android:layout_marginRight="16dp"
         android:layout_gravity="right|center_vertical"/>

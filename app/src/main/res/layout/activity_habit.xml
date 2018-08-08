@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-
+                android:layout_marginBottom="@dimen/layout_top_bottom"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -415,10 +415,17 @@
                     android:id="@+id/btn_save"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:layout_marginBottom="@dimen/layout_top_bottom"
                     android:onClick="onClickSaveHabit"
                     android:text="@string/save_habit"
                     style="@style/AppTheme.Button.01.Contained" />
+                <Button
+                    android:id="@+id/btn_del"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:onClick="onClickDelHabit"
+                    android:text="@string/del_habit"
+                    style="@style/AppTheme.Button.04.Outlined" />
             </LinearLayout>
 
 

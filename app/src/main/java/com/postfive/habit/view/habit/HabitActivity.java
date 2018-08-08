@@ -31,8 +31,6 @@ import com.postfive.habit.habits.factory.HabitFactory;
 import com.postfive.habit.view.HabitList.HabitListActivity;
 import com.postfive.habit.view.myhabitlist.MyHabitListActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -54,6 +52,7 @@ public class HabitActivity extends AppCompatActivity {
     private TextView mActivityTitleName;
     private TextView mHabitName;
     private Button mHabitListBtn;
+    private Button mHabitDelBtn;
     private EditText mUserNameEdtText;        // 사용자 설정 이름
     private ImageButton mUserNameClearBtn;
     private TextView mUserNameHintTextView;
@@ -97,6 +96,7 @@ public class HabitActivity extends AppCompatActivity {
         // 추가 인놈
         if(mHabit == null){
             mActivityTitleName.setText(getResources().getText(R.string.add_habit_name));
+            mHabitDelBtn.setVisibility(View.GONE);
             return;
         }
         mActivityTitleName.setText(getResources().getText(R.string.edit_habit));
@@ -193,6 +193,7 @@ public class HabitActivity extends AppCompatActivity {
         });
 
         mHabitListBtn = (Button)findViewById(R.id.btn_habit_list);
+        mHabitDelBtn = (Button)findViewById(R.id.btn_del);
         mGoalHintTextView = (TextView)findViewById(R.id.textview_goal_hint);
         mGoalEdtText = (EditText)findViewById(R.id.edittext_goal);
         mGoalClearBtn = (ImageButton)findViewById(R.id.btn_clear_goal);
@@ -319,6 +320,9 @@ public class HabitActivity extends AppCompatActivity {
         mSpinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(mHabit == null){
+                    Toast.makeText(getApplicationContext(), "습관을 먼저 선택하세요!", Toast.LENGTH_LONG).show();
+                }
                 mHabit.setUnit((String) mSpinnerUnit.getItemAtPosition(position));
             }
 
@@ -377,6 +381,7 @@ public class HabitActivity extends AppCompatActivity {
 
         for(int i = 1 ; i < 8 ; i ++){
             if((tmpDaySum & ( 1<< i) ) > 0){
+                Log.d(TAG, "DayofWeek ??"+ i);
                 mDayofWeekToggleBtn[i-1].setChecked(true);
             }
         }
@@ -392,7 +397,9 @@ public class HabitActivity extends AppCompatActivity {
     // 요일 버튼 클릭
     public void onClickDayofWeek(View v){
         // 습관 미선택시 안됨
+
         if(mHabit == null){
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -427,7 +434,15 @@ public class HabitActivity extends AppCompatActivity {
     }
 
     public void onClickTime(View v){
+        if(mHabit == null){
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
 
+            mMorningTimeToggleBtn.setChecked(false);
+            mAfternoonTimeToggleBtn.setChecked(false);
+            mNightTimeToggleBtn.setChecked(false);
+            mAllTimeToggleBtn.setChecked(false);
+            return;
+        }
         switch (v.getId()){
             case R.id.toggleBtn_all:
                 mMorningTimeToggleBtn.setChecked(false);
@@ -470,7 +485,7 @@ public class HabitActivity extends AppCompatActivity {
 
     public void onClickSaveHabit(View v){
         if(mHabit == null){
-            Toast.makeText(this,"습관을 선택하지 않으셨습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -516,6 +531,27 @@ public class HabitActivity extends AppCompatActivity {
 //        disconnectDB();
         finish();
     }
+    public void onClickDelHabit(View v){
+        if(mHabit == null){
+            Toast.makeText(this,"습관삭제할 습관이 없습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int seq = mHabit.getHabitseq();
+        connectDB();
+
+        mUserHabitRespository.deleteUserHabit(mHabit.getHabitseq());
+
+        disconnectDB();
+
+
+/*        Intent intent = new Intent();
+        intent.putExtra("seq", seq);
+        setResult(RESULT_OK, intent);*/
+        finish();
+
+
+    }
 
     private void saveHait() {
         int detailSeq = mUserHabitRespository.getMaxSeqHabitDetail();
@@ -528,10 +564,10 @@ public class HabitActivity extends AppCompatActivity {
         List<UserHabitState> userHabitStateList  = new ArrayList<>();
         int userStatepriority =0;
 
-        int userStateSeq = mUserHabitRespository.getMaxSeqUserHabitState();
+//        int userStateSeq = mUserHabitRespository.getMaxSeqUserHabitState();
         Log.d(TAG, "DB TEST time "+mHabit.getTime()  );
 
-        Log.d(TAG, "DB TEST "+userStatepriority+1 +"  "+userStateSeq+1);
+        Log.d(TAG, "DB TEST "+userStatepriority+1 +"  "+stateSeq+1);
         // user state 습관 넣기
 
         for (int dayofweek = 1; dayofweek < 8; dayofweek++) {
@@ -539,10 +575,10 @@ public class HabitActivity extends AppCompatActivity {
                 //userStatepriority = mUserHabitRespository.getMaxPriorityUserHabitState(mHabit.getTime(), dayofweek);
                 Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
                 userStatepriority++;
-                userStateSeq++;
+                stateSeq++;
                 Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
 //                UserHabitState tmpState = new UserHabitState(userStateSeq,userStatepriority, dayofweek, mHabit);
-                UserHabitState tmpState = new UserHabitState(userStateSeq, dayofweek, mHabit);
+                UserHabitState tmpState = new UserHabitState(stateSeq, dayofweek, mHabit);
                 userHabitStateList.add(tmpState);
 //                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getPriority()+"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getGoal() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getFull() +"/"+ tmpState.getUnit() );
                 Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getCustomname() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getGoal() +"/"+ tmpState.getUnit() );

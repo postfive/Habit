@@ -20,6 +20,7 @@
         <item name="android:textColorPrimary">@color/black</item>
         <!-- Toolbar Up Button Colo  -->
         <item name="android:textColorSecondary">@color/main_title</item>
+        <item name="android:background">#00ffffff</item>
         <item name ="android:gravity">center</item>
     </style>
 
@@ -27,7 +28,7 @@
     <style name="AppTheme.Toolbar.Title" parent="AppTheme.Toolbar">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">20dp</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">#00ffffff</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -35,6 +36,7 @@
     <style name="AppTheme.Toolbar.Title.Noncenter" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/main_title</item>
+
     </style>
 
 
@@ -197,8 +199,8 @@
         <item name="android:textColor">@color/celebHabitComment</item>
     </style>
 
-    android:textColor="#de513628"
-    android:textSize="16sp"
-    android:lineSpacingExtra="8dp"
-    <!--<item name="android:lineSpacingExtra">@dimen/main_title_02_linespace</item>-->
+    <style name="AppTheme.Tab" parent="AppTheme">
+        <item name="colorAccent">@color/item_title</item>
+        <item name="android:background">@color/statusBarColor</item>
+    </style>
 </resources>
