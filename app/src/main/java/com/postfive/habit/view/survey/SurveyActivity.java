@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -27,6 +28,7 @@ public class SurveyActivity extends AppCompatActivity {
     private ToggleButton mBtnWoman;
     private ToggleButton mBtnMan;
     private DiscreteSeekBar mDiscreteSeekBar;
+    private TextView mTextviewAge;
 
     private String mGender = null;
     private String mJob    = null;
@@ -68,10 +70,11 @@ public class SurveyActivity extends AppCompatActivity {
         mBtnWoman = (ToggleButton)findViewById(R.id.togglebtn_woman);
         mBtnMan = (ToggleButton)findViewById(R.id.togglebtn_man);
         mDiscreteSeekBar = (DiscreteSeekBar)findViewById(R.id.discreteseekbar);
+        mTextviewAge = (TextView)findViewById(R.id.textview_age);
         mDiscreteSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
-
+                mTextviewAge.setText(Integer.toString(seekBar.getProgress()*10)+"대");
             }
 
             @Override

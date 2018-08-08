@@ -323,7 +323,8 @@ public class HabitActivity extends AppCompatActivity {
                 if(mHabit == null){
                     Toast.makeText(getApplicationContext(), "습관을 먼저 선택하세요!", Toast.LENGTH_LONG).show();
                 }
-                mHabit.setUnit((String) mSpinnerUnit.getItemAtPosition(position));
+                String unit =  (String) mSpinnerUnit.getItemAtPosition(position);
+                mHabit.setUnit(unit.substring(0, unit.indexOf("/")));
             }
 
             @Override
@@ -509,7 +510,7 @@ public class HabitActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "getTime "+Integer.toString(mHabit.getTime()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "getTime "+Integer.toString(mHabit.getTime()), Toast.LENGTH_SHORT).show();
         if(mHabit.getTime() < 0 ){
             Toast.makeText(this, "시간이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
             return;
@@ -559,29 +560,29 @@ public class HabitActivity extends AppCompatActivity {
 
         mHabit.setHabitseq(detailSeq+1);
 
-        Toast.makeText(this, "DB TEST get Seq "+Integer.toString(detailSeq) + " / "+ Integer.toString(stateSeq) , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "DB TEST get Seq "+Integer.toString(detailSeq) + " / "+ Integer.toString(stateSeq) , Toast.LENGTH_SHORT).show();
 
         List<UserHabitState> userHabitStateList  = new ArrayList<>();
         int userStatepriority =0;
 
 //        int userStateSeq = mUserHabitRespository.getMaxSeqUserHabitState();
-        Log.d(TAG, "DB TEST time "+mHabit.getTime()  );
+//        Log.d(TAG, "DB TEST time "+mHabit.getTime()  );
 
-        Log.d(TAG, "DB TEST "+userStatepriority+1 +"  "+stateSeq+1);
+//        Log.d(TAG, "DB TEST "+userStatepriority+1 +"  "+stateSeq+1);
         // user state 습관 넣기
 
         for (int dayofweek = 1; dayofweek < 8; dayofweek++) {
             if ((mHabit.getDaysum() & (1 << dayofweek)) > 0) {
                 //userStatepriority = mUserHabitRespository.getMaxPriorityUserHabitState(mHabit.getTime(), dayofweek);
-                Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
+//                Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
                 userStatepriority++;
                 stateSeq++;
-                Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
+//                Log.d(TAG, "DB TEST userstatepri "+userStatepriority);
 //                UserHabitState tmpState = new UserHabitState(userStateSeq,userStatepriority, dayofweek, mHabit);
                 UserHabitState tmpState = new UserHabitState(stateSeq, dayofweek, mHabit);
                 userHabitStateList.add(tmpState);
 //                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getPriority()+"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getGoal() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getFull() +"/"+ tmpState.getUnit() );
-                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getCustomname() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getGoal() +"/"+ tmpState.getUnit() );
+//                Log.d(TAG,  "DB TEST  make state "+tmpState.getDayofweek() +"/"+tmpState.getDaysum()+"/"+tmpState.getTime() +"/"+ tmpState.getMasterseq()  +"/"+ tmpState.getHabitcode() +"/"+  tmpState.getName() +"/"+ tmpState.getCustomname() +"/"+ tmpState.getDaysum() +"/"+ tmpState.getGoal() +"/"+ tmpState.getUnit() );
             }
 
         }
@@ -621,9 +622,9 @@ public class HabitActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "완료 되었네 ?");
+//        Log.d(TAG, "완료 되었네 ?");
         if(requestCode == GET_HABIT && resultCode == RESULT_OK){
-            Log.d(TAG, "완료 되었네 ");
+//            Log.d(TAG, "완료 되었네 ");
             mHabit = (UserHabitDetail) data.getSerializableExtra("object");
             setComponent(mHabit);
         }

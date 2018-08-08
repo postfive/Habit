@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.postfive.habit.ItemClickSupport;
 import com.postfive.habit.R;
@@ -101,6 +102,10 @@ public class CelebListFragment extends Fragment {
 
                 CelebHabitMaster habit = mCelebRecyclerViewAdapter.getHabit(position);
 
+                if(habit.getCelebcode() > 2){
+                    Toast.makeText(getContext(),"중비중입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getContext(), CelebActivity.class);
                 intent.putExtra("celebcode", habit);
                 startActivityForResult(intent, MainActivity.GET_CELEB_HABIT);

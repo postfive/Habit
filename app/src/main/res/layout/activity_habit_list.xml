@@ -42,10 +42,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Base.Widget.AppCompat.ProgressBar"/>
         <TextView
             android:id="@+id/textview_health"
             style="@style/AppTheme.TextView"

@@ -4,40 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="4dp">
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/layout_left_right"
+        android:layout_marginLeft="@dimen/layout_left_right"
+        android:layout_marginBottom="@dimen/layout_left_right"
+        android:elevation="16dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp">
 
             <ImageView
                 android:id="@+id/image_my_habit_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="44dp"
+                android:layout_marginRight="8dp"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="false"
                 android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:tag="a"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
+                android:src="@drawable/ic_star_black_24dp" />
 
 
             <LinearLayout
                 android:id="@+id/linearlayout_goal_day_my_habit_item"
-                android:layout_width="wrap_content"
+                android:layout_width="148dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentTop="false"
                 android:layout_centerVertical="true"
+                android:paddingLeft="13dp"
                 android:layout_toLeftOf="@+id/linearlayout_did_my_habit_item"
                 android:layout_toRightOf="@+id/image_my_habit_item"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                style="@style/AppTheme.TextView.04.Button.01"
+                android:background="@drawable/drawable_myhabit_list_item"
+                android:layout_weight="1"
+                >
 
                 <TextView
                     android:id="@+id/textview_customname_my_habit_item"
@@ -45,8 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:tag="b"
-                    android:text="습관이름" />
+                    android:text="습관이름"
+                    style="@style/AppTheme.TextView.04.Button.01"/>
 
                 <TextView
                     android:id="@+id/textview_dayofweek_my_habit_item"
@@ -55,7 +67,8 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:text="요일" />
+                    android:text="요일"
+                    style="@style/AppTheme.TextView.02.Main.Habit.Sub"/>
             </LinearLayout>
 
             <LinearLayout
@@ -63,34 +76,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
-                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/image_my_habit_item"
                 android:layout_alignParentTop="false"
                 android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textview_didday_my_habit_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="1회" />
-
-                <TextView
-                    android:id="@+id/textview_per_my_habit_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="/" />
+                android:gravity="top"
+                android:orientation="horizontal"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textview_dayFull_my_habit_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="3회" />
+                    android:text="3회"
+                    style="@style/AppTheme.TextView.04.Button.01"/>
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

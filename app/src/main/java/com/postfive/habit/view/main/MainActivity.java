@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new CelebListFragment();
                             break;
                         case R.id.setting :
-                            fragment = new SettingFragment();
+//                            fragment = new SettingFragment();
                             break;
                         default :
                             break;
@@ -181,21 +181,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
-
     @Override
     protected void onRestart() {
         super.onRestart();
         finish();
+        startActivity(getIntent());
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -205,6 +197,5 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(new MyHabitsFragment());
             mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         }
-
     }
 }

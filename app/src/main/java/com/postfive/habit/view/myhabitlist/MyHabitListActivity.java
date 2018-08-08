@@ -126,7 +126,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onRestart() {
         super.onRestart();
-        Toast.makeText(this, "onRestart ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onRestart ", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onRestart ");
         if(userHabitRespository != null) {
             userHabitRespository = new UserHabitRespository(getApplication());
@@ -145,7 +145,7 @@ public class MyHabitListActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "onStop ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onStop ", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onStop ");
 /*        if(userHabitViewModel !=null) {
             userHabitViewModel.getAllUserHabitDetailLive().removeObserver(observer);

@@ -6,12 +6,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/upper_back_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
 
@@ -32,7 +32,7 @@
                 <TextView
                     android:id="@+id/goal_statement"
                     android:layout_width="match_parent"
-                    android:layout_height="133dp"
+                    android:layout_height="170dp"
                     android:layout_gravity="bottom"
                     android:gravity="bottom"
                     android:text="오늘부터 다이어트!!"
@@ -42,7 +42,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginBottom="32dp"
                     android:gravity="top"

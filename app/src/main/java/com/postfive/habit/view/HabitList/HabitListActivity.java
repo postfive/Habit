@@ -199,7 +199,7 @@ public class HabitListActivity extends AppCompatActivity {
         habitSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplication(),"선택완료", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplication(),"선택완료", Toast.LENGTH_SHORT).show();
                 onClickSelect();
             }
         });
@@ -211,7 +211,7 @@ public class HabitListActivity extends AppCompatActivity {
     /* toolbar, action bar 버튼 클릭 이벤트 */
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
 
-        Toast.makeText(this,"앵 왜 안나옴 ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"앵 왜 안나옴 ", Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case android.R.id.home:
                 onClickClose();

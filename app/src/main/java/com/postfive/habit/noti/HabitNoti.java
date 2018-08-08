@@ -73,7 +73,7 @@ public class HabitNoti {
         intent.putExtra("when", when);
         PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, when);
 
-        Toast.makeText(context, "알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, "알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
         Log.d( TAG,"알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE));
         //알람 예약
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);

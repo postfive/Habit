@@ -42,7 +42,6 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 //        ((RowCell)holder).imageView.setImageDrawable();
         ((RowCell)holder).goalText.setText( mMyHabitList.get(position).getGoal());
         ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getGoal()+""+mMyHabitList.get(position).getUnit());
-        ((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDid()+""+mMyHabitList.get(position).getUnit());
         Drawable drawable = mContext.getResources().getDrawable(mMyHabitList.get(position).getIcon());
 
         ((RowCell)holder).imageView.setImageDrawable(drawable);
@@ -72,7 +71,6 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public TextView goalText;
         public TextView dayofweekText;
         public TextView dayFullText;
-        public TextView didDayText;
 
         public RowCell(View view) {
             super(view);
@@ -80,7 +78,6 @@ public class MyHabitRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             goalText = (TextView)view.findViewById(R.id.textview_customname_my_habit_item);
             dayofweekText = (TextView)view.findViewById(R.id.textview_dayofweek_my_habit_item);
             dayFullText = (TextView)view.findViewById(R.id.textview_dayFull_my_habit_item);
-            didDayText = (TextView)view.findViewById(R.id.textview_didday_my_habit_item);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
