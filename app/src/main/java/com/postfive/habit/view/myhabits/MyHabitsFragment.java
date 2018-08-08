@@ -83,8 +83,8 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         UserSettingValue userSettingValue = new UserSettingValue(getContext().getApplicationContext());
 
         userSettingValue.setMainImgResource(R.drawable.img_ahnyoungi_title);
-//        userSettingValue.setStartDate("2018.07.31");
-//        userSettingValue.setEndDate("2018.08.31");
+        userSettingValue.setStartDate("2018.07.31");
+        userSettingValue.setEndDate("2018.08.31");
 
         Log.d(TAG, "shered test " + Integer.toString(userSettingValue.getMainImgResource())
                 + " " + userSettingValue.getStartDate()

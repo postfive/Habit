@@ -50,11 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.d(TAG, "언제?4");
         setContentView(R.layout.activity_main);
-
-        Log.d(TAG, "언제?5");
         //getHashKey(getApplicationContext());
         mainActivity = this;
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
@@ -63,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // BottomNavigation 선택 리스터
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-
-        Log.d(TAG, "언제?6");
-
         processIntent();
-
-
-        Log.d(TAG, "언제?11");
         new HabitNoti(getApplicationContext()).Alarm();
     }
 
@@ -105,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, fragment)
                 .commit();
 
-        Log.d(TAG, "언제?9");
         return true;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -119,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new MyHabitsFragment();
                             break;
                         case R.id.statistics : // 달력으로 바꿀꺼임
-                            fragment = new StatisticsFragment();
+                            fragment = new SettingFragment();
                             break;
                         case R.id.favorite :
                             fragment = new CelebListFragment();
                             break;
                         case R.id.setting :
-//                            fragment = new SettingFragment();
+                            fragment = new SettingFragment();
                             break;
                         default :
                             break;

@@ -364,11 +364,11 @@ public class CelebActivity extends AppCompatActivity  {
         }else{
             Calendar today = Calendar.getInstance();
             startDate = Integer.toString(today.get(Calendar.YEAR)) + "."
-                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
-                        + Integer.toString(today.get(Calendar.DATE));
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE));
             endDate = Integer.toString(today.get(Calendar.YEAR)) + "."
-                        + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
-                        + Integer.toString(today.get(Calendar.DATE) + 7);
+                    + Integer.toString(today.get(Calendar.MONTH) + 1) + "."
+                    + Integer.toString(today.get(Calendar.DATE) + 7);
 
             myCustomDialog();
         }
