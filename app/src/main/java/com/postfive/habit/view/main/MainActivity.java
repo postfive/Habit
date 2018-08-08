@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new MyHabitsFragment();
                             break;
                         case R.id.statistics : // 달력으로 바꿀꺼임
-                            fragment = new SettingFragment();
+                            fragment = new StatisticsFragment();
                             break;
                         case R.id.favorite :
                             fragment = new CelebListFragment();
