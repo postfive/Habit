@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.postfive.habit.ItemClickSupport;
@@ -70,6 +71,9 @@ public class CelebListFragment extends Fragment {
             linearLayout.setVisibility(View.VISIBLE);
             textViewTitle.setVisibility(View.GONE);
         }
+
+        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressbar_celeb_list);
+        progressBar.setVisibility(View.VISIBLE);
         int width = getResources().getDisplayMetrics().widthPixels;
         mCelebRecyclerViewAdapter = new CelebRecyclerViewAdapter(null);
 
@@ -87,6 +91,7 @@ public class CelebListFragment extends Fragment {
             public void onChanged(@Nullable List<CelebHabitMaster> celebHabitMasters) {
 
                 mCelebRecyclerViewAdapter.setAllHabit(celebHabitMasters);
+                progressBar.setVisibility(View.GONE);
             }
         });
 

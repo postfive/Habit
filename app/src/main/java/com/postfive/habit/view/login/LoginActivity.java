@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserHabitRespository mUserHabitRespository;
     private HabitRespository mHabitRespository;
-
+    private boolean isFinish = false;
     UserSettingValue mUserSettingValue;
 
     private ImageView mImageView;
@@ -49,37 +49,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_login);
 
+        Log.d(TAG, "언제?1");
 
         mUserSettingValue = new UserSettingValue(getApplication());
 
-        // 앱 최초 실행 여부 확인
-        if(mUserSettingValue.init()) {
-
-            setContentView(R.layout.activity_login);
-
-            mImageView = (ImageView)findViewById(R.id.imageview_login_bg);
-
-            // 디비 초기화
-            ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
-            new CheckTypesTask(progressBar).execute();
-
+        mImageView = (ImageView)findViewById(R.id.imageview_login_bg);
         mBtnKakao = (LinearLayout)findViewById(R.id.btn_login_kakao);
         mBtnFacebook = (LinearLayout)findViewById(R.id.btn_login_facebook);
         mBtnGoogle = (LinearLayout)findViewById(R.id.btn_login_google);
         mBtnNoLogin = (LinearLayout)findViewById(R.id.btn_no_login);
         mTextviewForgetAccount = (TextView)findViewById(R.id.textview_forget_account);
 
+        // 앱 최초 실행 여부 확인
+        if(mUserSettingValue.init()) {
+
+
+
+            // 디비 초기화
+            ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+            new CheckTypesTask(progressBar).execute();
+
+
         mBtnKakao.setOnClickListener(this);
         mBtnFacebook.setOnClickListener(this);
         mBtnGoogle.setOnClickListener(this);
         mBtnNoLogin.setOnClickListener(this);
         mTextviewForgetAccount.setOnClickListener(this);
+
         }else{
+//            mImageView.setVisibility(View.INVISIBLE);
+            mBtnKakao.setVisibility(View.INVISIBLE);
+            mBtnFacebook.setVisibility(View.INVISIBLE);
+            mBtnGoogle.setVisibility(View.INVISIBLE);
+            mBtnNoLogin.setVisibility(View.INVISIBLE);
+            mTextviewForgetAccount.setVisibility(View.INVISIBLE);
+
+            Log.d(TAG, "언제?2");
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("init",1);
             startActivity(intent);
             finish();
+
+            Log.d(TAG, "언제?3");
         }
 
     }
@@ -120,13 +133,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 connectDB();
                 populateWithTestData();
-                for (int i = 0; i < 5; i++) {
-                    //asyncDialog.setProgress(i * 30);
+                while(!isFinish) {
+                    Log.d(TAG,"DB TEST 진행중");
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                Log.d(TAG,"DB TEST 끝");
+            } catch (Exception e){
+
             }
+            /*catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
             return null;
         }
 
@@ -192,20 +210,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // 유명인 set
 
-        Habit bicycle = new Habit(1, Habit.HEALTH_CATEGORY, "자전거타기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_bicycle);
-        Habit run     = new Habit(2, Habit.HEALTH_CATEGORY, "달리기 하기", Unit.COUNT_UNIT, Habit.NIGHT_TIME, 1, 1, 6, "blue", R.drawable.ic_run);
-        Habit walk    = new Habit(3, Habit.HEALTH_CATEGORY, "만보 걷기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_walking);
-        Habit yoga    = new Habit(4, Habit.HEALTH_CATEGORY, "요가 하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_yoga);
+        Habit bicycle = new Habit(1, Habit.HEALTH_CATEGORY, "자전거타기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_bicycle);
+        Habit run     = new Habit(2, Habit.HEALTH_CATEGORY, "달리기 하기", Unit.COUNT_UNIT, Habit.NIGHT_TIME, 0, 1, 0, "blue", R.drawable.ic_run);
+        Habit walk    = new Habit(3, Habit.HEALTH_CATEGORY, "만보 걷기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_walking);
+        Habit yoga    = new Habit(4, Habit.HEALTH_CATEGORY, "요가 하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_yoga);
 
-        Habit fruits     = new Habit(5, Habit.EAT_CATEGORY, "아침에 사과 먹기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_apple);
-        Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "견과류먹기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 5, 1, 6, "blue", R.drawable.ic_dry_fruits);
-        Habit drinkwater = new Habit(7, Habit.EAT_CATEGORY, "물마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 1, 6, "blue", R.drawable.ic_water);
-        Habit drinktea   = new Habit(8, Habit.EAT_CATEGORY, "차마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 10, 1, 6, "blue", R.drawable.ic_tea);
-        Habit hi         = new Habit(9, Habit.SOCIAL_LIFE_CATEGORY, "인사하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_greet);
-        Habit write      = new Habit(10, Habit.SOCIAL_LIFE_CATEGORY, "필기하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_listup);
-        Habit cleanup    = new Habit(11, Habit.SOCIAL_LIFE_CATEGORY, "정리하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 1, 1, 6, "blue", R.drawable.ic_cleanup);
-        Habit wakeup    = new Habit(12, Habit.SOCIAL_LIFE_CATEGORY, "기상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_cleanup);
-        Habit mind       = new Habit(13, Habit.MIND_CATEGORY, "명상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 1, 1, 6, "blue", R.drawable.ic_meditation);
+        Habit fruits     = new Habit(5, Habit.EAT_CATEGORY, "아침에 사과 먹기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_apple);
+        Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "견과류먹기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_dry_fruits);
+        Habit drinkwater = new Habit(7, Habit.EAT_CATEGORY, "물마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_water);
+        Habit drinktea   = new Habit(8, Habit.EAT_CATEGORY, "차마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_tea);
+        Habit hi         = new Habit(9, Habit.SOCIAL_LIFE_CATEGORY, "인사하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_greet);
+        Habit write      = new Habit(10, Habit.SOCIAL_LIFE_CATEGORY, "필기하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_listup);
+        Habit cleanup    = new Habit(11, Habit.SOCIAL_LIFE_CATEGORY, "정리하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_cleanup);
+        Habit wakeup    = new Habit(12, Habit.SOCIAL_LIFE_CATEGORY, "기상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_cleanup);
+        Habit mind       = new Habit(13, Habit.MIND_CATEGORY, "명상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_meditation);
 
         List<Habit> habitli = new ArrayList<>();
         habitli.add(bicycle);
@@ -408,9 +426,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         unitList.add(walkUnit3);
         mHabitRespository.insertUnit(unitList);
 
-        Log.d(TAG, "DB TEST 초기화 종료 ");
-
         disconnectDB();
+
+        Log.d(TAG, "DB TEST 초기화 종료 ");
+        isFinish = true;
     }
 
 }

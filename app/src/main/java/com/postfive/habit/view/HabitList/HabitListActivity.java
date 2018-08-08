@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,6 +120,30 @@ public class HabitListActivity extends AppCompatActivity {
             }
         });
 
+        ItemClickSupport socialClickSupport = ItemClickSupport.addTo(mSocialHabitRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                habit = mySocailRecyclerViewAdapter.getHabit(position);
+                if(selectedView != null) {
+                    selectedView.setBackgroundColor(getResources().getColor(R.color.noneHabit));
+                }
+                v.setBackgroundColor(getResources().getColor(R.color.selectedHabit));
+                selectedView = v;
+            }
+        });
+
+        ItemClickSupport mindlickSupport = ItemClickSupport.addTo(mMindHabitRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                habit = myMindRecyclerViewAdapter.getHabit(position);
+                if(selectedView != null) {
+                    selectedView.setBackgroundColor(getResources().getColor(R.color.noneHabit));
+                }
+                v.setBackgroundColor(getResources().getColor(R.color.selectedHabit));
+                selectedView = v;
+            }
+        });
+
 
         mHabitViewModel =  ViewModelProviders.of(this).get(HabitViewModel.class);
         mHabitViewModel.getAllHabitLive().observe(this, new Observer<List<Habit>>() {
@@ -170,7 +195,7 @@ public class HabitListActivity extends AppCompatActivity {
         final MenuItem alertMenuItem = menu.findItem(R.id.action_select);
         FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
 
-        TextView habitSelect = (TextView)rootView.findViewById(R.id.btn_habit_select);
+        Button habitSelect = (Button)rootView.findViewById(R.id.btn_habit_select);
         habitSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +231,9 @@ public class HabitListActivity extends AppCompatActivity {
         finish();
     }
     private void onClickSelect(){
+        if(habit == null){
+            return;
+        }
         Intent result = new Intent();
 
         UserHabitDetail userHabitDetail = new UserHabitDetail(habit);

@@ -13,14 +13,18 @@ import java.util.List;
 public class UserHabitViewModel extends AndroidViewModel {
     private UserHabitRespository mHabitRespository;
     private LiveData<List<HabitStatistics>> mHabitStatistics;
+    private LiveData<List<HabitStatisticsCalendar>> mHabitStatisticsCalendarList;
 
     public UserHabitViewModel(@NonNull Application application) {
         super(application);
         mHabitRespository = new UserHabitRespository(application);
 
         mHabitStatistics = this.mHabitRespository.getHabitStatics();
+        mHabitStatisticsCalendarList = this.mHabitRespository.getHabitStaticsCalendar();
     }
     public LiveData<List<HabitStatistics>> getHabitStatics() {
         return mHabitStatistics;
+    }    public LiveData<List<HabitStatisticsCalendar>> getHabitStaticsCalendar() {
+        return mHabitStatisticsCalendarList;
     }
 }

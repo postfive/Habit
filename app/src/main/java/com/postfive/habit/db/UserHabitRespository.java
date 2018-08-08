@@ -22,6 +22,8 @@ public class UserHabitRespository {
     private UserHabitDao mUserHabitDao;
     private UserHabitDao2 mUserHabitDao2;
     private LiveData<List<HabitStatistics>> mHabitStatisticsList;
+    private LiveData<List<HabitStatisticsCalendar>> mHabitStatisticsCalendarList;
+
 
     public UserHabitRespository(Application application ){
         this.db =  AppDatabase.getInMemoryDatabase(application);
@@ -29,10 +31,12 @@ public class UserHabitRespository {
         this.mUserHabitDao2 = db.userhabitModel2();
 
         this.mHabitStatisticsList = db.userhabitModel().getHabitStatics();
+        this.mHabitStatisticsCalendarList = db.userhabitModel().getHabitStaticsCalendar();
     }
 
     // 데이터 변경되면 자동 변경 되도록 일단 만들어는 놓는다..
     LiveData<List<HabitStatistics>> getHabitStatics() {return mHabitStatisticsList;}
+    LiveData<List<HabitStatisticsCalendar>> getHabitStaticsCalendar() {return mHabitStatisticsCalendarList;}
 
     public void destroyInstance(){
         db.destroyInstance();

@@ -19,6 +19,7 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.postfive.habit.R;
+import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.Utils;
 import com.postfive.habit.adpater.celebdetaillist.celeblist.HabitKitRecyclerViewModel;
 import com.postfive.habit.adpater.statistics.StatisticsRecyclerViewAdapter;
@@ -45,8 +46,9 @@ public class StatisticsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private StatisticsRecyclerViewAdapter mRecyclerViewAdapter;
     private UserHabitViewModel userHabitViewModel;
-    private List<UserHabitDetail> mHabitList;
 
+
+    private UserSettingValue userSettingValue;
     public StatisticsFragment() {
         // Required empty public constructor
     }
@@ -116,6 +118,10 @@ public class StatisticsFragment extends Fragment {
 
         mRecyclerViewAdapter = new StatisticsRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+
+        userSettingValue = new UserSettingValue(getContext());
+
+
 /*        connectDB();
         mHabitList = mUserHabitRespository.getAllUserHabitDetail();
 
@@ -126,8 +132,7 @@ public class StatisticsFragment extends Fragment {
 
         // 데이터가 변경될 때 호출
         userHabitViewModel.getHabitStatics().observe(this, observer);
-//        userHabitViewModel.getHabitStaticsCalendar().observe(this, observer2);
-
+        userHabitViewModel.getHabitStaticsCalendar().observe(this, observer2);
 
         return view;
     }
@@ -140,12 +145,41 @@ public class StatisticsFragment extends Fragment {
             mRecyclerViewAdapter.setAllHabit(habitStatistics);
         }
     };
-/*    Observer observer2 = new Observer<List<HabitStatisticsCalendar>>() {
+    Observer observer2 = new Observer<List<HabitStatisticsCalendar>>() {
         @Override
         public void onChanged(@Nullable List<HabitStatisticsCalendar> habitStatistics) {
-            updateCalendar
+//            updateCalendar
+            String strStartday = UserSettingValue.getStartDate();
+
+            Log.d("date",strStartday);
+            String [] array = strStartday.split(".");
+            Log.d("date", "for "+ array.length);
+            for(String tmp : array){
+                Log.d("date", "for "+ tmp);
+            }/*
+            int intStartDay = Integer.getInteger(strStartday.split(".")[0]);
+            int intStartMonth =Integer.getInteger(strStartday.split(".")[1]);
+            int intStartYear  = Integer.getInteger(strStartday.split(".")[2]);
+
+            Log.d("date",Integer.toString(intStartDay) +" "+  Integer.toString(intStartMonth) +" "+ Integer.toString(intStartYear));
+            *//*
+            int intStartDay     = Integer.parseInt(strStartday.substring(strStartday.lastIndexOf(".")+1, strStartday.length()));
+            int intStartMonth   = Integer.parseInt(strStartday.substring(strStartday.lastIndexOf(".")-2, strStartday.lastIndexOf(".")));
+            int intStartYear   = Integer.parseInt(strStartday.substring(strStartday.indexOf(".")+1, strStartday.indexOf(".")+4));*//*
+            Date date = new Date();
+            date.setYear(intStartYear);
+            date.setMonth(intStartMonth);
+            date.setDate(intStartDay);
+
+            String DATE_FORMAT = "yyyy. MM. dd";
+
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            Log.d("date",sdf.format(date.getTime()));*/
+
+
+
         }
-    };*/
+    };
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

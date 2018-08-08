@@ -29,6 +29,8 @@
 
     <string name="health_habit">건강</string>
     <string name="eat_habit">식 습관</string>
+    <string name="social_life_habit">사회생활</string>
+    <string name="mind_habit">마음수련</string>
     <string name="habit_title">습관 제목</string>
     <string name="repetition">반복</string>
     <string name="everyday">매일</string>

@@ -50,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "언제?4");
         setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "언제?5");
         //getHashKey(getApplicationContext());
         mainActivity = this;
         mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation_main);
@@ -60,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
         mBottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
 
+        Log.d(TAG, "언제?6");
+
         processIntent();
 
-        new HabitNoti(this).Alarm();
+
+        Log.d(TAG, "언제?11");
+        new HabitNoti(getApplicationContext()).Alarm();
     }
 
     protected void onNewIntent(Intent intent){
@@ -80,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
             mBottomNavigationView.setOnNavigationItemSelectedListener(null);
             mBottomNavigationView.setClickable(false);
         }else {
+            Log.d(TAG, "언제?7");
             // 두번째 로그인 시
             loadFragment(new MyHabitsFragment());
         }
+        Log.d(TAG, "언제?8");
     }
 
     private boolean loadFragment(Fragment fragment){
@@ -95,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, fragment)
                 .commit();
 
+        Log.d(TAG, "언제?9");
         return true;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =

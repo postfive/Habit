@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.postfive.habit.UserSettingValue;
 import com.postfive.habit.db.UserHabitState;
@@ -72,7 +73,8 @@ public class HabitNoti {
         intent.putExtra("when", when);
         PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, when);
 
-        Log.d(TAG, "알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE));
+        Toast.makeText(context, "알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
+        Log.d( TAG,"알람 시간 확인 " + Integer.toString(when) +" "+ calendar.get(Calendar.YEAR) +" "+ calendar.get(Calendar.MONTH) + " "+ calendar.get(Calendar.DATE) + " "+ calendar.get(Calendar.HOUR_OF_DAY)+ " "+ calendar.get(Calendar.MINUTE));
         //알람 예약
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }

@@ -56,6 +56,7 @@ public class UserSettingValue {
         if(mUserSettingValue == null) {
             mUserSettingValue = new UserSettingValue();
             settings = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
+            readValue();
         }
     }
 

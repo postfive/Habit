@@ -24,13 +24,13 @@ public interface UserHabitDao {
             "ORDER BY sum(user_habit_s.did) DESC ")
     LiveData<List<HabitStatistics>> getHabitStatics();
 
-/*    @Query("SELECT USER_HABIT_S.dayofweek, sum(user_habit_s.did) as did, sum(user_habit_s.goal) as goal  " +
+    @Query("SELECT USER_HABIT_S.dayofweek, sum(user_habit_s.did) as did, sum(user_habit_s.goal) as goal  " +
             "FROM USER_HABIT_D, " +
             "       user_habit_s " +
             "WHERE USER_HABIT_D.habitseq = USER_HABIT_S.masterseq " +
             "GROUP BY USER_HABIT_S.dayofweek " +
             "ORDER BY USER_HABIT_S.dayofweek DESC ")
-    LiveData<List<HabitStatisticsCalendar>> getHabitStaticsCalendar();*/
+    LiveData<List<HabitStatisticsCalendar>> getHabitStaticsCalendar();
 
     // 전체 습관
     @Query("SELECT * FROM USER_HABIT_D ORDER BY habitseq ASC")

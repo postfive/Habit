@@ -52,6 +52,7 @@ public class HabitActivity extends AppCompatActivity {
     private TextView mActivityTitleName;
     private TextView mHabitName;
     private Button mHabitListBtn;
+    private Button mHabitDelBtn;
     private EditText mUserNameEdtText;        // 사용자 설정 이름
     private ImageButton mUserNameClearBtn;
     private TextView mUserNameHintTextView;
@@ -95,6 +96,7 @@ public class HabitActivity extends AppCompatActivity {
         // 추가 인놈
         if(mHabit == null){
             mActivityTitleName.setText(getResources().getText(R.string.add_habit_name));
+            mHabitDelBtn.setVisibility(View.GONE);
             return;
         }
         mActivityTitleName.setText(getResources().getText(R.string.edit_habit));
@@ -191,6 +193,7 @@ public class HabitActivity extends AppCompatActivity {
         });
 
         mHabitListBtn = (Button)findViewById(R.id.btn_habit_list);
+        mHabitDelBtn = (Button)findViewById(R.id.btn_del);
         mGoalHintTextView = (TextView)findViewById(R.id.textview_goal_hint);
         mGoalEdtText = (EditText)findViewById(R.id.edittext_goal);
         mGoalClearBtn = (ImageButton)findViewById(R.id.btn_clear_goal);
@@ -317,6 +320,9 @@ public class HabitActivity extends AppCompatActivity {
         mSpinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(mHabit == null){
+                    Toast.makeText(getApplicationContext(), "습관을 먼저 선택하세요!", Toast.LENGTH_LONG).show();
+                }
                 mHabit.setUnit((String) mSpinnerUnit.getItemAtPosition(position));
             }
 
@@ -375,6 +381,7 @@ public class HabitActivity extends AppCompatActivity {
 
         for(int i = 1 ; i < 8 ; i ++){
             if((tmpDaySum & ( 1<< i) ) > 0){
+                Log.d(TAG, "DayofWeek ??"+ i);
                 mDayofWeekToggleBtn[i-1].setChecked(true);
             }
         }
@@ -390,7 +397,9 @@ public class HabitActivity extends AppCompatActivity {
     // 요일 버튼 클릭
     public void onClickDayofWeek(View v){
         // 습관 미선택시 안됨
+
         if(mHabit == null){
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -425,7 +434,15 @@ public class HabitActivity extends AppCompatActivity {
     }
 
     public void onClickTime(View v){
+        if(mHabit == null){
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
 
+            mMorningTimeToggleBtn.setChecked(false);
+            mAfternoonTimeToggleBtn.setChecked(false);
+            mNightTimeToggleBtn.setChecked(false);
+            mAllTimeToggleBtn.setChecked(false);
+            return;
+        }
         switch (v.getId()){
             case R.id.toggleBtn_all:
                 mMorningTimeToggleBtn.setChecked(false);
@@ -468,7 +485,7 @@ public class HabitActivity extends AppCompatActivity {
 
     public void onClickSaveHabit(View v){
         if(mHabit == null){
-            Toast.makeText(this,"습관을 선택하지 않으셨습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "습관을 선택하세요!", Toast.LENGTH_LONG).show();
             return;
         }
 

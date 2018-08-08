@@ -128,7 +128,7 @@ public class HabitRespository {
         CelebHabit mCelebHabit;
 
 
-        public DeleteAllAsyncTask(UserHabitDao2 mUserHabitDao
+        public DeleteAllAsyncTask(UserHabitDao2 mUserHabitDao2
                 , HabitDao mHabitDao
                 , CelebHabit mCelebHabit) {
             this.mUserHabitDao2 = mUserHabitDao2;
