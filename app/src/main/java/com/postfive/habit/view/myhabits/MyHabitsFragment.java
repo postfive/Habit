@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -83,7 +82,11 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         //Init values for TEST
         UserSettingValue userSettingValue = new UserSettingValue(getContext().getApplicationContext());
 
-         Log.d(TAG, "shered test " + Integer.toString(userSettingValue.getMainImgResource())
+        userSettingValue.setMainImgResource(R.drawable.img_ahnyoungi_title);
+        userSettingValue.setStartDate("2018.07.31");
+        userSettingValue.setEndDate("2018.08.31");
+
+        Log.d(TAG, "shered test " + Integer.toString(userSettingValue.getMainImgResource())
                 + " " + userSettingValue.getStartDate()
                 + " "+ userSettingValue.getEndDate());
 
@@ -96,8 +99,8 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         TextView end_day_tv = (TextView) view.findViewById(R.id.end_day);
         end_day_tv.setText(UserSettingValue.getEndDate());
 
-        ImageView upper_background = (ImageView) view.findViewById(R.id.upper_back_img);
-        upper_background.setImageResource(UserSettingValue.getMainImgResource());
+        LinearLayout upperLayout = (LinearLayout) view.findViewById(R.id.upperLayout);
+        upperLayout.setBackgroundResource(UserSettingValue.getMainImgResource());
         final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setDay(date_tv, 0);
 
@@ -106,6 +109,9 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
 
         prev_tv.setOnClickListener(this);
         next_tv.setOnClickListener(this);
+
+
+
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -190,7 +196,6 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-
         // Fragment가 화면에 완전히 표시되었을때 사용자의 Action과 상호작용 가능
 //        Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
     }

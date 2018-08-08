@@ -11,6 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.postfive.habit.R;
 import com.postfive.habit.view.login.LoginActivity;
@@ -31,6 +32,7 @@ public class BroadcastD extends BroadcastReceiver {
         int when = intent.getIntExtra("when",0);
         String text="";
         Log.d("Service", "HabitNoti get Extra text: " + when);
+        Toast.makeText(context, "HabitNoti get Extra text: " + when, Toast.LENGTH_SHORT).show();
 
         if(when == 1) {
             text = context.getString(R.string.morning_noti);
@@ -59,7 +61,7 @@ public class BroadcastD extends BroadcastReceiver {
 //                .setStyle(bigTextStyle)
                 ;
 
-        notificationmanager.notify(1, builder.build());
+        notificationmanager.notify(when, builder.build());
 
         new HabitNoti(context).Alarm();
     }

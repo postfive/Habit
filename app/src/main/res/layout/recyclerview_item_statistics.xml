@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:background="@drawable/drawable_statistics_list">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_left_right"
+        android:layout_marginRight="@dimen/layout_left_right"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textview_statistics_item_habit_name"
+                style="@style/AppTheme.TextView.04.Button.01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="아침에 사과먹기" />
+
+            <TextView
+                android:id="@+id/textview_statistics_item_habit_did"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="10%" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar_statistics_item"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="5dp"
+            android:max="100"
+            android:progressBackgroundTint="@color/background"
+            android:progressTint="#ff9d00" />
+<!--        <SeekBar
+            android:id="@+id/seekbar_statistics_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            />-->
+    </LinearLayout>
+</LinearLayout>

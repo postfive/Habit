@@ -3,44 +3,39 @@
     package="com.postfive.habit">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:configChanges="keyboardHidden|orientation"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.main.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.MainActivity">
-        </activity>
+            android:theme="@style/AppTheme.MainActivity"></activity>
         <activity
             android:name=".view.login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.myhabitlist.MyHabitListActivity">
-        </activity>
+        <activity android:name=".view.myhabitlist.MyHabitListActivity"></activity>
         <activity
             android:name=".view.celeb.CelebActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:theme="@style/AppTheme.NoStatusBar">
-        </activity>
+            android:theme="@style/AppTheme.NoStatusBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
             android:name=".view.habit.HabitActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <activity android:name=".view.HabitList.HabitListActivity">
-        </activity>
-        <receiver android:name=".noti.BroadcastD">
-        </receiver>
-        <activity android:name=".view.survey.SurveyActivity">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+        <activity android:name=".view.HabitList.HabitListActivity"></activity>
+        <activity android:name=".view.survey.SurveyActivity"></activity>
+
+        <receiver android:name=".noti.BroadcastD"></receiver>
+
     </application>
 
 </manifest>

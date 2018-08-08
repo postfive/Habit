@@ -2,6 +2,7 @@ package com.postfive.habit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class UserSettingValue {
     private static UserSettingValue mUserSettingValue = null;
@@ -55,6 +56,7 @@ public class UserSettingValue {
         if(mUserSettingValue == null) {
             mUserSettingValue = new UserSettingValue();
             settings = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
+            readValue();
         }
     }
 
@@ -169,6 +171,22 @@ public class UserSettingValue {
         this.endDate = endDate;
     }
 
+
+
+    public void resetAll() {
+        SharedPreferences.Editor editor = settings.edit();
+
+        // SharedPreference 데이터 넣기 시작
+        editor.clear();
+
+        editor.putBoolean("isAppinit", false);
+        editor.putInt(MAIN_IMG_RESOURCE, -1);
+        // Commit the edits!
+        editor.commit();
+        UserSettingValue.mainImgResource = -1;
+
+    }
+
     /**
      *  resetValue()
      *  초기화 함수
@@ -195,6 +213,7 @@ public class UserSettingValue {
 
         editor.putString("resolution", "안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!");
 
+        setMainImgResource(-1);
         // Commit the edits!
         editor.commit();
         // SharedPreference 데이터 넣기 종료
@@ -210,93 +229,11 @@ public class UserSettingValue {
         setInnerNightFrom("18:00");
 
         setInnerResolutionValue("안녕하세요! 비스켓과 함께 건강한 생활 만들어가요!");
+        setInneMainImgResource(-1);
 
         // 설정값 변수 설정 종료
 
         //Toast.makeText(mContext, "설정값 초기화", //Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     *  setValue
-     *  시간 및 목표 설정
-     *
-     * @param strKey
-     * @param strValue
-     * @return
-     */
-    private boolean setValue(String strKey, String strValue){
-
-        // value값 확인
-        if(strValue == null || strValue.length() <1)
-            return false;
-
-        // Key 값 확인
-        if(strKey == null || strKey.length() <1)
-            return false;
-
-        int idx = strValue.indexOf(":");
-
-        if(strKey.equals(MORNING_PUSH)){
-            if(idx < 0)
-                return false;
-
-            morningPushHour = Integer.parseInt(strValue.substring(0, idx));
-            morningPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(AFTERNOON_PUSH)){
-            if(idx < 0)
-                return false;
-
-            afternoonPushHour = Integer.parseInt(strValue.substring(0, idx));
-            afternoonPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(NIGHT_PUSH)){
-            if(idx < 0)
-                return false;
-
-            nightPushHour = Integer.parseInt(strValue.substring(0, idx));
-            nightPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(GOODNIGHT_PUSH)){
-            if(idx < 0)
-                return false;
-
-            goodnightPushHour = Integer.parseInt(strValue.substring(0, idx));
-            goodnightPushMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(MORNING_FROM)){
-            if(idx < 0)
-                return false;
-
-            morningFromHour = Integer.parseInt(strValue.substring(0, idx));
-            morningFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(AFTERNOON_FROM)){
-            if(idx < 0)
-                return false;
-
-            afternoonFromHour = Integer.parseInt(strValue.substring(0, idx));
-            afternoonFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(NIGHT_FROM)){
-            if(idx < 0)
-                return false;
-
-            nightFromHour = Integer.parseInt(strValue.substring(0, idx));
-            nightFromMinute = Integer.parseInt(strValue.substring(idx+1, strValue.length()-1));
-        }
-        else if(strKey.equals(RESOLUTION)){
-            resolutionValue = strValue;
-        }
-        else{
-            return false;
-        }
-
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(strKey, strValue);
-
-        return editor.commit();
-
     }
 
     /**
@@ -309,9 +246,12 @@ public class UserSettingValue {
 
         if (getBoolean) {
             readValue();
+            Log.d("setting","초기화 되어 있음" );
             return false;
         } else{
+            Log.d("setting","초기화 시작" );
             resetValue();
+            Log.d("setting","초기화 종료" );
             return true;
         }
     }
@@ -331,7 +271,9 @@ public class UserSettingValue {
 
         setInnerEndDate(settings.getString(END_DATE, ""));
         setInnerStartDate(settings.getString(START_DATE, ""));
-        setInneMainImgResource(settings.getInt(MAIN_IMG_RESOURCE, 0));
+        setInneMainImgResource(settings.getInt(MAIN_IMG_RESOURCE, -1));
+
+        Log.d("setting", " 초기화 "+Integer.toString(getAfternoonPushHour()));
 
     }
     public static int getMorningPushHour() {
@@ -476,17 +418,4 @@ public class UserSettingValue {
         }
     }
 
-    public void resetAll() {
-        SharedPreferences.Editor editor = settings.edit();
-
-        // SharedPreference 데이터 넣기 시작
-        editor.clear();
-
-        editor.putBoolean("isAppinit", false);
-        editor.putInt(MAIN_IMG_RESOURCE, -1);
-        // Commit the edits!
-        editor.commit();
-        UserSettingValue.mainImgResource = -1;
-
-    }
 }

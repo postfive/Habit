@@ -44,9 +44,11 @@ public class CelebActivity extends AppCompatActivity  {
 
     private static final String TAG = "CelebActivity";
 
-    private TextView textViewTitle;
+    private TextView textViewHeaderTitle;
+    private TextView textViewHeaderSubTitle;
     private TextView textViewSubTitle;
     private TextView textViewSubTitle2;
+    private TextView textViewKitTitle;
     private ImageView imageViewTitle;
     private Button mBtnResolution;
     private EditText editTextResolution;
@@ -120,9 +122,12 @@ public class CelebActivity extends AppCompatActivity  {
         Log.d(TAG, "????" + Integer.toString(mCelebHabitMaster.getDrawable()));
         imageViewTitle.setImageResource(mCelebHabitMaster.getDrawabledetail());
 
-        textViewTitle.setText(mCelebHabitMaster.getTitle());
-        textViewSubTitle.setText(mCelebHabitMaster.getTitle());
+        textViewHeaderTitle.setText(mCelebHabitMaster.getTitle());
+        textViewHeaderSubTitle.setText(mCelebHabitMaster.getSubtitle());
+        textViewSubTitle.setText(mCelebHabitMaster.getSubtitle2());
+        textViewSubTitle2.setText(mCelebHabitMaster.getSubtitle3());
 
+        textViewKitTitle.setText(mCelebHabitMaster.getName()+"의 라이프스타일 키트  ");
         Log.d(TAG, "mCelebHabitDetailList size " + mCelebHabitDetailList.size());
 
         mCelebRecyclerViewAdapter.setAllHabit(mCelebHabitDetailList);
@@ -185,11 +190,14 @@ public class CelebActivity extends AppCompatActivity  {
 
         // 헤더 부분
         imageViewTitle = (ImageView)findViewById(R.id.image_celeb_title);
-        textViewTitle = (TextView)findViewById(R.id.textview_celeb_title);
+        textViewHeaderTitle = (TextView)findViewById(R.id.textview_celeb_title);
+        textViewHeaderSubTitle = (TextView)findViewById(R.id.textview_subtitle_celeb);
 
         // subtitle 부분
         textViewSubTitle = (TextView)findViewById(R.id.textview_celeb_subtitle);
         textViewSubTitle2 = (TextView)findViewById(R.id.textview_celeb_subtitle2);
+
+        textViewKitTitle = (TextView)findViewById(R.id.textview_title_celeb_kit);
 
         mCelebRecyclerViewAdapter = new CelebDetailRecyclerViewAdapter();
         mRecyclerViewCelebDetailList = (RecyclerView)findViewById(R.id.recyclerview_celeb_detail_list);

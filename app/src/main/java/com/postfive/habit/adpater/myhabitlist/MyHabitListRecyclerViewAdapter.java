@@ -1,5 +1,8 @@
 package com.postfive.habit.adpater.myhabitlist;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +39,7 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // XML 디자인한 부분 안에 내용 변경
-//        ((RowCell)holder).imageView.setImageDrawable();
+        ((RowCell)holder).imageView.setImageResource(mMyHabitList.get(position).getIcon());
         ((RowCell)holder).customnameText.setText( mMyHabitList.get(position).getCustomname());
         ((RowCell)holder).dayFullText.setText( mMyHabitList.get(position).getGoal()+""+mMyHabitList.get(position).getUnit());
         //((RowCell)holder).didDayText.setText( mMyHabitList.get(position).getDidDay()+""+mMyHabitList.get(position).getUnit());
@@ -141,5 +144,11 @@ public class MyHabitListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         this.mMyHabitList.add(habit);
 
         notifyDataSetChanged();
+    }
+
+    public void deleteHabit(UserHabitDetail habit){
+
+        this.mMyHabitList.remove(habit);
+        notifyItemRemoved(mMyHabitList.indexOf(habit));
     }
 }

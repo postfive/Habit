@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Habit</string>
+    <string name="app_name">Biskit</string>
 
     <string name="log_out">로그아웃</string>
     <string name="look_around">둘러보기</string>
@@ -21,13 +21,16 @@
     <string name="perday">/일</string>
     <string name="once_doing">1회 수행</string>
     <string name="saving_habit">습관저장</string>
-    <string name="save_habit">습관 저장하기</string>
+    <string name="save_habit">저장하기</string>
+    <string name="del_habit">삭제하기</string>
     <string name="edit_habit">습관편집</string>
     <string name="add_habit_name">습관추가</string>
 
 
     <string name="health_habit">건강</string>
     <string name="eat_habit">식 습관</string>
+    <string name="social_life_habit">사회생활</string>
+    <string name="mind_habit">마음수련</string>
     <string name="habit_title">습관 제목</string>
     <string name="repetition">반복</string>
     <string name="everyday">매일</string>

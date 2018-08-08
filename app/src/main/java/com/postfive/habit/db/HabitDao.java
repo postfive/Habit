@@ -16,21 +16,8 @@ public interface HabitDao {
     @Query("SELECT * FROM habit_m")
     LiveData<List<Habit>> allHabitLive();
 
-    @Query("SELECT * FROM habit_m")
-    List<Habit> allHabit();
-
-    @Query("SELECT * FROM habit_m where habitcode =:habitcode")
-    Habit selectHabit(int habitcode);
-
-
-    @Query("SELECT max(habitcode) FROM habit_m")
-    int getMaxCode();
-
     @Insert(onConflict = IGNORE)
     void insertAllHabit(List<Habit> habit);
-
-    @Insert(onConflict = IGNORE)
-    void insertHabit(Habit habit);
 
     @Query("DELETE FROM HABIT_M")
     void delAllHabit();

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.statistics.StatisticsFragment"
+    style="@style/AppTheme.Tab">
+
+    <LinearLayout
+        android:id="@+id/linearlayout_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+            <TextView
+                style="@style/AppTheme.Toolbar.Title"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+
+                android:gravity="center"
+                android:text="통계"/>
+<!--android:layout_marginTop="19dp"
+                android:layout_marginBottom="18dp"-->
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport = "true">
+            <TabHost
+                android:id="@+id/tabHost1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <!-- TabWidget의 id값이 반드시 "tabs"로 지정되어야 함. -->
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!-- FrameLayout의 id값이 반드시 "tabcontent"로 지정되어야 함. -->
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true">
+
+                        <!-- 첫 번째 페이지. content1 -->
+                        <LinearLayout
+                            android:id="@+id/content1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                <com.postfive.habit.calendar.CalendarView xmlns:calendarNS="http://schemas.android.com/apk/res/com.postfive.habit"
+                                    android:id="@+id/calendar_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    calendarNS:dateFormat="yyyy MM" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginLeft="@dimen/layout_left_right"
+                                    android:layout_marginRight="@dimen/layout_left_right"
+                                    android:orientation="horizontal">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal">
+                                        <ImageView
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
+                                            android:layout_marginBottom="8dp"
+                                            android:src ="@color/statistics_25"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="25%미만 완료"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal">
+                                        <ImageView
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
+                                            android:layout_marginBottom="8dp"
+                                            android:src ="@color/statistics_50"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="50% 완료"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal">
+                                        <ImageView
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
+                                            android:layout_marginBottom="8dp"
+                                            android:src ="@color/statistics_75"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="75% 완료"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal">
+                                        <ImageView
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
+                                            android:layout_marginBottom="8dp"
+                                            android:src ="@color/statistics_100"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="100% 완료"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                                </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 두 번째 페이지. content2 -->
+                        <LinearLayout
+                            android:id="@+id/content2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+<!--                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#009688"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:text="TAB CONTENT 2" />-->
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerview_statistics_habit_list"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>
+                        </LinearLayout>
+
+                    </FrameLayout>
+                </LinearLayout>
+            </TabHost>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>
