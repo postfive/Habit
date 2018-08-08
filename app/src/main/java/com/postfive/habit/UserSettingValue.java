@@ -418,17 +418,4 @@ public class UserSettingValue {
         }
     }
 
-    public void resetAll() {
-        SharedPreferences.Editor editor = settings.edit();
-
-        // SharedPreference 데이터 넣기 시작
-        editor.clear();
-
-        editor.putBoolean("isAppinit", false);
-        editor.putInt(MAIN_IMG_RESOURCE, -1);
-        // Commit the edits!
-        editor.commit();
-        UserSettingValue.mainImgResource = -1;
-
-    }
 }
