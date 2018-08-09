@@ -60,7 +60,7 @@
 
 그렇게 20층을 1~10층은 한칸씩, 11~20층은 두칸씩
 오르니 2주차부터는 효과가 있더라구요."
-        style="AppTheme.TextView.02.Celeb.Detail.Coment"/>
+        style="@style/AppTheme.TextView.02.Celeb.Detail.Coment"/>
 
     <TextView
         android:id="@+id/textview_celeb_detail_item_memo"

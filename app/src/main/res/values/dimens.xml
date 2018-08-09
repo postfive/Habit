@@ -22,5 +22,7 @@
 
     <dimen name="main_habit_title_date_02_textsize">12sp</dimen>
     <dimen name="main_habit_title_date_02_linesapce">6sp</dimen>
+    <dimen name="celeb_detail_comment_textsize">16sp</dimen>
+    <dimen name="celeb_detail_comment_linespace">8sp</dimen>
 
 </resources>

@@ -219,11 +219,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Habit dryfruits  = new Habit(6, Habit.EAT_CATEGORY, "견과류먹기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_dry_fruits);
         Habit drinkwater = new Habit(7, Habit.EAT_CATEGORY, "물마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_water);
         Habit drinktea   = new Habit(8, Habit.EAT_CATEGORY, "차마시기", Unit.LIQUID_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_tea);
+
         Habit hi         = new Habit(9, Habit.SOCIAL_LIFE_CATEGORY, "인사하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_greet);
         Habit write      = new Habit(10, Habit.SOCIAL_LIFE_CATEGORY, "필기하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_listup);
         Habit cleanup    = new Habit(11, Habit.SOCIAL_LIFE_CATEGORY, "정리하기", Unit.COUNT_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_cleanup);
         Habit wakeup    = new Habit(12, Habit.SOCIAL_LIFE_CATEGORY, "기상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_clock);
-        Habit mind       = new Habit(13, Habit.MIND_CATEGORY, "명상하기", Unit.COUNT_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_meditation);
+        Habit suda   = new Habit(14, Habit.SOCIAL_LIFE_CATEGORY, "수다떨기", Unit.TIME_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_tea);
+
+
+        Habit mind       = new Habit(13, Habit.MIND_CATEGORY, "명상하기", Unit.TIME_UNIT, Habit.MORNING_TIME, 0, 1, 0, "blue", R.drawable.ic_meditation);
+        Habit san    = new Habit(15, Habit.MIND_CATEGORY, "산책 하기", Unit.TIME_UNIT, Habit.ALLDAY_TIME, 0, 1, 0, "blue", R.drawable.ic_walking);
+
 
         List<Habit> habitli = new ArrayList<>();
         habitli.add(bicycle);
@@ -239,6 +245,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         habitli.add(cleanup);
         habitli.add(wakeup);
         habitli.add(mind);
+        habitli.add(suda);
+        habitli.add(san);
+
 
         mHabitRespository.insertAllHabit(habitli);
 
@@ -268,7 +277,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             "카페인이 지방 연소에 윤활유 역할을 한다고해요."
                                             ,"07:00", 124, 1, 1, Unit.COUNT_UNIT, "회", "img_parkboram_detail_1.png", "blue", R.drawable.ic_water, R.drawable.img_parkboram_detail_1);
 
-        CelebHabitDetail celebHabitd2 = new CelebHabitDetail(2, 2, Habit.MORNING_TIME, 2, "유산소 운동하기", "유산소 운동하기", "", "또한 공복의 유산소 운동은 \n" +
+        CelebHabitDetail celebHabitd2 = new CelebHabitDetail(2, 2, Habit.MORNING_TIME, 3, "유산소 운동하기", "유산소 운동하기", "", "또한 공복의 유산소 운동은 \n" +
                 "체내에 축적되어 있던 탄수화물을\n" +
                 "긴 수면시간 동안 천천히 소모시키게 된\n" +
                 "상태이기 때문에 음식 섭취를 하기 전인 오전 공복에 유산소를 할 경우 체지방을 끌어내어\n" +
@@ -330,14 +339,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "아침을 깨끗한 정신으로 맞이했다고 합니다."
                 ,"06:00", 124, 1, 1, Unit.COUNT_UNIT, "회", "img_parkboram_detail_1.png", "blue", R.drawable.ic_clock, R.drawable.sub_jobs_1);
 
-        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(1, 2, Habit.MORNING_TIME, 2, "필기하기", "하루 계획 하기", "\"지난 33년 동안, 매일 아침 거울을 보며 \n" +
+        CelebHabitDetail celebHabitd22 = new CelebHabitDetail(1, 2, Habit.MORNING_TIME, 2, "하루 계획 하기", "하루 계획과 목표 확인으로\n" +
+                "하루를 시작하기", "\"지난 33년 동안, 매일 아침 거울을 보며 \n" +
                 "자신에게 질문했습니다. \n" +
                 "만약 오늘이 내 인생 마지막 날이라면, \n" +
                 "오늘 내가 하려는 이 일을 하려고 할까? \n" +
                 "만약 아니라는 대답이 며칠 연속으로 나온다면, \n" +
                 "뭔가 변화가 필요하다는 것을 깨닫게 되죠\""
-                , "또한 공복의 유산소 운동은 \n" +
-                "'나도 곧 죽겠지'라는 사실을 항상 명심한다면\n" +
+                , "'나도 곧 죽겠지'라는 사실을 항상 명심한다면\n" +
                 "인생에 있어서 중차대한 결정을 내려야 할 때 \n" +
                 "큰 도움이 됩니다.\n" +
                 "왜냐면 대부분의 것들이 외부의 기대치나, \n" +
@@ -352,7 +361,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "하나하나 머릿속으로\n" +
                 "생각해보고 작성하는 시간을 가져보세요.","07:00",124, 1, 1, Unit.COUNT_UNIT,"회", "img_parkboram_detail_1.png", "blue", R.drawable.ic_listup, R.drawable.sub_jobs_2);
 
-        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(1, 3, Habit.AFTERNOON_TIME, 2, "산책하기", "산책하기"
+        CelebHabitDetail celebHabitd23 = new CelebHabitDetail(1, 3, Habit.AFTERNOON_TIME, 15, "산책하기", "산책하기"
                 , ""
                 ,"잡스는 시간이 날 때 마다\n" +
                 "복잡한 생각을 정리하기 위해 산책을 했다고 합니다.\n" +
@@ -367,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "하루 한번씩은, 복잡한 머리를 정리하기 위해\n" +
                 "아무생각없이 산책한번씩 해봐요!", "16:00",254, 20, 1, Unit.TIME_UNIT,"분", "img_parkboram_detail_2.png", "blue", R.drawable.ic_walking, R.drawable.sub_jobs_3);
 
-        CelebHabitDetail celebHabitd24 = new CelebHabitDetail(1, 4, Habit.NIGHT_TIME, 3, "수다떨기", "마음 맞는 사람들과 차 한잔과 수다떨기", "", "Apple이 전 세계적인 성공을 이룰 수 있었던\n" +
+        CelebHabitDetail celebHabitd24 = new CelebHabitDetail(1, 4, Habit.NIGHT_TIME, 14, "수다떨기", "마음 맞는 사람들과 차 한잔과 수다떨기", "", "Apple이 전 세계적인 성공을 이룰 수 있었던\n" +
                 "가장 큰 이유는 바로 \n" +
                 "스티브잡스의 기발한 상상력이 녹아든 제품 입니다.\n" +
                 "\n" +
@@ -380,7 +389,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "수다를 떨면서 나와 다른 생각을 통해 \n" +
                 "새로운 발견을 할 수 있을것입니다.","16:00",124, 10, 1, Unit.TIME_UNIT,"분", "img_parkboram_detail_3.png", "blue", R.drawable.ic_tea, R.drawable.sub_jobs_4);
 
-        CelebHabitDetail celebHabitd25 = new CelebHabitDetail(1, 5,  Habit.NIGHT_TIME,3, "명상하기", "하루를 마무리하며 명상하기", "\"가만히 앉아서 내면을 들여다보면 \n" +
+        CelebHabitDetail celebHabitd25 = new CelebHabitDetail(1, 5,  Habit.NIGHT_TIME,13, "명상하기", "하루를 마무리하며 명상하기", "\"가만히 앉아서 내면을 들여다보면 \n" +
                 "마음에 평온이 찾아오고 \n" +
                 "현재의 순간이 한없이 확장되는 것이 느껴집니다\n" +
                 "이것이 바로 마음의 수양이며, 지속적으로 훈련해야하는 것입니다.\""
@@ -407,10 +416,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         celebHabitKits.add(new CelebHabitKit(2, "아임 닭 1kg", "#저녁에 먹는 \n닭가슴살 쉐킷쉐킷", R.drawable.img_chi));
         celebHabitKits.add(new CelebHabitKit(2, "올리브영 \n바디쇼 요가메트", "#오늘밤 나와 함께 근력운동 \n헛둘 헛둘 메트", R.drawable.img_mat));
         celebHabitKits.add(new CelebHabitKit(2, "닌자 블랜디드\n모바일 상품권", "#다갈아 시...", R.drawable.img_mix));
-        celebHabitKits.add(new CelebHabitKit(1, "자명종 시계\n", "#아침일찍 일어나기", R.drawable.product_jobs_1));
-        celebHabitKits.add(new CelebHabitKit(1, "몰스킨 \n다이어리", "#오늘 할일 목표 적기", R.drawable.product_jobs_2));
-        celebHabitKits.add(new CelebHabitKit(1, "스티브잡스 자서전\n", "#자극받기 #영감받기", R.drawable.product_jobs_3));
-        celebHabitKits.add(new CelebHabitKit(1, "스타벅스 말차", "#차 한잔의 여유 #수다 필수품", R.drawable.product_jobs_4));
+        celebHabitKits.add(new CelebHabitKit(1, "자명종 시계\n", "#등짝 스메시 전에", R.drawable.product_jobs_1));
+        celebHabitKits.add(new CelebHabitKit(1, "몰스킨 \n다이어리", "#먹을거 적는거 \n아니야", R.drawable.product_jobs_2));
+        celebHabitKits.add(new CelebHabitKit(1, "스티브잡스 자서전\n", "#잡스 \n#넌내꺼", R.drawable.product_jobs_3));
+        celebHabitKits.add(new CelebHabitKit(1, "스타벅스 말차", "#말 할때는 \n#말차지", R.drawable.product_jobs_4));
 
         mHabitRespository.insertHabitKit(celebHabitKits);
 

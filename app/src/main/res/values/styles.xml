@@ -197,6 +197,8 @@
 
     <style name="AppTheme.TextView.02.Celeb.Detail.Coment" parent="AppTheme.TextView.02.Main.Habit.Title">
         <item name="android:textColor">@color/celebHabitComment</item>
+        <item name="android:textSize">@dimen/celeb_detail_comment_textsize</item>
+        <item name="android:lineSpacingExtra">@dimen/celeb_detail_comment_linespace</item>
     </style>
 
     <style name="AppTheme.Tab" parent="AppTheme">

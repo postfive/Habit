@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.dd.processbutton.iml.SubmitProcessButton;
 import com.postfive.habit.R;
+import com.postfive.habit.Utils;
 import com.postfive.habit.db.Habit;
 import com.postfive.habit.db.UserHabitDetail;
 import com.postfive.habit.db.UserHabitRespository;
@@ -88,7 +89,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         // 오늘 요일
         int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        int nowTime = Habit.NIGHT_TIME;
+        int nowTime = Utils.getTime(mContext);
 
         // TODO 어제 습관
         if (position == 0) {
@@ -277,7 +278,7 @@ public class CustomPagerAdapter extends PagerAdapter {
             wrap_id.set(position, temp_wrap_id);
 
         curValue.setText("" + userHabitState.getDid());
-        titleV.setText(userHabitState.getName());
+        titleV.setText(userHabitState.getCustomname());
         valueUnit.setText(userHabitState.getUnit());
 
         valueUnit2.setText(userHabitState.getUnit());

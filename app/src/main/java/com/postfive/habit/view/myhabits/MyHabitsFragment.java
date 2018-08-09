@@ -100,7 +100,7 @@ public class MyHabitsFragment extends Fragment implements View.OnClickListener{
         ImageView upper_background = (ImageView) view.findViewById(R.id.upper_back_img);
         upper_background.setImageResource(UserSettingValue.getMainImgResource());
         LinearLayout upperLayout = (LinearLayout) view.findViewById(R.id.upperLayout);
-        upperLayout.setBackgroundResource(UserSettingValue.getMainImgResource());
+//        upperLayout.setBackgroundResource(UserSettingValue.getMainImgResource());
         final TextView date_tv = (TextView) view.findViewById(R.id.date_tv);
         setDay(date_tv, 0);
 

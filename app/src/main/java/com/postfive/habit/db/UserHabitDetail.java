@@ -75,7 +75,7 @@ public class UserHabitDetail implements Serializable {
         this.habitcode = celebHabit.getHabitcode();
         this.time = celebHabit.getTime();     //
         this.name = celebHabit.getName();
-        this.customname = celebHabit.getGoal();     //
+        this.customname = celebHabit.getName();     //
         this.daysum = celebHabit.getDaysum(); //
         this.goal = celebHabit.getFull();     //
         this.once = celebHabit.getOnce();     //

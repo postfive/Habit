@@ -72,8 +72,7 @@
             android:layout_height="44dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            android:gravity="center"
-            android:src="@drawable/watericon" />
+            android:gravity="center"/>
 
         <View
             android:layout_width="1dp"
